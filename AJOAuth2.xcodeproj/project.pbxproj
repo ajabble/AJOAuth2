@@ -1,0 +1,530 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		38CE70BC1E309514009195D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70BB1E309514009195D9 /* main.m */; };
+		38CE70BF1E309514009195D9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70BE1E309514009195D9 /* AppDelegate.m */; };
+		38CE70C21E309514009195D9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70C11E309514009195D9 /* ViewController.m */; };
+		38CE70C51E309514009195D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38CE70C31E309514009195D9 /* Main.storyboard */; };
+		38CE70C71E309514009195D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38CE70C61E309514009195D9 /* Assets.xcassets */; };
+		38CE70CA1E309514009195D9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38CE70C81E309514009195D9 /* LaunchScreen.storyboard */; };
+		38CE70D51E309514009195D9 /* AJOAuth2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70D41E309514009195D9 /* AJOAuth2Tests.m */; };
+		38CE70E01E309514009195D9 /* AJOAuth2UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70DF1E309514009195D9 /* AJOAuth2UITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		38CE70D11E309514009195D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38CE70AF1E309514009195D9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 38CE70B61E309514009195D9;
+			remoteInfo = AJOAuth2;
+		};
+		38CE70DC1E309514009195D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38CE70AF1E309514009195D9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 38CE70B61E309514009195D9;
+			remoteInfo = AJOAuth2;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		38CE70B71E309514009195D9 /* AJOAuth2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AJOAuth2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		38CE70BB1E309514009195D9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		38CE70BD1E309514009195D9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		38CE70BE1E309514009195D9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		38CE70C01E309514009195D9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		38CE70C11E309514009195D9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		38CE70C41E309514009195D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		38CE70C61E309514009195D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		38CE70C91E309514009195D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		38CE70CB1E309514009195D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		38CE70D01E309514009195D9 /* AJOAuth2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AJOAuth2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		38CE70D41E309514009195D9 /* AJOAuth2Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AJOAuth2Tests.m; sourceTree = "<group>"; };
+		38CE70D61E309514009195D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		38CE70DB1E309514009195D9 /* AJOAuth2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AJOAuth2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		38CE70DF1E309514009195D9 /* AJOAuth2UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AJOAuth2UITests.m; sourceTree = "<group>"; };
+		38CE70E11E309514009195D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		38CE70B41E309514009195D9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		38CE70CD1E309514009195D9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		38CE70D81E309514009195D9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		38CE70AE1E309514009195D9 = {
+			isa = PBXGroup;
+			children = (
+				38CE70B91E309514009195D9 /* AJOAuth2 */,
+				38CE70D31E309514009195D9 /* AJOAuth2Tests */,
+				38CE70DE1E309514009195D9 /* AJOAuth2UITests */,
+				38CE70B81E309514009195D9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		38CE70B81E309514009195D9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				38CE70B71E309514009195D9 /* AJOAuth2.app */,
+				38CE70D01E309514009195D9 /* AJOAuth2Tests.xctest */,
+				38CE70DB1E309514009195D9 /* AJOAuth2UITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		38CE70B91E309514009195D9 /* AJOAuth2 */ = {
+			isa = PBXGroup;
+			children = (
+				38CE70BD1E309514009195D9 /* AppDelegate.h */,
+				38CE70BE1E309514009195D9 /* AppDelegate.m */,
+				38CE70C01E309514009195D9 /* ViewController.h */,
+				38CE70C11E309514009195D9 /* ViewController.m */,
+				38CE70C31E309514009195D9 /* Main.storyboard */,
+				38CE70C61E309514009195D9 /* Assets.xcassets */,
+				38CE70C81E309514009195D9 /* LaunchScreen.storyboard */,
+				38CE70CB1E309514009195D9 /* Info.plist */,
+				38CE70BA1E309514009195D9 /* Supporting Files */,
+			);
+			path = AJOAuth2;
+			sourceTree = "<group>";
+		};
+		38CE70BA1E309514009195D9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				38CE70BB1E309514009195D9 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		38CE70D31E309514009195D9 /* AJOAuth2Tests */ = {
+			isa = PBXGroup;
+			children = (
+				38CE70D41E309514009195D9 /* AJOAuth2Tests.m */,
+				38CE70D61E309514009195D9 /* Info.plist */,
+			);
+			path = AJOAuth2Tests;
+			sourceTree = "<group>";
+		};
+		38CE70DE1E309514009195D9 /* AJOAuth2UITests */ = {
+			isa = PBXGroup;
+			children = (
+				38CE70DF1E309514009195D9 /* AJOAuth2UITests.m */,
+				38CE70E11E309514009195D9 /* Info.plist */,
+			);
+			path = AJOAuth2UITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		38CE70B61E309514009195D9 /* AJOAuth2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 38CE70E41E309514009195D9 /* Build configuration list for PBXNativeTarget "AJOAuth2" */;
+			buildPhases = (
+				38CE70B31E309514009195D9 /* Sources */,
+				38CE70B41E309514009195D9 /* Frameworks */,
+				38CE70B51E309514009195D9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AJOAuth2;
+			productName = AJOAuth2;
+			productReference = 38CE70B71E309514009195D9 /* AJOAuth2.app */;
+			productType = "com.apple.product-type.application";
+		};
+		38CE70CF1E309514009195D9 /* AJOAuth2Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 38CE70E71E309514009195D9 /* Build configuration list for PBXNativeTarget "AJOAuth2Tests" */;
+			buildPhases = (
+				38CE70CC1E309514009195D9 /* Sources */,
+				38CE70CD1E309514009195D9 /* Frameworks */,
+				38CE70CE1E309514009195D9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				38CE70D21E309514009195D9 /* PBXTargetDependency */,
+			);
+			name = AJOAuth2Tests;
+			productName = AJOAuth2Tests;
+			productReference = 38CE70D01E309514009195D9 /* AJOAuth2Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		38CE70DA1E309514009195D9 /* AJOAuth2UITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 38CE70EA1E309514009195D9 /* Build configuration list for PBXNativeTarget "AJOAuth2UITests" */;
+			buildPhases = (
+				38CE70D71E309514009195D9 /* Sources */,
+				38CE70D81E309514009195D9 /* Frameworks */,
+				38CE70D91E309514009195D9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				38CE70DD1E309514009195D9 /* PBXTargetDependency */,
+			);
+			name = AJOAuth2UITests;
+			productName = AJOAuth2UITests;
+			productReference = 38CE70DB1E309514009195D9 /* AJOAuth2UITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		38CE70AF1E309514009195D9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Ashish Jabble";
+				TargetAttributes = {
+					38CE70B61E309514009195D9 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+					38CE70CF1E309514009195D9 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 38CE70B61E309514009195D9;
+					};
+					38CE70DA1E309514009195D9 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 38CE70B61E309514009195D9;
+					};
+				};
+			};
+			buildConfigurationList = 38CE70B21E309514009195D9 /* Build configuration list for PBXProject "AJOAuth2" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 38CE70AE1E309514009195D9;
+			productRefGroup = 38CE70B81E309514009195D9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				38CE70B61E309514009195D9 /* AJOAuth2 */,
+				38CE70CF1E309514009195D9 /* AJOAuth2Tests */,
+				38CE70DA1E309514009195D9 /* AJOAuth2UITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		38CE70B51E309514009195D9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				38CE70CA1E309514009195D9 /* LaunchScreen.storyboard in Resources */,
+				38CE70C71E309514009195D9 /* Assets.xcassets in Resources */,
+				38CE70C51E309514009195D9 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		38CE70CE1E309514009195D9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		38CE70D91E309514009195D9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		38CE70B31E309514009195D9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				38CE70C21E309514009195D9 /* ViewController.m in Sources */,
+				38CE70BF1E309514009195D9 /* AppDelegate.m in Sources */,
+				38CE70BC1E309514009195D9 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		38CE70CC1E309514009195D9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				38CE70D51E309514009195D9 /* AJOAuth2Tests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		38CE70D71E309514009195D9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				38CE70E01E309514009195D9 /* AJOAuth2UITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		38CE70D21E309514009195D9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 38CE70B61E309514009195D9 /* AJOAuth2 */;
+			targetProxy = 38CE70D11E309514009195D9 /* PBXContainerItemProxy */;
+		};
+		38CE70DD1E309514009195D9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 38CE70B61E309514009195D9 /* AJOAuth2 */;
+			targetProxy = 38CE70DC1E309514009195D9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		38CE70C31E309514009195D9 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				38CE70C41E309514009195D9 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		38CE70C81E309514009195D9 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				38CE70C91E309514009195D9 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		38CE70E21E309514009195D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		38CE70E31E309514009195D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		38CE70E51E309514009195D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = AJOAuth2/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nerdapplabs.aj.AJOAuth2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		38CE70E61E309514009195D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = AJOAuth2/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nerdapplabs.aj.AJOAuth2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		38CE70E81E309514009195D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = AJOAuth2Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nerdapplabs.aj.AJOAuth2Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AJOAuth2.app/AJOAuth2";
+			};
+			name = Debug;
+		};
+		38CE70E91E309514009195D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = AJOAuth2Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nerdapplabs.aj.AJOAuth2Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AJOAuth2.app/AJOAuth2";
+			};
+			name = Release;
+		};
+		38CE70EB1E309514009195D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = AJOAuth2UITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nerdapplabs.aj.AJOAuth2UITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = AJOAuth2;
+			};
+			name = Debug;
+		};
+		38CE70EC1E309514009195D9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = AJOAuth2UITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nerdapplabs.aj.AJOAuth2UITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = AJOAuth2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		38CE70B21E309514009195D9 /* Build configuration list for PBXProject "AJOAuth2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				38CE70E21E309514009195D9 /* Debug */,
+				38CE70E31E309514009195D9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		38CE70E41E309514009195D9 /* Build configuration list for PBXNativeTarget "AJOAuth2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				38CE70E51E309514009195D9 /* Debug */,
+				38CE70E61E309514009195D9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		38CE70E71E309514009195D9 /* Build configuration list for PBXNativeTarget "AJOAuth2Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				38CE70E81E309514009195D9 /* Debug */,
+				38CE70E91E309514009195D9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		38CE70EA1E309514009195D9 /* Build configuration list for PBXNativeTarget "AJOAuth2UITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				38CE70EB1E309514009195D9 /* Debug */,
+				38CE70EC1E309514009195D9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 38CE70AF1E309514009195D9 /* Project object */;
+}
