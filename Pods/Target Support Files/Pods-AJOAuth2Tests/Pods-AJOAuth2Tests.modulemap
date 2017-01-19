@@ -1,0 +1,6 @@
+framework module Pods_AJOAuth2Tests {
+  umbrella header "Pods-AJOAuth2Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

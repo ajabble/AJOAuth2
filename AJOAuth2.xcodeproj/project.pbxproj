@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2547C87EC17E42A9BC79A359 /* Pods_AJOAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F54441420E54454759C0EC9 /* Pods_AJOAuth2.framework */; };
 		38CE70BC1E309514009195D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70BB1E309514009195D9 /* main.m */; };
 		38CE70BF1E309514009195D9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70BE1E309514009195D9 /* AppDelegate.m */; };
 		38CE70C21E309514009195D9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70C11E309514009195D9 /* ViewController.m */; };
@@ -15,6 +16,11 @@
 		38CE70CA1E309514009195D9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38CE70C81E309514009195D9 /* LaunchScreen.storyboard */; };
 		38CE70D51E309514009195D9 /* AJOAuth2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70D41E309514009195D9 /* AJOAuth2Tests.m */; };
 		38CE70E01E309514009195D9 /* AJOAuth2UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70DF1E309514009195D9 /* AJOAuth2UITests.m */; };
+		38CE70F21E30A7FE009195D9 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 38CE70F01E30A7FE009195D9 /* Podfile */; };
+		38CE70F31E30A7FE009195D9 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 38CE70F11E30A7FE009195D9 /* README.md */; };
+		38CE70F51E30AA4C009195D9 /* strings.json in Resources */ = {isa = PBXBuildFile; fileRef = 38CE70F41E30AA4C009195D9 /* strings.json */; };
+		71E43EDC6DDBA98C20B1F77B /* Pods_AJOAuth2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECD6C81F7B9D71FBD3A0206C /* Pods_AJOAuth2Tests.framework */; };
+		72EDEC766F53989F810272BD /* Pods_AJOAuth2UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC79854CEDD4329E4DC18B57 /* Pods_AJOAuth2UITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		32CFBDDB65C5AFD955798714 /* Pods-AJOAuth2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AJOAuth2.release.xcconfig"; path = "Pods/Target Support Files/Pods-AJOAuth2/Pods-AJOAuth2.release.xcconfig"; sourceTree = "<group>"; };
 		38CE70B71E309514009195D9 /* AJOAuth2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AJOAuth2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38CE70BB1E309514009195D9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		38CE70BD1E309514009195D9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -51,6 +58,19 @@
 		38CE70DB1E309514009195D9 /* AJOAuth2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AJOAuth2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		38CE70DF1E309514009195D9 /* AJOAuth2UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AJOAuth2UITests.m; sourceTree = "<group>"; };
 		38CE70E11E309514009195D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		38CE70F01E30A7FE009195D9 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		38CE70F11E30A7FE009195D9 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		38CE70F41E30AA4C009195D9 /* strings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = strings.json; sourceTree = "<group>"; };
+		38CE70F61E30ACD4009195D9 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		38CE70F71E30AD7D009195D9 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		6A517ED11854943A0AE8AB59 /* Pods-AJOAuth2UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AJOAuth2UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AJOAuth2UITests/Pods-AJOAuth2UITests.debug.xcconfig"; sourceTree = "<group>"; };
+		721B5967C8E86645C431B85D /* Pods-AJOAuth2UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AJOAuth2UITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AJOAuth2UITests/Pods-AJOAuth2UITests.release.xcconfig"; sourceTree = "<group>"; };
+		7F54441420E54454759C0EC9 /* Pods_AJOAuth2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AJOAuth2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A74E82F248A8D9483A6CE143 /* Pods-AJOAuth2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AJOAuth2Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AJOAuth2Tests/Pods-AJOAuth2Tests.release.xcconfig"; sourceTree = "<group>"; };
+		A7C0D38D88CD2FAA9AF06842 /* Pods-AJOAuth2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AJOAuth2Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AJOAuth2Tests/Pods-AJOAuth2Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		AC79854CEDD4329E4DC18B57 /* Pods_AJOAuth2UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AJOAuth2UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ECD6C81F7B9D71FBD3A0206C /* Pods_AJOAuth2Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AJOAuth2Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED275739A825230D6B9EDDC2 /* Pods-AJOAuth2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AJOAuth2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AJOAuth2/Pods-AJOAuth2.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2547C87EC17E42A9BC79A359 /* Pods_AJOAuth2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71E43EDC6DDBA98C20B1F77B /* Pods_AJOAuth2Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72EDEC766F53989F810272BD /* Pods_AJOAuth2UITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,10 +104,17 @@
 		38CE70AE1E309514009195D9 = {
 			isa = PBXGroup;
 			children = (
+				38CE70F01E30A7FE009195D9 /* Podfile */,
+				38CE70F61E30ACD4009195D9 /* PrefixHeader.pch */,
+				38CE70F11E30A7FE009195D9 /* README.md */,
+				38CE70F71E30AD7D009195D9 /* Constants.h */,
+				38CE70F41E30AA4C009195D9 /* strings.json */,
 				38CE70B91E309514009195D9 /* AJOAuth2 */,
 				38CE70D31E309514009195D9 /* AJOAuth2Tests */,
 				38CE70DE1E309514009195D9 /* AJOAuth2UITests */,
 				38CE70B81E309514009195D9 /* Products */,
+				DD2D47D20A4064FDE8507E77 /* Pods */,
+				6A7DE0822C41CE98723DBC22 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -140,6 +170,29 @@
 			path = AJOAuth2UITests;
 			sourceTree = "<group>";
 		};
+		6A7DE0822C41CE98723DBC22 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7F54441420E54454759C0EC9 /* Pods_AJOAuth2.framework */,
+				ECD6C81F7B9D71FBD3A0206C /* Pods_AJOAuth2Tests.framework */,
+				AC79854CEDD4329E4DC18B57 /* Pods_AJOAuth2UITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DD2D47D20A4064FDE8507E77 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				ED275739A825230D6B9EDDC2 /* Pods-AJOAuth2.debug.xcconfig */,
+				32CFBDDB65C5AFD955798714 /* Pods-AJOAuth2.release.xcconfig */,
+				A7C0D38D88CD2FAA9AF06842 /* Pods-AJOAuth2Tests.debug.xcconfig */,
+				A74E82F248A8D9483A6CE143 /* Pods-AJOAuth2Tests.release.xcconfig */,
+				6A517ED11854943A0AE8AB59 /* Pods-AJOAuth2UITests.debug.xcconfig */,
+				721B5967C8E86645C431B85D /* Pods-AJOAuth2UITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -147,9 +200,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 38CE70E41E309514009195D9 /* Build configuration list for PBXNativeTarget "AJOAuth2" */;
 			buildPhases = (
+				7D779159D54926AB7BCA7CFB /* [CP] Check Pods Manifest.lock */,
 				38CE70B31E309514009195D9 /* Sources */,
 				38CE70B41E309514009195D9 /* Frameworks */,
 				38CE70B51E309514009195D9 /* Resources */,
+				EE6A1C0BC8CEEDF0ED68A8BD /* [CP] Embed Pods Frameworks */,
+				2F7266ED25A1329E6DAC2832 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -164,9 +220,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 38CE70E71E309514009195D9 /* Build configuration list for PBXNativeTarget "AJOAuth2Tests" */;
 			buildPhases = (
+				3AB2DAD9A03A8BD0F8F76705 /* [CP] Check Pods Manifest.lock */,
 				38CE70CC1E309514009195D9 /* Sources */,
 				38CE70CD1E309514009195D9 /* Frameworks */,
 				38CE70CE1E309514009195D9 /* Resources */,
+				86D996EDBFF6DE11D4D93B26 /* [CP] Embed Pods Frameworks */,
+				BEA3951F9B7349F5DA3F99A1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -182,9 +241,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 38CE70EA1E309514009195D9 /* Build configuration list for PBXNativeTarget "AJOAuth2UITests" */;
 			buildPhases = (
+				7E734AD2411560DE82AA3282 /* [CP] Check Pods Manifest.lock */,
 				38CE70D71E309514009195D9 /* Sources */,
 				38CE70D81E309514009195D9 /* Frameworks */,
 				38CE70D91E309514009195D9 /* Resources */,
+				43A8F27470D7149121D4C461 /* [CP] Embed Pods Frameworks */,
+				543AE3DF4C80E0D679FBEE1E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -248,7 +310,10 @@
 			files = (
 				38CE70CA1E309514009195D9 /* LaunchScreen.storyboard in Resources */,
 				38CE70C71E309514009195D9 /* Assets.xcassets in Resources */,
+				38CE70F51E30AA4C009195D9 /* strings.json in Resources */,
+				38CE70F21E30A7FE009195D9 /* Podfile in Resources */,
 				38CE70C51E309514009195D9 /* Main.storyboard in Resources */,
+				38CE70F31E30A7FE009195D9 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,6 +332,144 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2F7266ED25A1329E6DAC2832 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AJOAuth2/Pods-AJOAuth2-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3AB2DAD9A03A8BD0F8F76705 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		43A8F27470D7149121D4C461 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AJOAuth2UITests/Pods-AJOAuth2UITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		543AE3DF4C80E0D679FBEE1E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AJOAuth2UITests/Pods-AJOAuth2UITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7D779159D54926AB7BCA7CFB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7E734AD2411560DE82AA3282 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		86D996EDBFF6DE11D4D93B26 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AJOAuth2Tests/Pods-AJOAuth2Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BEA3951F9B7349F5DA3F99A1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AJOAuth2Tests/Pods-AJOAuth2Tests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EE6A1C0BC8CEEDF0ED68A8BD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AJOAuth2/Pods-AJOAuth2-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		38CE70B31E309514009195D9 /* Sources */ = {
@@ -422,9 +625,12 @@
 		};
 		38CE70E51E309514009195D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED275739A825230D6B9EDDC2 /* Pods-AJOAuth2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = AJOAuth2/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nerdapplabs.aj.AJOAuth2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -433,9 +639,12 @@
 		};
 		38CE70E61E309514009195D9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 32CFBDDB65C5AFD955798714 /* Pods-AJOAuth2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = AJOAuth2/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nerdapplabs.aj.AJOAuth2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -444,6 +653,7 @@
 		};
 		38CE70E81E309514009195D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A7C0D38D88CD2FAA9AF06842 /* Pods-AJOAuth2Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = AJOAuth2Tests/Info.plist;
@@ -456,6 +666,7 @@
 		};
 		38CE70E91E309514009195D9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A74E82F248A8D9483A6CE143 /* Pods-AJOAuth2Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = AJOAuth2Tests/Info.plist;
@@ -468,6 +679,7 @@
 		};
 		38CE70EB1E309514009195D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6A517ED11854943A0AE8AB59 /* Pods-AJOAuth2UITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = AJOAuth2UITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -479,6 +691,7 @@
 		};
 		38CE70EC1E309514009195D9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 721B5967C8E86645C431B85D /* Pods-AJOAuth2UITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = AJOAuth2UITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -507,6 +720,7 @@
 				38CE70E61E309514009195D9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		38CE70E71E309514009195D9 /* Build configuration list for PBXNativeTarget "AJOAuth2Tests" */ = {
 			isa = XCConfigurationList;
@@ -515,6 +729,7 @@
 				38CE70E91E309514009195D9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		38CE70EA1E309514009195D9 /* Build configuration list for PBXNativeTarget "AJOAuth2UITests" */ = {
 			isa = XCConfigurationList;
@@ -523,6 +738,7 @@
 				38CE70EC1E309514009195D9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
