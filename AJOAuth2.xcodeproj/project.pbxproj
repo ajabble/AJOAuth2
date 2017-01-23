@@ -8,17 +8,33 @@
 
 /* Begin PBXBuildFile section */
 		2547C87EC17E42A9BC79A359 /* Pods_AJOAuth2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F54441420E54454759C0EC9 /* Pods_AJOAuth2.framework */; };
+		381952731E31F6F900ACB611 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 381952721E31F6F900ACB611 /* HomeViewController.xib */; };
+		381952771E32122B00ACB611 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381952751E32122B00ACB611 /* LoginViewController.m */; };
+		381952781E32122B00ACB611 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 381952761E32122B00ACB611 /* LoginViewController.xib */; };
+		3819527F1E32124E00ACB611 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3819527D1E32124E00ACB611 /* SignupViewController.m */; };
+		381952801E32124E00ACB611 /* SignupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3819527E1E32124E00ACB611 /* SignupViewController.xib */; };
+		381952841E3219E300ACB611 /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381952821E3219E300ACB611 /* ForgotPasswordViewController.m */; };
+		381952851E3219E300ACB611 /* ForgotPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 381952831E3219E300ACB611 /* ForgotPasswordViewController.xib */; };
+		381952881E3243D000ACB611 /* hi.json in Resources */ = {isa = PBXBuildFile; fileRef = 381952871E3243D000ACB611 /* hi.json */; };
 		38CE70BC1E309514009195D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70BB1E309514009195D9 /* main.m */; };
 		38CE70BF1E309514009195D9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70BE1E309514009195D9 /* AppDelegate.m */; };
-		38CE70C21E309514009195D9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70C11E309514009195D9 /* ViewController.m */; };
 		38CE70C51E309514009195D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38CE70C31E309514009195D9 /* Main.storyboard */; };
 		38CE70C71E309514009195D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38CE70C61E309514009195D9 /* Assets.xcassets */; };
 		38CE70CA1E309514009195D9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38CE70C81E309514009195D9 /* LaunchScreen.storyboard */; };
 		38CE70D51E309514009195D9 /* AJOAuth2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70D41E309514009195D9 /* AJOAuth2Tests.m */; };
 		38CE70E01E309514009195D9 /* AJOAuth2UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70DF1E309514009195D9 /* AJOAuth2UITests.m */; };
-		38CE70F21E30A7FE009195D9 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 38CE70F01E30A7FE009195D9 /* Podfile */; };
 		38CE70F31E30A7FE009195D9 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 38CE70F11E30A7FE009195D9 /* README.md */; };
-		38CE70F51E30AA4C009195D9 /* strings.json in Resources */ = {isa = PBXBuildFile; fileRef = 38CE70F41E30AA4C009195D9 /* strings.json */; };
+		38CE71251E30C69F009195D9 /* en.json in Resources */ = {isa = PBXBuildFile; fileRef = 38CE71241E30C69F009195D9 /* en.json */; };
+		38CE71311E30C800009195D9 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE71301E30C800009195D9 /* HomeViewController.m */; };
+		38DC4FC81E35ECED00C7FA3F /* LeftViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DC4FBD1E35ECED00C7FA3F /* LeftViewCell.m */; };
+		38DC4FC91E35ECED00C7FA3F /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DC4FBF1E35ECED00C7FA3F /* LeftViewController.m */; };
+		38DC4FD01E35ED1100C7FA3F /* CenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DC4FCF1E35ED1100C7FA3F /* CenterViewController.m */; };
+		38DC4FD51E35ED2E00C7FA3F /* imageLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 38DC4FD21E35ED2E00C7FA3F /* imageLeft.png */; };
+		38DC4FD61E35ED2E00C7FA3F /* imageRoot.png in Resources */ = {isa = PBXBuildFile; fileRef = 38DC4FD31E35ED2E00C7FA3F /* imageRoot.png */; };
+		38F7E87C1E3624F6006041DC /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F7E87B1E3624F6006041DC /* Helper.m */; };
+		38F7E8801E364452006041DC /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F7E87F1E364452006041DC /* User.m */; };
+		38F7E8841E36983E006041DC /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F7E8821E36983E006041DC /* ProfileViewController.m */; };
+		38F7E8851E36983E006041DC /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38F7E8831E36983E006041DC /* ProfileViewController.xib */; };
 		71E43EDC6DDBA98C20B1F77B /* Pods_AJOAuth2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECD6C81F7B9D71FBD3A0206C /* Pods_AJOAuth2Tests.framework */; };
 		72EDEC766F53989F810272BD /* Pods_AJOAuth2UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC79854CEDD4329E4DC18B57 /* Pods_AJOAuth2UITests.framework */; };
 /* End PBXBuildFile section */
@@ -42,12 +58,21 @@
 
 /* Begin PBXFileReference section */
 		32CFBDDB65C5AFD955798714 /* Pods-AJOAuth2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AJOAuth2.release.xcconfig"; path = "Pods/Target Support Files/Pods-AJOAuth2/Pods-AJOAuth2.release.xcconfig"; sourceTree = "<group>"; };
+		381952721E31F6F900ACB611 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		381952741E32122B00ACB611 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		381952751E32122B00ACB611 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		381952761E32122B00ACB611 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		3819527C1E32124E00ACB611 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
+		3819527D1E32124E00ACB611 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
+		3819527E1E32124E00ACB611 /* SignupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupViewController.xib; sourceTree = "<group>"; };
+		381952811E3219E300ACB611 /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotPasswordViewController.h; sourceTree = "<group>"; };
+		381952821E3219E300ACB611 /* ForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPasswordViewController.m; sourceTree = "<group>"; };
+		381952831E3219E300ACB611 /* ForgotPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgotPasswordViewController.xib; sourceTree = "<group>"; };
+		381952871E3243D000ACB611 /* hi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hi.json; sourceTree = "<group>"; };
 		38CE70B71E309514009195D9 /* AJOAuth2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AJOAuth2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38CE70BB1E309514009195D9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		38CE70BD1E309514009195D9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		38CE70BE1E309514009195D9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		38CE70C01E309514009195D9 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		38CE70C11E309514009195D9 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		38CE70BE1E309514009195D9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38CE70C41E309514009195D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		38CE70C61E309514009195D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		38CE70C91E309514009195D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -58,11 +83,27 @@
 		38CE70DB1E309514009195D9 /* AJOAuth2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AJOAuth2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		38CE70DF1E309514009195D9 /* AJOAuth2UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AJOAuth2UITests.m; sourceTree = "<group>"; };
 		38CE70E11E309514009195D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		38CE70F01E30A7FE009195D9 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		38CE70F11E30A7FE009195D9 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		38CE70F41E30AA4C009195D9 /* strings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = strings.json; sourceTree = "<group>"; };
-		38CE70F61E30ACD4009195D9 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
-		38CE70F71E30AD7D009195D9 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		38CE71221E30C69F009195D9 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		38CE71231E30C69F009195D9 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		38CE71241E30C69F009195D9 /* en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = en.json; sourceTree = "<group>"; };
+		38CE712F1E30C800009195D9 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		38CE71301E30C800009195D9 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		38DC4FBC1E35ECED00C7FA3F /* LeftViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftViewCell.h; sourceTree = "<group>"; };
+		38DC4FBD1E35ECED00C7FA3F /* LeftViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftViewCell.m; sourceTree = "<group>"; };
+		38DC4FBE1E35ECED00C7FA3F /* LeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftViewController.h; sourceTree = "<group>"; };
+		38DC4FBF1E35ECED00C7FA3F /* LeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LeftViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		38DC4FCE1E35ED1100C7FA3F /* CenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CenterViewController.h; sourceTree = "<group>"; };
+		38DC4FCF1E35ED1100C7FA3F /* CenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CenterViewController.m; sourceTree = "<group>"; };
+		38DC4FD21E35ED2E00C7FA3F /* imageLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageLeft.png; sourceTree = "<group>"; };
+		38DC4FD31E35ED2E00C7FA3F /* imageRoot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageRoot.png; sourceTree = "<group>"; };
+		38F7E87A1E3624F6006041DC /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
+		38F7E87B1E3624F6006041DC /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
+		38F7E87E1E364452006041DC /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		38F7E87F1E364452006041DC /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		38F7E8811E36983E006041DC /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		38F7E8821E36983E006041DC /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		38F7E8831E36983E006041DC /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		6A517ED11854943A0AE8AB59 /* Pods-AJOAuth2UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AJOAuth2UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AJOAuth2UITests/Pods-AJOAuth2UITests.debug.xcconfig"; sourceTree = "<group>"; };
 		721B5967C8E86645C431B85D /* Pods-AJOAuth2UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AJOAuth2UITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AJOAuth2UITests/Pods-AJOAuth2UITests.release.xcconfig"; sourceTree = "<group>"; };
 		7F54441420E54454759C0EC9 /* Pods_AJOAuth2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AJOAuth2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,11 +145,7 @@
 		38CE70AE1E309514009195D9 = {
 			isa = PBXGroup;
 			children = (
-				38CE70F01E30A7FE009195D9 /* Podfile */,
-				38CE70F61E30ACD4009195D9 /* PrefixHeader.pch */,
 				38CE70F11E30A7FE009195D9 /* README.md */,
-				38CE70F71E30AD7D009195D9 /* Constants.h */,
-				38CE70F41E30AA4C009195D9 /* strings.json */,
 				38CE70B91E309514009195D9 /* AJOAuth2 */,
 				38CE70D31E309514009195D9 /* AJOAuth2Tests */,
 				38CE70DE1E309514009195D9 /* AJOAuth2UITests */,
@@ -131,10 +168,11 @@
 		38CE70B91E309514009195D9 /* AJOAuth2 */ = {
 			isa = PBXGroup;
 			children = (
+				38F7E87D1E364443006041DC /* Classes */,
+				38F7E8791E3624DC006041DC /* Custom */,
 				38CE70BD1E309514009195D9 /* AppDelegate.h */,
 				38CE70BE1E309514009195D9 /* AppDelegate.m */,
-				38CE70C01E309514009195D9 /* ViewController.h */,
-				38CE70C11E309514009195D9 /* ViewController.m */,
+				38CE712B1E30C7DE009195D9 /* ViewControllers */,
 				38CE70C31E309514009195D9 /* Main.storyboard */,
 				38CE70C61E309514009195D9 /* Assets.xcassets */,
 				38CE70C81E309514009195D9 /* LaunchScreen.storyboard */,
@@ -148,6 +186,12 @@
 			isa = PBXGroup;
 			children = (
 				38CE70BB1E309514009195D9 /* main.m */,
+				38CE71221E30C69F009195D9 /* Constants.h */,
+				38CE71231E30C69F009195D9 /* PrefixHeader.pch */,
+				38CE71241E30C69F009195D9 /* en.json */,
+				381952871E3243D000ACB611 /* hi.json */,
+				38DC4FD21E35ED2E00C7FA3F /* imageLeft.png */,
+				38DC4FD31E35ED2E00C7FA3F /* imageRoot.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -168,6 +212,52 @@
 				38CE70E11E309514009195D9 /* Info.plist */,
 			);
 			path = AJOAuth2UITests;
+			sourceTree = "<group>";
+		};
+		38CE712B1E30C7DE009195D9 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				38CE712F1E30C800009195D9 /* HomeViewController.h */,
+				38CE71301E30C800009195D9 /* HomeViewController.m */,
+				381952721E31F6F900ACB611 /* HomeViewController.xib */,
+				381952741E32122B00ACB611 /* LoginViewController.h */,
+				381952751E32122B00ACB611 /* LoginViewController.m */,
+				381952761E32122B00ACB611 /* LoginViewController.xib */,
+				3819527C1E32124E00ACB611 /* SignupViewController.h */,
+				3819527D1E32124E00ACB611 /* SignupViewController.m */,
+				3819527E1E32124E00ACB611 /* SignupViewController.xib */,
+				381952811E3219E300ACB611 /* ForgotPasswordViewController.h */,
+				381952821E3219E300ACB611 /* ForgotPasswordViewController.m */,
+				381952831E3219E300ACB611 /* ForgotPasswordViewController.xib */,
+				38DC4FCE1E35ED1100C7FA3F /* CenterViewController.h */,
+				38DC4FCF1E35ED1100C7FA3F /* CenterViewController.m */,
+				38DC4FBC1E35ECED00C7FA3F /* LeftViewCell.h */,
+				38DC4FBD1E35ECED00C7FA3F /* LeftViewCell.m */,
+				38DC4FBE1E35ECED00C7FA3F /* LeftViewController.h */,
+				38DC4FBF1E35ECED00C7FA3F /* LeftViewController.m */,
+				38F7E8811E36983E006041DC /* ProfileViewController.h */,
+				38F7E8821E36983E006041DC /* ProfileViewController.m */,
+				38F7E8831E36983E006041DC /* ProfileViewController.xib */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		38F7E8791E3624DC006041DC /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				38F7E87A1E3624F6006041DC /* Helper.h */,
+				38F7E87B1E3624F6006041DC /* Helper.m */,
+			);
+			name = Custom;
+			sourceTree = "<group>";
+		};
+		38F7E87D1E364443006041DC /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				38F7E87E1E364452006041DC /* User.h */,
+				38F7E87F1E364452006041DC /* User.m */,
+			);
+			name = Classes;
 			sourceTree = "<group>";
 		};
 		6A7DE0822C41CE98723DBC22 /* Frameworks */ = {
@@ -310,9 +400,16 @@
 			files = (
 				38CE70CA1E309514009195D9 /* LaunchScreen.storyboard in Resources */,
 				38CE70C71E309514009195D9 /* Assets.xcassets in Resources */,
-				38CE70F51E30AA4C009195D9 /* strings.json in Resources */,
-				38CE70F21E30A7FE009195D9 /* Podfile in Resources */,
+				38CE71251E30C69F009195D9 /* en.json in Resources */,
+				381952851E3219E300ACB611 /* ForgotPasswordViewController.xib in Resources */,
 				38CE70C51E309514009195D9 /* Main.storyboard in Resources */,
+				381952731E31F6F900ACB611 /* HomeViewController.xib in Resources */,
+				38DC4FD51E35ED2E00C7FA3F /* imageLeft.png in Resources */,
+				381952781E32122B00ACB611 /* LoginViewController.xib in Resources */,
+				381952801E32124E00ACB611 /* SignupViewController.xib in Resources */,
+				381952881E3243D000ACB611 /* hi.json in Resources */,
+				38DC4FD61E35ED2E00C7FA3F /* imageRoot.png in Resources */,
+				38F7E8851E36983E006041DC /* ProfileViewController.xib in Resources */,
 				38CE70F31E30A7FE009195D9 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -476,9 +573,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38CE70C21E309514009195D9 /* ViewController.m in Sources */,
+				381952771E32122B00ACB611 /* LoginViewController.m in Sources */,
 				38CE70BF1E309514009195D9 /* AppDelegate.m in Sources */,
+				38CE71311E30C800009195D9 /* HomeViewController.m in Sources */,
+				38DC4FC91E35ECED00C7FA3F /* LeftViewController.m in Sources */,
+				38DC4FC81E35ECED00C7FA3F /* LeftViewCell.m in Sources */,
+				3819527F1E32124E00ACB611 /* SignupViewController.m in Sources */,
 				38CE70BC1E309514009195D9 /* main.m in Sources */,
+				38F7E8801E364452006041DC /* User.m in Sources */,
+				38F7E87C1E3624F6006041DC /* Helper.m in Sources */,
+				381952841E3219E300ACB611 /* ForgotPasswordViewController.m in Sources */,
+				38F7E8841E36983E006041DC /* ProfileViewController.m in Sources */,
+				38DC4FD01E35ED1100C7FA3F /* CenterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,6 +735,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = AJOAuth2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -643,6 +750,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = AJOAuth2/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

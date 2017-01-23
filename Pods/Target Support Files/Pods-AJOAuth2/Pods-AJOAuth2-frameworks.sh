@@ -86,14 +86,16 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/AFNetworking/AFNetworking.framework"
   install_framework "$BUILT_PRODUCTS_DIR/AFOAuth2Manager/AFOAuth2Manager.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/JJMaterialTextField/JJMaterialTextField.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/LGSideMenuController/LGSideMenuController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/MCLocalization/MCLocalization.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/MMDrawerController/MMDrawerController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SVProgressHUD/SVProgressHUD.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/AFNetworking/AFNetworking.framework"
   install_framework "$BUILT_PRODUCTS_DIR/AFOAuth2Manager/AFOAuth2Manager.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/JJMaterialTextField/JJMaterialTextField.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/LGSideMenuController/LGSideMenuController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/MCLocalization/MCLocalization.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/MMDrawerController/MMDrawerController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SVProgressHUD/SVProgressHUD.framework"
 fi

@@ -1,0 +1,22 @@
+{
+    "PERSONALIZED_TITLE_PLACEHOLDER": "Get a personalized experience >",
+    "PERSONALIZED_SUB_TITLE_PLACEHOLDER": "Login",
+    "center_navigation_title": "Nerd-Forum",
+    "login_sign_up_nav_title": "Log In or Sign Up",
+    "login_btn_title": "LOGIN",
+    "signup_btn_title":"SIGN UP",
+    "login_nav_title": "Login with Email",
+    "signup_nav_title": "Sign Up",
+    "forgot_password_nav_title": "Forgot Password",
+    "email_placeholder": "Email",
+    "password_placeholder": "Password",
+    "signin_btn_title": "Sign In",
+    "forgot_password_btn_title": "Forgot Password?",
+    "reset_password_btn_title": "Reset Password",
+    "signup_btn_title": "Sign Up",
+    "first_name_placeholder": "First Name",
+    "last_name_placeholder": "Last Name",
+    "display_name_placeholder": "Display Name",
+    "dob_placeholder": "DOB",
+    "profile_navigation_title": "Profile"
+}
