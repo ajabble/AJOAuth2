@@ -11,6 +11,8 @@
 #import "Constants.h"
 #import "AFOAuth2Manager.h"
 #import "ProfileViewController.h"
+#import "Helper.h"
+#import "User.h"
 
 @interface LeftViewController ()
 
@@ -22,28 +24,11 @@
 
 @implementation LeftViewController
 
+#pragma mark View-Life Cycle
+
 - (id)init {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
-        /*
-         self.titlesArray = @[@"Open Right View",
-                             @"",
-                             @"Change Root VC",
-                             @"",
-                             @"Profile",
-                             @"News",
-                             @"Articles",
-                             @"Video",
-                             @"Music"];
-
-        self.view.backgroundColor = [UIColor clearColor];
-        [self.tableView registerClass:[LeftViewCell class] forCellReuseIdentifier:@"cell"];
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        self.tableView.contentInset = UIEdgeInsetsMake(44.0, 0.0, 44.0, 0.0);
-        self.tableView.showsVerticalScrollIndicator = NO;
-        self.tableView.backgroundColor = [UIColor clearColor];
-        */
-        
         // Forcefully stop to call table data source and delegates
         self.tableView.dataSource = nil;
         self.tableView.delegate = nil;
@@ -63,24 +48,21 @@
     // Table header view
     self.tableView.tableHeaderView = [self getTableHeaderView];
     
-    AFOAuthCredential *credential = [AFOAuthCredential retrieveCredentialWithIdentifier:SERVICE_PROVIDER_IDENTIFIER];
-    NSLog(@"%@",credential.description);
-
-    // TODO: (id)[NSNull null] not working
-    if ([credential.accessToken isKindOfClass:[NSNull class]] || (NSNull *)credential.accessToken == [NSNull null] || credential.accessToken == nil){
-        NSLog(@"WTF!!!!!");
-    }
-
-    if (credential.accessToken == nil) {
+    if (![PREFS objectForKey:USER_INFORMATION]) {
         _usernameLabel.text = [MCLocalization stringForKey:@"PERSONALIZED_TITLE_PLACEHOLDER"];
         _emailLabel.text = [MCLocalization stringForKey:@"PERSONALIZED_SUB_TITLE_PLACEHOLDER"];
     }else {
+        if ([Helper isConnected])
         [self me];
+        else
+        [MCLocalization stringForKey:@"NO_INTERNET_CONNECTIVITY"];
     }
     
     // Tap gesture added to TableHeaderView
     [self.tableView.tableHeaderView addGestureRecognizer:[self tableHeaderViewRecognizer]];
 }
+
+#pragma mark UITableview header
 
 - (UIView *)getTableHeaderView {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
@@ -105,7 +87,7 @@
     [headerView addSubview:_emailLabel];
     
     // Separator line
-    UIView *colorLineView = [[UIView alloc]initWithFrame:CGRectMake(0, 55, 280, 0.5)];
+    UIView *colorLineView = [[UIView alloc]initWithFrame:CGRectMake(0, 60, 280, 0.5)];
     colorLineView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.7];
     [headerView addSubview:colorLineView];
     
@@ -120,10 +102,16 @@
     return singleTapRecognizer;
 }
 
+#pragma mark /ME - API
+
 - (void)me {
-    AFHTTPSessionManager *manager =
-    [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URI]];
-    [manager.requestSerializer setAuthorizationHeaderFieldWithCredential:[AFOAuthCredential retrieveCredentialWithIdentifier:SERVICE_PROVIDER_IDENTIFIER]];
+    NSData *myObject = [PREFS objectForKey:USER_INFORMATION];
+    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
+    NSLog(@"%@", user.description);
+    
+    // TODO: Refresh token/ Expiration time handling later on
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URI]];
+    [manager.requestSerializer setAuthorizationHeaderFieldWithCredential:[AFOAuthCredential credentialWithOAuthToken:user.accessToken tokenType:user.tokenType]];
     [manager GET:GET_USERS_API_NAME
       parameters:@{}
         progress:nil
@@ -131,12 +119,28 @@
              NSLog(@"Success: %@", responseObject);
              NSArray *jsonArray = (NSArray *)responseObject;
              if (!jsonArray)
-             return;
+                return;
              if ([jsonArray isKindOfClass:[NSArray class]] == NO)
-             NSAssert(NO, @"Expected an Array, got %@", NSStringFromClass([jsonArray class]));
+                NSAssert(NO, @"Expected an Array, got %@", NSStringFromClass([jsonArray class]));
              
-             _usernameLabel.text = [jsonArray objectAtIndex:0][@"username"];
-             _emailLabel.text = [jsonArray objectAtIndex:0][@"email"];
+             
+             // User information updated with username, email address
+             AFOAuthCredential *credential = [AFOAuthCredential credentialWithOAuthToken:user.accessToken tokenType:user.tokenType];
+             User *user = [[User alloc] initWithCredentials:credential withInfo:jsonArray];
+             NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:user];
+             [PREFS setObject:myEncodedObject forKey:USER_INFORMATION];
+             [PREFS synchronize];
+             NSLog(@"%@", user.description);
+             
+             // Get user info
+             NSData *myObject = [PREFS objectForKey:USER_INFORMATION];
+             user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
+             
+             // Username
+             _usernameLabel.text = user.userName;
+             
+             // Email Address
+             _emailLabel.text = user.emailAddress;
          }
          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
              NSLog(@"Failure: %@", error);
@@ -146,11 +150,9 @@
 #pragma mark - UITapGestureRecognizer
 
 - (void)gestureHandler:(UIGestureRecognizer *)gestureRecognizer {
-    AFOAuthCredential *credential = [AFOAuthCredential retrieveCredentialWithIdentifier:SERVICE_PROVIDER_IDENTIFIER];
-    NSLog(@"%@",credential.description);
     UIViewController *rightSideVC = nil;
-
-    if (credential.accessToken == nil) {
+    
+    if (![PREFS objectForKey:USER_INFORMATION]) {
         rightSideVC = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:[NSBundle mainBundle]];
     }else {
         rightSideVC = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
@@ -186,59 +188,26 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LeftViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-
     cell.textLabel.text = self.titlesArray[indexPath.row];
-   // cell.separatorView.hidden = (indexPath.row <= 3 || indexPath.row == self.titlesArray.count-1);
-    //cell.userInteractionEnabled = (indexPath.row != 1 && indexPath.row != 3);
-    
+
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return  44.0; //(indexPath.row == 1 || indexPath.row == 3) ? 22.0 :
+    return  44.0;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    MainViewController *mainViewController = (MainViewController *)self.sideMenuController;
-//    
-//    if (indexPath.row == 0) {
-//        if ([mainViewController isLeftViewAlwaysVisibleForCurrentOrientation]) {
-//            [mainViewController showRightViewAnimated:YES completionHandler:nil];
-//        }
-//        else {
-//            [mainViewController hideLeftViewAnimated:YES completionHandler:^(void) {
-//                [mainViewController showRightViewAnimated:YES completionHandler:nil];
-//            }];
-//        }
-//    }
-//    else if (indexPath.row == 2) {
-//        UINavigationController *navigationController = (UINavigationController *)mainViewController.rootViewController;
-//        UIViewController *viewController;
-//
-//        if ([navigationController.viewControllers.firstObject isKindOfClass:[ViewController class]]) {
-//           // viewController = [OtherViewController new];
-//        }
-//        else {
-//            viewController = [ViewController new];
-//        }
-//
-//        [navigationController setViewControllers:@[viewController]];
-//
-//        [mainViewController hideLeftViewAnimated:YES completionHandler:nil];
-//    }
-//    else {
+    // New controller
+    UIViewController *viewController = [UIViewController new];
+    viewController.view.backgroundColor = [UIColor whiteColor];
+    viewController.title = self.titlesArray[indexPath.row];
     
-        // New controller
-        UIViewController *viewController = [UIViewController new];
-        viewController.view.backgroundColor = [UIColor whiteColor];
-        viewController.title = self.titlesArray[indexPath.row];
-    
-        UINavigationController *navigationController = (UINavigationController *)self.sideMenuController.rootViewController;
-        [navigationController pushViewController:viewController animated:YES];
-        [self.sideMenuController hideLeftViewAnimated:YES completionHandler:nil];
-    //}
+    UINavigationController *navigationController = (UINavigationController *)self.sideMenuController.rootViewController;
+    [navigationController pushViewController:viewController animated:YES];
+    [self.sideMenuController hideLeftViewAnimated:YES completionHandler:nil];
 }
 
 @end

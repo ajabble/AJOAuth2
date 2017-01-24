@@ -24,6 +24,8 @@
 
 @implementation LoginViewController
 
+#pragma mark View-Life Cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -91,9 +93,9 @@
     }
     
     if ([Helper isConnected])
-        [self getAccessToken];
+    [self getAccessToken];
     else
-       [SVProgressHUD showErrorWithStatus:@"No internet connectivity"];
+    [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"NO_INTERNET_CONNECTIVITY"]];
     
     
     //    if ([Helper validateEmail:_emailTextfield.text]) {
@@ -110,34 +112,51 @@
     [self.navigationController pushViewController:forgotPasswordVC animated:YES];
 }
 
+#pragma mark - Access Token with API
 - (void)getAccessToken {
     [SVProgressHUD show];
+    
     // get access token, refresh token, expiration time
     AFOAuth2Manager *OAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URI] clientID:CLIENT_ID secret:SECRET_KEY];
     [OAuth2Manager authenticateUsingOAuthWithURLString:GET_TOKEN_API_NAME username:_emailTextfield.text password:_passwordTextfield.text scope:@""success:^(AFOAuthCredential *credential) {
         NSLog(@"Token: %@", credential.description);
         dispatch_async(dispatch_get_main_queue(), ^{
-            [SVProgressHUD showSuccessWithStatus:@"Login successfully!"];
-            [SVProgressHUD dismiss];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillAppearNotification object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
+            [SVProgressHUD showSuccessWithStatus:[MCLocalization stringForKey:@"LOGIN_SUCCESS_MSG"]];
         });
         
         // Store credential
         [AFOAuthCredential storeCredential:credential withIdentifier:SERVICE_PROVIDER_IDENTIFIER];
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
-    failure:^(NSError *error) {
-            [SVProgressHUD showErrorWithStatus:@"Failed with Error"];
-            NSLog(@"Error: %@", error.description);
+        User *user = [[User alloc] initWithCredentials:credential withInfo:nil];
+        NSLog(@"%@", user.description);
+       
+        NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:user];
+        [PREFS setObject:myEncodedObject forKey:USER_INFORMATION];
+
+    } failure:^(NSError *error) {
+        [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"ERROR_MSG"]];
+        NSLog(@"Error: %@", error.description);
     }];
+}
+
+- (void)handleNotification:(NSNotification *)notification {
+    NSLog(@"Notification received: %@", notification.name);
+    NSLog(@"Status user info key: %@", notification.userInfo[SVProgressHUDStatusUserInfoKey]);
+    
+    if([notification.name isEqualToString:SVProgressHUDWillDisappearNotification]) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:SVProgressHUDWillDisappearNotification object:nil];
+    }
 }
 
 #pragma mark UITextfield
 
 - (void)textFieldDidEndEditing:(JJMaterialTextfield *)textField {
     if (textField.text.length == 0)
-      [textField showError];
+    [textField showError];
     else
-       [textField hideError];
+    [textField hideError];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -145,7 +164,8 @@
     if (!view)
        [textField resignFirstResponder];
     else
-       [view becomeFirstResponder];
+      [view becomeFirstResponder];
+    
     return YES;
 }
 

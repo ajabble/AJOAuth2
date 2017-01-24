@@ -24,6 +24,8 @@
 
 @implementation SignupViewController
 
+#pragma mark View-Life Cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -150,6 +152,8 @@
     
     return YES;
 }
+
+#pragma mark DateTimePicker
 
 - (void)updateTextField:(UIDatePicker *)sender {
     NSDateFormatter *objDateFormatter = [[NSDateFormatter alloc] init];

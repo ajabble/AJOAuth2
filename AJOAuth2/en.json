@@ -18,5 +18,8 @@
     "last_name_placeholder": "Last Name",
     "display_name_placeholder": "Display Name",
     "dob_placeholder": "DOB",
-    "profile_navigation_title": "Profile"
+    "profile_navigation_title": "My Account",
+    "NO_INTERNET_CONNECTIVITY": "No internet connectivity",
+    "LOGIN_SUCCESS_MSG": "Login successfully!",
+    "ERROR_MSG": "Failed with Error"
 }

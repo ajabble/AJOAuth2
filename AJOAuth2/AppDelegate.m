@@ -57,12 +57,6 @@
     
     LGSideMenuController *sideMenuController = [LGSideMenuController sideMenuControllerWithRootViewController:navigationController leftViewController:leftViewController rightViewController:nil];
     
-    //    sideMenuController.leftViewWidth = 250.0;
-    //    sideMenuController.leftViewPresentationStyle = LGSideMenuPresentationStyleScaleFromBig;
-    //    sideMenuController.leftViewBackgroundImage = [UIImage imageNamed:@"imageLeft"];
-    //    sideMenuController.leftViewBackgroundColor = [UIColor colorWithRed:0.5 green:0.6 blue:0.5 alpha:0.9];
-    //    sideMenuController.rootViewCoverColorForLeftView = [UIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:0.05];
-    
     // Left hand side view
     sideMenuController.leftViewWidth = 280.0; // width of the left drawer
     sideMenuController.leftViewBackgroundImage = [UIImage imageNamed:@"imageLeft"]; // bg image

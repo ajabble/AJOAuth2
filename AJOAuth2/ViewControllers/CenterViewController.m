@@ -13,6 +13,8 @@
 
 @implementation CenterViewController
 
+#pragma mark View-Life Cycle
+
 - (id)init {
     self = [super init];
     if (self) {

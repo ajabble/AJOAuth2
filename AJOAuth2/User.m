@@ -66,11 +66,19 @@
     return [NSString stringWithFormat:@"<%@ accessToken:\"%@\" tokenType:\"%@\" refreshToken:\"%@\" expiration:\"%@\" username:\"%@\" email address:\"%@\">", [self class], _accessToken, _tokenType, _refreshToken, _expiration, _userName, _emailAddress];
 }
 
-- (void)initWithCredentials: (AFOAuthCredential *)credential {
-    _accessToken = credential.accessToken;
-    _tokenType = credential.tokenType;
-    _refreshToken = credential.refreshToken;
-    _tokenType = credential.tokenType;
+- (id)initWithCredentials: (AFOAuthCredential *)credential withInfo:(NSArray *)infoArray {
+    if (credential !=nil) {
+        _accessToken = credential.accessToken;
+        _tokenType = credential.tokenType;
+        _refreshToken = credential.refreshToken;
+        _tokenType = credential.tokenType;
+    }
+    if (infoArray != nil) {
+        _userName = [[infoArray objectAtIndex:0] objectForKey:USERNAME];
+        _emailAddress = [[infoArray objectAtIndex:0] objectForKey:EMAIL_ADDRESS];
+    }
+    
+    return self;
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
@@ -79,6 +87,8 @@
     _tokenType = [decoder decodeObjectForKey:TOKEN_TYPE];
     _refreshToken = [decoder decodeObjectForKey:REFRESH_TOKEN];
     _expiration = [decoder decodeObjectForKey:EXPIRATION];
+    _userName = [decoder decodeObjectForKey:USERNAME];
+    _emailAddress = [decoder decodeObjectForKey:EMAIL_ADDRESS];
     
     return self;
 }
@@ -88,6 +98,8 @@
     [encoder encodeObject:_tokenType forKey:TOKEN_TYPE];
     [encoder encodeObject:_refreshToken forKey:REFRESH_TOKEN];
     [encoder encodeObject:_expiration forKey:EXPIRATION];
+    [encoder encodeObject:_userName forKey:USERNAME];
+    [encoder encodeObject:_emailAddress forKey:EMAIL_ADDRESS];
 }
 
 @end

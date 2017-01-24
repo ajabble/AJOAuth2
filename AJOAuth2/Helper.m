@@ -28,4 +28,5 @@ static SVProgressHUD *HUD;
     
     return [emailTest evaluateWithObject:candidate];
 }
+
 @end

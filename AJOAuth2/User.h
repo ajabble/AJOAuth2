@@ -19,6 +19,6 @@
 @property (nonatomic, copy) NSString *emailAddress;
 
 - (id)initWithAttributes:(NSMutableDictionary *)userDict;
-- (void)initWithCredentials: (AFOAuthCredential *)credential;
+- (id)initWithCredentials: (AFOAuthCredential *)credential withInfo:(NSArray *)infoArray;
 
 @end
