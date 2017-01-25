@@ -59,10 +59,9 @@
     [_forgotPasswordButton setTitle:[MCLocalization stringForKey:@"forgot_password_btn_title"] forState:UIControlStateNormal];
     
     if(DEV_ENV) {
-        _emailTextfield.text = @"aUser";
-        _passwordTextfield.text = @"test1test1";
+        _emailTextfield.text = @"ajabble";
+        _passwordTextfield.text = @"aj123";
     }
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -117,9 +116,12 @@
     [SVProgressHUD show];
     
     // get access token, refresh token, expiration time
-    AFOAuth2Manager *OAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URI] clientID:CLIENT_ID secret:SECRET_KEY];
-    [OAuth2Manager authenticateUsingOAuthWithURLString:GET_TOKEN_API_NAME username:_emailTextfield.text password:_passwordTextfield.text scope:@""success:^(AFOAuthCredential *credential) {
+    AFOAuth2Manager *OAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL] clientID:CLIENT_ID secret:SECRET_KEY];
+    OAuth2Manager.useHTTPBasicAuthentication = NO;
+    [OAuth2Manager authenticateUsingOAuthWithURLString:FETCH_ACCESS_TOKEN_URI username:_emailTextfield.text password:_passwordTextfield.text scope:@""success:^(AFOAuthCredential *credential) {
         NSLog(@"Token: %@", credential.description);
+        NSDictionary *dict = @{@"accessToken":credential.accessToken, @"refreshToken":credential.refreshToken, @"tokenType":credential.tokenType};
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillAppearNotification object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
@@ -128,15 +130,15 @@
         
         // Store credential
         [AFOAuthCredential storeCredential:credential withIdentifier:SERVICE_PROVIDER_IDENTIFIER];
-        User *user = [[User alloc] initWithCredentials:credential withInfo:nil];
+        User *user = [[User alloc] initWithAttributes:[dict mutableCopy]];
         NSLog(@"%@", user.description);
        
         NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:user];
         [PREFS setObject:myEncodedObject forKey:USER_INFORMATION];
 
     } failure:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"ERROR_MSG"]];
         NSLog(@"Error: %@", error.description);
+        [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"ERROR_MSG"]];
     }];
 }
 

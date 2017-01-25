@@ -11,10 +11,12 @@
 #define ACCESS_TOKEN @"accessToken"
 #define REFRESH_TOKEN @"refreshToken"
 #define TOKEN_TYPE @"tokenType"
-#define EXPIRATION @"expiration"
 
 #define USERNAME @"username"
+#define FIRST_NAME @"firstname"
+#define LAST_NAME @"lastname"
 #define EMAIL_ADDRESS @"email"
+#define DOB @"dob"
 
 @implementation User
 
@@ -44,41 +46,34 @@
             [userDict removeObjectForKey:REFRESH_TOKEN];
         }
         
-        if (userDict[EXPIRATION]) {
-            _expiration = userDict[EXPIRATION];
-            [userDict removeObjectForKey:EXPIRATION];
-        }
-        
         if (userDict[USERNAME]) {
             _userName = userDict[USERNAME];
             [userDict removeObjectForKey:USERNAME];
         }
         
+        if (userDict[FIRST_NAME]) {
+            _firstName = userDict[FIRST_NAME];
+            [userDict removeObjectForKey:FIRST_NAME];
+        }
+        if (userDict[LAST_NAME]) {
+            _lastName = userDict[LAST_NAME];
+            [userDict removeObjectForKey:LAST_NAME];
+        }
         if (userDict[EMAIL_ADDRESS]) {
             _emailAddress = userDict[EMAIL_ADDRESS];
             [userDict removeObjectForKey:EMAIL_ADDRESS];
         }
+        if (userDict[DOB]) {
+            _dob = userDict[DOB];
+            [userDict removeObjectForKey:DOB];
+        }
+        
     }
     return self;
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@ accessToken:\"%@\" tokenType:\"%@\" refreshToken:\"%@\" expiration:\"%@\" username:\"%@\" email address:\"%@\">", [self class], _accessToken, _tokenType, _refreshToken, _expiration, _userName, _emailAddress];
-}
-
-- (id)initWithCredentials: (AFOAuthCredential *)credential withInfo:(NSArray *)infoArray {
-    if (credential !=nil) {
-        _accessToken = credential.accessToken;
-        _tokenType = credential.tokenType;
-        _refreshToken = credential.refreshToken;
-        _tokenType = credential.tokenType;
-    }
-    if (infoArray != nil) {
-        _userName = [[infoArray objectAtIndex:0] objectForKey:USERNAME];
-        _emailAddress = [[infoArray objectAtIndex:0] objectForKey:EMAIL_ADDRESS];
-    }
-    
-    return self;
+    return [NSString stringWithFormat:@"<%@ accessToken:\"%@\" tokenType:\"%@\" refreshToken:\"%@\" username:\"%@\" email address:\"%@\" first name:\"%@\" last name:\"%@\" dob:\"%@\">", [self class], _accessToken, _tokenType, _refreshToken, _userName, _emailAddress, _firstName, _lastName, _dob];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
@@ -86,9 +81,11 @@
     _accessToken = [decoder decodeObjectForKey:ACCESS_TOKEN];
     _tokenType = [decoder decodeObjectForKey:TOKEN_TYPE];
     _refreshToken = [decoder decodeObjectForKey:REFRESH_TOKEN];
-    _expiration = [decoder decodeObjectForKey:EXPIRATION];
     _userName = [decoder decodeObjectForKey:USERNAME];
+    _firstName = [decoder decodeObjectForKey:FIRST_NAME];
+    _lastName = [decoder decodeObjectForKey:LAST_NAME];
     _emailAddress = [decoder decodeObjectForKey:EMAIL_ADDRESS];
+    _dob = [decoder decodeObjectForKey:DOB];
     
     return self;
 }
@@ -97,9 +94,11 @@
     [encoder encodeObject:_accessToken forKey:ACCESS_TOKEN];
     [encoder encodeObject:_tokenType forKey:TOKEN_TYPE];
     [encoder encodeObject:_refreshToken forKey:REFRESH_TOKEN];
-    [encoder encodeObject:_expiration forKey:EXPIRATION];
     [encoder encodeObject:_userName forKey:USERNAME];
+    [encoder encodeObject:_firstName forKey:FIRST_NAME];
+    [encoder encodeObject:_lastName forKey:LAST_NAME];
     [encoder encodeObject:_emailAddress forKey:EMAIL_ADDRESS];
+    [encoder encodeObject:_dob forKey:DOB];
 }
 
 @end

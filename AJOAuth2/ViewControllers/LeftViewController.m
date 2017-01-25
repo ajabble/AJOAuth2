@@ -53,9 +53,9 @@
         _emailLabel.text = [MCLocalization stringForKey:@"PERSONALIZED_SUB_TITLE_PLACEHOLDER"];
     }else {
         if ([Helper isConnected])
-        [self me];
+           [self showProfile];
         else
-        [MCLocalization stringForKey:@"NO_INTERNET_CONNECTIVITY"];
+          [MCLocalization stringForKey:@"NO_INTERNET_CONNECTIVITY"];
     }
     
     // Tap gesture added to TableHeaderView
@@ -104,29 +104,34 @@
 
 #pragma mark /ME - API
 
-- (void)me {
+- (void)showProfile {
     NSData *myObject = [PREFS objectForKey:USER_INFORMATION];
     User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
     NSLog(@"%@", user.description);
     
     // TODO: Refresh token/ Expiration time handling later on
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URI]];
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
     [manager.requestSerializer setAuthorizationHeaderFieldWithCredential:[AFOAuthCredential credentialWithOAuthToken:user.accessToken tokenType:user.tokenType]];
-    [manager GET:GET_USERS_API_NAME
+    [manager POST:SHOW_PROFILE_URI
       parameters:@{}
         progress:nil
          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
              NSLog(@"Success: %@", responseObject);
-             NSArray *jsonArray = (NSArray *)responseObject;
-             if (!jsonArray)
+             NSDictionary *jsonDict = (NSDictionary *)responseObject;
+             if (!jsonDict)
                 return;
-             if ([jsonArray isKindOfClass:[NSArray class]] == NO)
-                NSAssert(NO, @"Expected an Array, got %@", NSStringFromClass([jsonArray class]));
+             if ([jsonDict isKindOfClass:[NSDictionary class]] == NO)
+                NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([jsonDict class]));
              
+             // Adding user credential dict into response dict
+             NSDictionary *dict = @{@"accessToken":user.accessToken, @"refreshToken":user.refreshToken, @"tokenType":user.tokenType};
+             NSMutableDictionary * mutableDict = [NSMutableDictionary dictionary];
+             [mutableDict addEntriesFromDictionary:dict];
+             [mutableDict addEntriesFromDictionary:jsonDict];
+             NSLog(@"Mutable Dict: %@", mutableDict);
              
-             // User information updated with username, email address
-             AFOAuthCredential *credential = [AFOAuthCredential credentialWithOAuthToken:user.accessToken tokenType:user.tokenType];
-             User *user = [[User alloc] initWithCredentials:credential withInfo:jsonArray];
+             // User information updated with username, email address, first name, last name, dob
+             User *user = [[User alloc] initWithAttributes:mutableDict];
              NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:user];
              [PREFS setObject:myEncodedObject forKey:USER_INFORMATION];
              [PREFS synchronize];
@@ -144,6 +149,7 @@
          }
          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
              NSLog(@"Failure: %@", error);
+             NSLog(@"AFOAuthManager2: %@", manager.description);
          }];
 }
 

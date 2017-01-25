@@ -11,15 +11,17 @@
 
 #define DEV_ENV 1
 
-#define BASE_URI @"http://127.0.0.1:8000"
-#define CLIENT_ID @"2_2s4ujt4hg9s0sossks08cs0oks84kow0gkwcckocw4ccskwo4o"
-#define SECRET_KEY @"5iyuqbnubvokg800c8008s4k4ww8w88kw4sw8s4o4o000gc4wc"
+#define BASE_URL @"http://192.168.1.167/Asinha-oauth2/authoauth/web/api/"
+#define CLIENT_ID @"1_3l9u3nrrlbk0oogkokos8wog84ok0w4owwoo0cgwocck8owow0"
+#define SECRET_KEY @"4n1hjpvoe2asg08gw4c8kcso0ogwo8g8scs8ow4o4o84o44co4"
 #define SERVICE_PROVIDER_IDENTIFIER [[[UIDevice currentDevice] identifierForVendor] UUIDString]
 #define USER_INFORMATION @"UserInformation"
 
-#define GET_TOKEN_API_NAME @"/oauth/v2/token"
-#define GET_USERS_API_NAME @"/users"
-
+#define FETCH_ACCESS_TOKEN_URI @"user/access/token"
+#define CHANGE_PASSWORD_URI @"user/change/password"
+#define SHOW_PROFILE_URI @"user/profile/show"
+#define USER_REGISTER_URI @"user/register"
+#define RESET_PASSWORD_URI @"user/resetting/check/email"
 
 #define LEFT_SIDE_RESTORATION_KEY @"LeftSideViewControllerRestorationKey"
 #define CENTER_NAVIGATION_RESTORATION_KEY @"CenterNavigationControllerRestorationKey"
