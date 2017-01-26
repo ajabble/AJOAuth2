@@ -87,6 +87,7 @@
 #pragma mark Request Password API method
 
 - (void)requestPassword {
+    [SVProgressHUD show];
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
      [manager POST:REQUEST_PASSWORD_URI
        parameters:@{@"username": _emailTextfield.text}

@@ -114,7 +114,6 @@
 #pragma mark - Access Token with API
 - (void)getAccessToken {
     [SVProgressHUD show];
-    
     // get access token, refresh token, expiration time
     AFOAuth2Manager *OAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL] clientID:CLIENT_ID secret:SECRET_KEY];
     OAuth2Manager.useHTTPBasicAuthentication = NO;
@@ -135,7 +134,6 @@
        
         NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:user];
         [PREFS setObject:myEncodedObject forKey:USER_INFORMATION];
-
     } failure:^(NSError *error) {
         NSLog(@"Error: %@", error.description);
         [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"ERROR_MSG"]];

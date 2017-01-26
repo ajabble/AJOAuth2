@@ -52,10 +52,14 @@
         _usernameLabel.text = [MCLocalization stringForKey:@"PERSONALIZED_TITLE_PLACEHOLDER"];
         _emailLabel.text = [MCLocalization stringForKey:@"PERSONALIZED_SUB_TITLE_PLACEHOLDER"];
     }else {
-        if ([Helper isConnected])
-           [self showProfile];
-        else
-          [MCLocalization stringForKey:@"NO_INTERNET_CONNECTIVITY"];
+        NSData *myObject = [PREFS objectForKey:USER_INFORMATION];
+        User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
+        
+        // Username
+        _usernameLabel.text = user.userName;
+        
+        // Email Address
+        _emailLabel.text = user.emailAddress;
     }
     
     // Tap gesture added to TableHeaderView
@@ -100,57 +104,6 @@
     singleTapRecognizer.numberOfTapsRequired = 1;
     
     return singleTapRecognizer;
-}
-
-#pragma mark /ME - API
-
-- (void)showProfile {
-    NSData *myObject = [PREFS objectForKey:USER_INFORMATION];
-    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
-    NSLog(@"%@", user.description);
-    
-    // TODO: Refresh token/ Expiration time handling later on
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
-    [manager.requestSerializer setAuthorizationHeaderFieldWithCredential:[AFOAuthCredential credentialWithOAuthToken:user.accessToken tokenType:user.tokenType]];
-    [manager POST:SHOW_PROFILE_URI
-      parameters:@{}
-        progress:nil
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-             NSLog(@"Success: %@", responseObject);
-             NSDictionary *jsonDict = (NSDictionary *)responseObject;
-             if (!jsonDict)
-                return;
-             if ([jsonDict isKindOfClass:[NSDictionary class]] == NO)
-                NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([jsonDict class]));
-             
-             // Adding user credential dict into response dict
-             NSDictionary *dict = @{@"accessToken":user.accessToken, @"refreshToken":user.refreshToken, @"tokenType":user.tokenType};
-             NSMutableDictionary * mutableDict = [NSMutableDictionary dictionary];
-             [mutableDict addEntriesFromDictionary:dict];
-             [mutableDict addEntriesFromDictionary:jsonDict];
-             NSLog(@"Mutable Dict: %@", mutableDict);
-             
-             // User information updated with username, email address, first name, last name, dob
-             User *user = [[User alloc] initWithAttributes:mutableDict];
-             NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:user];
-             [PREFS setObject:myEncodedObject forKey:USER_INFORMATION];
-             [PREFS synchronize];
-             NSLog(@"%@", user.description);
-             
-             // Get user info
-             NSData *myObject = [PREFS objectForKey:USER_INFORMATION];
-             user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
-             
-             // Username
-             _usernameLabel.text = user.userName;
-             
-             // Email Address
-             _emailLabel.text = user.emailAddress;
-         }
-         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-             NSLog(@"Failure: %@", error);
-             NSLog(@"AFOAuthManager2: %@", manager.description);
-         }];
 }
 
 #pragma mark - UITapGestureRecognizer
