@@ -7,9 +7,11 @@
 //
 
 #import "ForgotPasswordViewController.h"
+#import "AFOAuth2Manager.h"
 #import "MCLocalization.h"
 #import "Constants.h"
 #import "Helper.h"
+#import "SVProgressHUD.h"
 
 @interface ForgotPasswordViewController ()
 
@@ -71,11 +73,51 @@
         [_emailTextfield showError];
         return;
     }
-    if ([Helper validateEmail:_emailTextfield.text]) {
-        [_emailTextfield hideError];
-        NSLog(@"Proceed to next!!");
-    } else {
-        [_emailTextfield showError];
+    
+    [self requestPassword];
+    
+//    if ([Helper validateEmail:_emailTextfield.text]) {
+//        [_emailTextfield hideError];
+//        NSLog(@"Proceed to next!!");
+//    } else {
+//        [_emailTextfield showError];
+//    }
+}
+
+#pragma mark Request Password API method
+
+- (void)requestPassword {
+    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
+     [manager POST:REQUEST_PASSWORD_URI
+       parameters:@{@"username": _emailTextfield.text}
+         progress:nil
+          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+              NSLog(@"Success: %@", responseObject);
+              NSDictionary *jsonDict = (NSDictionary *)responseObject;
+              if (!jsonDict)
+                  return;
+              if ([jsonDict isKindOfClass:[NSDictionary class]] == NO)
+                  NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([jsonDict class]));
+              
+              dispatch_async(dispatch_get_main_queue(), ^{
+                  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillAppearNotification object:nil];
+                  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
+                  [SVProgressHUD showSuccessWithStatus:jsonDict[@"msg"]];
+              });
+          }
+          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+              NSLog(@"Failure: %@", error);
+              [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"ERROR_MSG"]];
+          }];
+}
+
+- (void)handleNotification:(NSNotification *)notification {
+    NSLog(@"Notification received: %@", notification.name);
+    NSLog(@"Status user info key: %@", notification.userInfo[SVProgressHUDStatusUserInfoKey]);
+    
+    if([notification.name isEqualToString:SVProgressHUDWillDisappearNotification]) {
+        [self.navigationController popViewControllerAnimated:YES];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:SVProgressHUDWillDisappearNotification object:nil];
     }
 }
 
