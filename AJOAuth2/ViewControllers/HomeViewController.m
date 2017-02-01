@@ -37,6 +37,8 @@
     
     // Buttons corner radius
     _signupButton.layer.cornerRadius = _loginButton.layer.cornerRadius = BTN_CORNER_RADIUS;
+    _signupButton.layer.borderWidth = _loginButton.layer.borderWidth = 1.0f;
+    _signupButton.layer.borderColor = _loginButton.layer.borderColor = [UIColor whiteColor].CGColor;
 }
 
 #pragma mark methods
