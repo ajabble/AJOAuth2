@@ -20,6 +20,8 @@
     if (self) {
         // Center Navigation title
         self.title = [MCLocalization stringForKey:@"center_navigation_title"];
+        UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"BACK_BAR_BUTTON_ITEM_TITLE"] style:UIBarButtonItemStylePlain target:nil action:nil];
+        self.navigationItem.backBarButtonItem = backBarButtonItem;
         
         self.view.backgroundColor = [UIColor whiteColor];
         

@@ -35,6 +35,8 @@
     
     // Navigation title
     self.navigationItem.title = [MCLocalization stringForKey:@"signup_nav_title"];
+    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"BACK_BAR_BUTTON_ITEM_TITLE"] style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backBarButtonItem;
     
     // First Name Textfield
     _firstNameTextfield.placeholder = [MCLocalization stringForKey:@"first_name_placeholder"];

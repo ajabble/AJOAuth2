@@ -32,6 +32,8 @@
     
     // Navigation title
     self.navigationItem.title = [MCLocalization stringForKey:@"login_nav_title"];
+    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"BACK_BAR_BUTTON_ITEM_TITLE"] style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backBarButtonItem;
     
     // Email textfield
     _emailTextfield.placeholder = [MCLocalization stringForKey:@"email_placeholder"];

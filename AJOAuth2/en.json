@@ -21,5 +21,6 @@
     "profile_navigation_title": "My Account",
     "NO_INTERNET_CONNECTIVITY": "No internet connectivity",
     "LOGIN_SUCCESS_MSG": "Login successfully!",
-    "ERROR_MSG": "Failed with Error"
+    "ERROR_MSG": "Failed with Error",
+    "BACK_BAR_BUTTON_ITEM_TITLE": "Back"
 }

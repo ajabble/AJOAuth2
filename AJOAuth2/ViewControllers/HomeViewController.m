@@ -26,6 +26,8 @@
     
     // Navigation title
     self.navigationItem.title = [MCLocalization stringForKey:@"login_sign_up_nav_title"];
+    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"BACK_BAR_BUTTON_ITEM_TITLE"] style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backBarButtonItem;
     
     // Sign up Button title
     [_signupButton setTitle:[MCLocalization stringForKey:@"signup_btn_title"] forState:UIControlStateNormal];

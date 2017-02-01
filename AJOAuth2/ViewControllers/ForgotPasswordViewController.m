@@ -26,6 +26,8 @@
     
     // Navigation title
     self.navigationItem.title = [MCLocalization stringForKey:@"forgot_password_nav_title"];
+    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"BACK_BAR_BUTTON_ITEM_TITLE"] style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backBarButtonItem;
     
     // Email Textfield
     _emailTextfield.enableMaterialPlaceHolder = YES;
