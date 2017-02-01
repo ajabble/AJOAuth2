@@ -29,6 +29,9 @@
     UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"BACK_BAR_BUTTON_ITEM_TITLE"] style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backBarButtonItem;
     
+    // View BG Color
+    self.view.backgroundColor = VIEW_BG_COLOR;
+    
     // Email Textfield
     _emailTextfield.enableMaterialPlaceHolder = YES;
     _emailTextfield.placeholder = [MCLocalization stringForKey:@"email_placeholder"];
@@ -42,6 +45,8 @@
     // Reset Password Button title
     [_resetPasswordButton setTitle:[MCLocalization stringForKey:@"reset_password_btn_title"] forState:UIControlStateNormal];
     _resetPasswordButton.layer.cornerRadius = BTN_CORNER_RADIUS;
+    _resetPasswordButton.layer.borderWidth = BTN_BORDER_WIDTH;
+    _resetPasswordButton.layer.borderColor = BTN_BORDER_COLOR;
 }
 
 - (void)didReceiveMemoryWarning {

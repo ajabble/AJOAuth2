@@ -30,6 +30,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    // View BG Color
+    self.view.backgroundColor = VIEW_BG_COLOR;
+    
     // Navigation title
     self.navigationItem.title = [MCLocalization stringForKey:@"login_nav_title"];
     UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"BACK_BAR_BUTTON_ITEM_TITLE"] style:UIBarButtonItemStylePlain target:nil action:nil];
@@ -52,10 +55,11 @@
     _emailTextfield.enableMaterialPlaceHolder = _passwordTextfield.enableMaterialPlaceHolder = YES;
     _emailTextfield.delegate = _passwordTextfield.delegate = self;
     
-    
-    // Sign In button title
+    // Sign In button
     [_signinButton setTitle:[MCLocalization stringForKey:@"signin_btn_title"] forState:UIControlStateNormal];
     _signinButton.layer.cornerRadius = BTN_CORNER_RADIUS;
+    _signinButton.layer.borderWidth = BTN_BORDER_WIDTH;
+    _signinButton.layer.borderColor = BTN_BORDER_COLOR;
     
     // Forgot Password button title
     [_forgotPasswordButton setTitle:[MCLocalization stringForKey:@"forgot_password_btn_title"] forState:UIControlStateNormal];

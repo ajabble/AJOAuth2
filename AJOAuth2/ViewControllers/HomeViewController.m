@@ -24,6 +24,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // View BG color
+    self.view.backgroundColor = VIEW_BG_COLOR;
+    
     // Navigation title
     self.navigationItem.title = [MCLocalization stringForKey:@"login_sign_up_nav_title"];
     UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"BACK_BAR_BUTTON_ITEM_TITLE"] style:UIBarButtonItemStylePlain target:nil action:nil];
@@ -35,10 +38,10 @@
     // Login Button title
     [_loginButton setTitle:[MCLocalization stringForKey:@"login_btn_title"] forState:UIControlStateNormal];
     
-    // Buttons corner radius
+    // Button layer properties
     _signupButton.layer.cornerRadius = _loginButton.layer.cornerRadius = BTN_CORNER_RADIUS;
-    _signupButton.layer.borderWidth = _loginButton.layer.borderWidth = 1.0f;
-    _signupButton.layer.borderColor = _loginButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    _signupButton.layer.borderWidth = _loginButton.layer.borderWidth = BTN_BORDER_WIDTH;
+    _signupButton.layer.borderColor = _loginButton.layer.borderColor = BTN_BORDER_COLOR;
 }
 
 #pragma mark methods

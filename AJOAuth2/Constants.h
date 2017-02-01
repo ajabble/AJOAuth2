@@ -12,8 +12,8 @@
 #define DEV_ENV 1
 
 #define BASE_URL @"http://localhost/Asinha-oauth2/authoauth/web/api/"
-#define CLIENT_ID @"1_3l9u3nrrlbk0oogkokos8wog84ok0w4owwoo0cgwocck8owow0"
-#define SECRET_KEY @"4n1hjpvoe2asg08gw4c8kcso0ogwo8g8scs8ow4o4o84o44co4"
+#define CLIENT_ID @"1_1mgfw7skldxc44040wcocg40kowo04ss84k0sco80w88kswg8s"
+#define SECRET_KEY @"4ym9cg6dckg08ccoccc4og8o0k8wowcgc0sk8gckwwgw0gk0oo"
 #define SERVICE_PROVIDER_IDENTIFIER [[[UIDevice currentDevice] identifierForVendor] UUIDString]
 #define USER_INFORMATION @"UserInformation"
 
@@ -32,9 +32,11 @@
 
 #define ERROR_COLOR [UIColor colorWithRed:0.910 green:0.329 blue:0.271 alpha:1.000]
 #define LINE_COLOR [UIColor colorWithRed:0.482 green:0.800 blue:1.000 alpha:1.000]
-#define BTN_CORNER_RADIUS 3.0
+#define BTN_CORNER_RADIUS 3.0f
+#define BTN_BORDER_COLOR [UIColor whiteColor].CGColor
+#define BTN_BORDER_WIDTH 1.0f
 
 #define PREFS [NSUserDefaults standardUserDefaults]
-
+#define VIEW_BG_COLOR [UIColor colorWithRed:0.211 green:0.658 blue:0.913 alpha:1.000]
 
 #endif /* Constants_h */
