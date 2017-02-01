@@ -38,6 +38,9 @@
     UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"BACK_BAR_BUTTON_ITEM_TITLE"] style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backBarButtonItem;
     
+    // View BG Color
+    self.view.backgroundColor = VIEW_BG_COLOR;
+    
     // First Name Textfield
     _firstNameTextfield.placeholder = [MCLocalization stringForKey:@"first_name_placeholder"];
     _firstNameTextfield.tag = firstNamefieldTag;
@@ -81,6 +84,8 @@
     // Sign up button title
     [_signupButton setTitle:[MCLocalization stringForKey:@"signup_btn_title"] forState:UIControlStateNormal];
     _signupButton.layer.cornerRadius = BTN_CORNER_RADIUS;
+    _signupButton.layer.borderWidth = BTN_BORDER_WIDTH;
+    _signupButton.layer.borderColor = BTN_BORDER_COLOR;
 }
 
 - (void)didReceiveMemoryWarning {
