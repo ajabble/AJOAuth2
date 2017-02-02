@@ -110,7 +110,7 @@
               dispatch_async(dispatch_get_main_queue(), ^{
                   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillAppearNotification object:nil];
                   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
-                  [SVProgressHUD showSuccessWithStatus:jsonDict[@"msg"]];
+                  [SVProgressHUD showSuccessWithStatus:jsonDict[@"message"]];
               });
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

@@ -11,11 +11,14 @@
 
 #define DEV_ENV 1
 
-#define BASE_URL @"http://localhost/Asinha-oauth2/authoauth/web/api/"
-#define CLIENT_ID @"1_1mgfw7skldxc44040wcocg40kowo04ss84k0sco80w88kswg8s"
-#define SECRET_KEY @"4ym9cg6dckg08ccoccc4og8o0k8wowcgc0sk8gckwwgw0gk0oo"
+#define BASE_URL @"http://localhost/auth/web/api/v1.0/"
+#define CLIENT_ID @"1_2f2y20gltutcw8oo0cwwo0ogcgso880o048g4c40go0w0cosw8"
+#define SECRET_KEY @"60pcfpi2ig4k0408g4w0k40os44w0ows0gs0ggwsc4kwgs4g00"
+#define SCOPE @"API"
+#define EMAIL_CONFIRMATION @"0"
 #define SERVICE_PROVIDER_IDENTIFIER [[[UIDevice currentDevice] identifierForVendor] UUIDString]
-#define USER_INFORMATION @"UserInformation"
+#define USER_INFO @"UserInformation"
+#define OAUTH_INFO @"OAuthInformation"
 
 #define FETCH_ACCESS_TOKEN_URI @"user/access/token"
 #define CHANGE_PASSWORD_URI @"user/change/password"

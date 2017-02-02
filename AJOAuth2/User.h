@@ -7,12 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFOAuthCredential.h"
 
 @interface User : NSObject
-@property (nonatomic, copy) NSString *accessToken;
-@property (nonatomic, copy) NSString *refreshToken;
-@property (nonatomic, copy) NSString *tokenType;
 
 @property (nonatomic, copy) NSString *userName;
 @property (nonatomic, copy) NSString *emailAddress;

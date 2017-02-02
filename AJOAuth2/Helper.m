@@ -9,6 +9,7 @@
 #import "Helper.h"
 #import "SVProgressHUD.h"
 #import "AFNetworkReachabilityManager.h"
+#import "Constants.h"
 
 static SVProgressHUD *HUD;
 
@@ -27,6 +28,22 @@ static SVProgressHUD *HUD;
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
     
     return [emailTest evaluateWithObject:candidate];
+}
+
++ (void)oAuthInfoSaveInDefaults:(NSDictionary *)oAuthInfoDict {
+    OAuth *auth = [[OAuth alloc] initWithAttributes:[oAuthInfoDict mutableCopy]];
+    NSLog(@"%@", auth.description);
+    NSData *myOAuthEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:auth];
+    [PREFS setObject:myOAuthEncodedObject forKey:OAUTH_INFO];
+    [PREFS synchronize];
+}
+
++ (void)userInfoSaveInDefaults:(NSDictionary *)userInfoDict {
+    User *user = [[User alloc] initWithAttributes:[userInfoDict mutableCopy]];
+    NSLog(@"%@", user.description);
+    NSData *myUserEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:user];
+    [PREFS setObject:myUserEncodedObject forKey:USER_INFO];
+    [PREFS synchronize];
 }
 
 @end

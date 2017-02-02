@@ -8,10 +8,6 @@
 
 #import "User.h"
 
-#define ACCESS_TOKEN @"accessToken"
-#define REFRESH_TOKEN @"refreshToken"
-#define TOKEN_TYPE @"tokenType"
-
 #define USERNAME @"username"
 #define FIRST_NAME @"firstname"
 #define LAST_NAME @"lastname"
@@ -31,21 +27,6 @@
 
 - (id)initWithAttributes:(NSMutableDictionary *)userDict {
     if (self = [super init]) {
-        if (userDict[ACCESS_TOKEN]) {
-            _accessToken = userDict[ACCESS_TOKEN];
-            [userDict removeObjectForKey:ACCESS_TOKEN];
-        }
-        
-        if (userDict[TOKEN_TYPE]) {
-            _tokenType = userDict[TOKEN_TYPE];
-            [userDict removeObjectForKey:TOKEN_TYPE];
-        }
-        
-        if (userDict[REFRESH_TOKEN]) {
-            _refreshToken = userDict[REFRESH_TOKEN];
-            [userDict removeObjectForKey:REFRESH_TOKEN];
-        }
-        
         if (userDict[USERNAME]) {
             _userName = userDict[USERNAME];
             [userDict removeObjectForKey:USERNAME];
@@ -73,14 +54,11 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@ accessToken:\"%@\" tokenType:\"%@\" refreshToken:\"%@\" username:\"%@\" email address:\"%@\" first name:\"%@\" last name:\"%@\" dob:\"%@\">", [self class], _accessToken, _tokenType, _refreshToken, _userName, _emailAddress, _firstName, _lastName, _dob];
+    return [NSString stringWithFormat:@"<%@ username:\"%@\" email address:\"%@\" first name:\"%@\" last name:\"%@\" dob:\"%@\">", [self class], _userName, _emailAddress, _firstName, _lastName, _dob];
 }
 
 - (id)initWithCoder:(NSCoder *)decoder {
     self = [super init];
-    _accessToken = [decoder decodeObjectForKey:ACCESS_TOKEN];
-    _tokenType = [decoder decodeObjectForKey:TOKEN_TYPE];
-    _refreshToken = [decoder decodeObjectForKey:REFRESH_TOKEN];
     _userName = [decoder decodeObjectForKey:USERNAME];
     _firstName = [decoder decodeObjectForKey:FIRST_NAME];
     _lastName = [decoder decodeObjectForKey:LAST_NAME];
@@ -91,9 +69,6 @@
 }
 
 - (void)encodeWithCoder:(NSCoder *)encoder {
-    [encoder encodeObject:_accessToken forKey:ACCESS_TOKEN];
-    [encoder encodeObject:_tokenType forKey:TOKEN_TYPE];
-    [encoder encodeObject:_refreshToken forKey:REFRESH_TOKEN];
     [encoder encodeObject:_userName forKey:USERNAME];
     [encoder encodeObject:_firstName forKey:FIRST_NAME];
     [encoder encodeObject:_lastName forKey:LAST_NAME];

@@ -13,6 +13,7 @@
 #import "AFOAuth2Manager.h"
 #import "SVProgressHUD.h"
 #import "Helper.h"
+#import "OAuth.h"
 #import "User.h"
 
 #define emailTextfieldTag 1234
@@ -123,23 +124,27 @@
     // get access token, refresh token, expiration time
     AFOAuth2Manager *OAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL] clientID:CLIENT_ID secret:SECRET_KEY];
     OAuth2Manager.useHTTPBasicAuthentication = NO;
-    [OAuth2Manager authenticateUsingOAuthWithURLString:FETCH_ACCESS_TOKEN_URI username:_emailTextfield.text password:_passwordTextfield.text scope:@""success:^(AFOAuthCredential *credential) {
+    [OAuth2Manager authenticateUsingOAuthWithURLString:FETCH_ACCESS_TOKEN_URI username:_emailTextfield.text password:_passwordTextfield.text scope:SCOPE success:^(AFOAuthCredential *credential) {
         NSLog(@"Token: %@", credential.description);
-        NSDictionary *dict = @{@"accessToken":credential.accessToken, @"refreshToken":credential.refreshToken, @"tokenType":credential.tokenType};
+       
+        // Store credential
+        [AFOAuthCredential storeCredential:credential withIdentifier:SERVICE_PROVIDER_IDENTIFIER];
+        
+        // TODO: Expiration time (Pending) and reponse it actually not parse by an API
+        
+        // Oauth info stored in NSUserDefaults
+        NSDictionary *oAuthInfoDict = @{@"access_token":credential.accessToken, @"refresh_token":credential.refreshToken, @"token_type":credential.tokenType, @"scope": SCOPE};
+        [Helper oAuthInfoSaveInDefaults:oAuthInfoDict];
+        
+        // User info stored in NSUserDefaults
+        NSDictionary *userInfoDict = @{@"username": _emailTextfield.text};
+        [Helper userInfoSaveInDefaults:userInfoDict];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillAppearNotification object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
             [SVProgressHUD showSuccessWithStatus:[MCLocalization stringForKey:@"LOGIN_SUCCESS_MSG"]];
         });
-        
-        // Store credential
-        [AFOAuthCredential storeCredential:credential withIdentifier:SERVICE_PROVIDER_IDENTIFIER];
-        User *user = [[User alloc] initWithAttributes:[dict mutableCopy]];
-        NSLog(@"%@", user.description);
-       
-        NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:user];
-        [PREFS setObject:myEncodedObject forKey:USER_INFORMATION];
     } failure:^(NSError *error) {
         NSLog(@"Error: %@", error.description);
         [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"ERROR_MSG"]];

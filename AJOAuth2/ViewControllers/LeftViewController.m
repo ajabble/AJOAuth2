@@ -29,7 +29,7 @@
 - (id)init {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
-        // Forcefully stop to call table data source and delegates
+        // TODO: Forcefully stop to call table data source and delegates
         self.tableView.dataSource = nil;
         self.tableView.delegate = nil;
         
@@ -48,11 +48,11 @@
     // Table header view
     self.tableView.tableHeaderView = [self getTableHeaderView];
     
-    if (![PREFS objectForKey:USER_INFORMATION]) {
+    if (![PREFS objectForKey:USER_INFO]) {
         _usernameLabel.text = [MCLocalization stringForKey:@"PERSONALIZED_TITLE_PLACEHOLDER"];
         _emailLabel.text = [MCLocalization stringForKey:@"PERSONALIZED_SUB_TITLE_PLACEHOLDER"];
-    }else {
-        NSData *myObject = [PREFS objectForKey:USER_INFORMATION];
+    } else {
+        NSData *myObject = [PREFS objectForKey:USER_INFO];
         User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
         
         // Username
@@ -111,7 +111,7 @@
 - (void)gestureHandler:(UIGestureRecognizer *)gestureRecognizer {
     UIViewController *rightSideVC = nil;
     
-    if (![PREFS objectForKey:USER_INFORMATION]) {
+    if (![PREFS objectForKey:USER_INFO]) {
         rightSideVC = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:[NSBundle mainBundle]];
     }else {
         rightSideVC = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
