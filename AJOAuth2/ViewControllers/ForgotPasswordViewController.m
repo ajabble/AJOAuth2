@@ -96,8 +96,7 @@
 - (void)requestPassword {
     [SVProgressHUD show];
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
-     [manager POST:REQUEST_PASSWORD_URI
-       parameters:@{@"username": _emailTextfield.text}
+    [manager GET:REQUEST_PASSWORD_URI parameters:@{@"username": _emailTextfield.text}
          progress:nil
           success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               NSLog(@"Success: %@", responseObject);

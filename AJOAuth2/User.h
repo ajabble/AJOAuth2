@@ -14,7 +14,7 @@
 @property (nonatomic, copy) NSString *emailAddress;
 @property (nonatomic, copy) NSString *firstName;
 @property (nonatomic, copy) NSString *lastName;
-@property (nonatomic, copy) NSDate *dob;
+@property (nonatomic, copy) NSString *dob;
 
 - (id)initWithAttributes:(NSMutableDictionary *)userDict;
 

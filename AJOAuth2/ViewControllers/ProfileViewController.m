@@ -99,8 +99,7 @@
               _fullNameLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
               
               // DOB
-              // TODO: DOB format should fix from API side
-              
+              _dobLabel.text = user.dob;
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"Failure: %@", error);

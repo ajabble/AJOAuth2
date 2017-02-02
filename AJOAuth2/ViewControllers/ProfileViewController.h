@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *fullNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *emailAddressLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dobLabel;
 
 @end
