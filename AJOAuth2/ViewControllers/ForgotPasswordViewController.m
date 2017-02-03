@@ -83,12 +83,12 @@
     
     [self requestPassword];
     
-//    if ([Helper validateEmail:_emailTextfield.text]) {
-//        [_emailTextfield hideError];
-//        NSLog(@"Proceed to next!!");
-//    } else {
-//        [_emailTextfield showError];
-//    }
+    //    if ([Helper validateEmail:_emailTextfield.text]) {
+    //        [_emailTextfield hideError];
+    //        NSLog(@"Proceed to next!!");
+    //    } else {
+    //        [_emailTextfield showError];
+    //    }
 }
 
 #pragma mark Request Password API method
@@ -97,25 +97,46 @@
     [SVProgressHUD show];
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
     [manager GET:REQUEST_PASSWORD_URI parameters:@{@"username": _emailTextfield.text}
-         progress:nil
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              NSLog(@"Success: %@", responseObject);
-              NSDictionary *jsonDict = (NSDictionary *)responseObject;
-              if (!jsonDict)
-                  return;
-              if ([jsonDict isKindOfClass:[NSDictionary class]] == NO)
-                  NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([jsonDict class]));
-              
-              dispatch_async(dispatch_get_main_queue(), ^{
-                  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillAppearNotification object:nil];
-                  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
-                  [SVProgressHUD showSuccessWithStatus:jsonDict[@"message"]];
-              });
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              NSLog(@"Failure: %@", error);
-              [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"ERROR_MSG"]];
-          }];
+        progress:nil
+         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+             NSLog(@"Success: %@", responseObject);
+             NSDictionary *jsonDict = (NSDictionary *)responseObject;
+             if (!jsonDict)
+                 return;
+             if ([jsonDict isKindOfClass:[NSDictionary class]] == NO)
+                 NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([jsonDict class]));
+             
+             NSInteger statusCode = [jsonDict[@"code"] integerValue];
+             if (statusCode == SUCCESS_CODE) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillAppearNotification object:nil];
+                     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
+                     [SVProgressHUD showSuccessWithStatus:jsonDict[@"show_message"]];
+                 });
+             }
+         }
+         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+             NSLog(@"Failure: %@", error);
+             
+             id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+             
+             NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
+             if (!errorJsonDict)
+                 return;
+             if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
+                 NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
+             
+             NSLog(@"%@",errorJsonDict.description);
+             
+             NSInteger statusCode = [errorJsonDict[@"code"] integerValue];
+             if (statusCode == BAD_REQUEST_CODE) {
+                 [SVProgressHUD showErrorWithStatus:errorJsonDict[@"show_message"]];
+                 return;
+             }else if (statusCode == INTERNAL_SERVER_ERROR_CODE) {
+                 NSLog(@"Error Code: %zd; ErrorDescription: %@", statusCode, errorJsonDict[@"error_description"]);
+             }
+             [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"ERROR_MSG"]];
+         }];
 }
 
 - (void)handleNotification:(NSNotification *)notification {

@@ -202,25 +202,45 @@
                   return;
               if ([jsonDict isKindOfClass:[NSDictionary class]] == NO)
                   NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([jsonDict class]));
-             
-              // TODO: Expiration time (Pending)
-    
-              // Oauth info stored in NSUserDefaults
-              NSDictionary *oAuthInfoDict = @{@"access_token":jsonDict[@"oauth"][@"access_token"], @"refresh_token":jsonDict[@"oauth"][@"refresh_token"], @"token_type":jsonDict[@"oauth"][@"token_type"], @"scope": SCOPE};
-              [Helper oAuthInfoSaveInDefaults:oAuthInfoDict];
               
-              // User info stored in NSUserDefaults
-              NSDictionary *userInfoDict = @{@"username": _displayNameTextfield.text, @"email": _emailTextfield.text};
-              [Helper userInfoSaveInDefaults:userInfoDict];
-              
-              dispatch_async(dispatch_get_main_queue(), ^{
-                  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillAppearNotification object:nil];
-                  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
-                  [SVProgressHUD showSuccessWithStatus:jsonDict[@"message"]];
-              });
+              NSInteger statusCode = [jsonDict[@"code"] integerValue];
+              if (statusCode == SUCCESS_CODE) {
+                  // TODO: Expiration time (Pending)
+                  
+                  // Oauth info stored in NSUserDefaults
+                  NSDictionary *oAuthInfoDict = @{@"access_token":jsonDict[@"oauth"][@"access_token"], @"refresh_token":jsonDict[@"oauth"][@"refresh_token"], @"token_type":jsonDict[@"oauth"][@"token_type"], @"scope": SCOPE};
+                  [Helper oAuthInfoSaveInDefaults:oAuthInfoDict];
+                  
+                  // User info stored in NSUserDefaults
+                  NSDictionary *userInfoDict = @{@"username": _displayNameTextfield.text, @"email": _emailTextfield.text};
+                  [Helper userInfoSaveInDefaults:userInfoDict];
+                  
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillAppearNotification object:nil];
+                      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
+                      [SVProgressHUD showSuccessWithStatus:jsonDict[@"show_message"]];
+                  });
+              }
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"Failure: %@", error);
+              id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+              
+              NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
+              if (!errorJsonDict)
+                  return;
+              if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
+                  NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
+              
+              NSLog(@"%@",errorJsonDict.description);
+              
+              NSInteger statusCode = [errorJsonDict[@"code"] integerValue];
+              if (statusCode == BAD_REQUEST_CODE) {
+                  [SVProgressHUD showErrorWithStatus:errorJsonDict[@"show_message"]];
+                  return;
+              }else if (statusCode == INTERNAL_SERVER_ERROR_CODE) {
+                  NSLog(@"Error Code: %zd; ErrorDescription: %@", statusCode, errorJsonDict[@"error_description"]);
+              }
               [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"ERROR_MSG"]];
           }];
 }

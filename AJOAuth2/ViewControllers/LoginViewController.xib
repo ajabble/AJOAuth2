@@ -24,7 +24,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zwH-bK-9UY">
-                    <rect key="frame" x="20" y="195" width="280" height="30"/>
+                    <rect key="frame" x="20" y="240" width="280" height="30"/>
                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <state key="normal" title="Button"/>
                     <connections>
@@ -32,7 +32,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RRY-tk-tHy">
-                    <rect key="frame" x="60" y="242" width="200" height="30"/>
+                    <rect key="frame" x="60" y="300" width="200" height="30"/>
                     <state key="normal" title="Button">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -41,7 +41,10 @@
                     </connections>
                 </button>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yba-Fd-zNp" customClass="JJMaterialTextfield">
-                    <rect key="frame" x="20" y="110" width="280" height="17"/>
+                    <rect key="frame" x="20" y="110" width="280" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="Qkh-bN-Wmt"/>
+                    </constraints>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
@@ -50,7 +53,10 @@
                     </connections>
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rxD-Wv-gEc" customClass="JJMaterialTextfield">
-                    <rect key="frame" x="20" y="147" width="280" height="17"/>
+                    <rect key="frame" x="20" y="170" width="280" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="eeK-gp-Mkc"/>
+                    </constraints>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
@@ -63,16 +69,16 @@
             <constraints>
                 <constraint firstItem="zwH-bK-9UY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="2Ee-xA-4c7"/>
                 <constraint firstAttribute="trailing" secondItem="rxD-Wv-gEc" secondAttribute="trailing" constant="20" id="BQ4-N0-7kZ"/>
-                <constraint firstItem="rxD-Wv-gEc" firstAttribute="top" secondItem="yba-Fd-zNp" secondAttribute="bottom" constant="20" id="CNd-Km-Rmc"/>
+                <constraint firstItem="rxD-Wv-gEc" firstAttribute="top" secondItem="yba-Fd-zNp" secondAttribute="bottom" constant="30" id="CNd-Km-Rmc"/>
                 <constraint firstItem="yba-Fd-zNp" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="110" id="RXp-YB-X1T"/>
                 <constraint firstAttribute="trailing" secondItem="zwH-bK-9UY" secondAttribute="trailing" constant="20" id="SZ3-B9-ieF"/>
                 <constraint firstAttribute="trailing" secondItem="yba-Fd-zNp" secondAttribute="trailing" constant="20" id="ShR-LI-0k9"/>
                 <constraint firstAttribute="trailing" secondItem="RRY-tk-tHy" secondAttribute="trailing" constant="60" id="UJz-hb-KXA"/>
-                <constraint firstItem="RRY-tk-tHy" firstAttribute="top" secondItem="zwH-bK-9UY" secondAttribute="bottom" constant="17" id="bdz-uX-U1u"/>
+                <constraint firstItem="RRY-tk-tHy" firstAttribute="top" secondItem="zwH-bK-9UY" secondAttribute="bottom" constant="30" id="bdz-uX-U1u"/>
                 <constraint firstItem="rxD-Wv-gEc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="bpE-D4-P4F"/>
                 <constraint firstItem="yba-Fd-zNp" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="hd6-UG-LTj"/>
                 <constraint firstItem="RRY-tk-tHy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="60" id="nOJ-IJ-Oc2"/>
-                <constraint firstItem="zwH-bK-9UY" firstAttribute="top" secondItem="rxD-Wv-gEc" secondAttribute="bottom" constant="31" id="xA1-Be-Tma"/>
+                <constraint firstItem="zwH-bK-9UY" firstAttribute="top" secondItem="rxD-Wv-gEc" secondAttribute="bottom" constant="40" id="xA1-Be-Tma"/>
             </constraints>
         </view>
     </objects>

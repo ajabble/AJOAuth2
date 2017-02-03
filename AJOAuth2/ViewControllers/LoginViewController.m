@@ -147,6 +147,24 @@
         });
     } failure:^(NSError *error) {
         NSLog(@"Error: %@", error.description);
+        
+        id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+        
+        NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
+        if (!errorJsonDict)
+            return;
+        if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
+            NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
+        
+        NSLog(@"%@",errorJsonDict.description);
+        
+        NSInteger statusCode = [errorJsonDict[@"code"] integerValue];
+        if (statusCode == BAD_REQUEST_CODE) {
+            [SVProgressHUD showErrorWithStatus:errorJsonDict[@"show_message"]];
+            return;
+        }else if (statusCode == INTERNAL_SERVER_ERROR_CODE) {
+            NSLog(@"Error Code: %zd; ErrorDescription: %@", statusCode, errorJsonDict[@"error_description"]);
+        }
         [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"ERROR_MSG"]];
     }];
 }

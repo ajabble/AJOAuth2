@@ -42,4 +42,9 @@
 #define PREFS [NSUserDefaults standardUserDefaults]
 #define VIEW_BG_COLOR [UIColor colorWithRed:0.211 green:0.658 blue:0.913 alpha:1.000]
 
+#define BAD_REQUEST_CODE 400
+#define UNAUTHORIZED_CODE 401
+#define SUCCESS_CODE 201
+#define INTERNAL_SERVER_ERROR_CODE 500
+
 #endif /* Constants_h */

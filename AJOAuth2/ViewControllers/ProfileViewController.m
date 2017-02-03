@@ -26,7 +26,7 @@
     // Do any additional setup after loading the view from its nib.
     
     self.title = [MCLocalization stringForKey:@"profile_navigation_title"];
-
+    
     // Right Bar Button Item image
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sign-out"] style:UIBarButtonItemStylePlain target:self action:@selector(signOut)];
     
@@ -46,14 +46,14 @@
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 #pragma mark /ME - API
 
 - (void)showProfile {
@@ -62,47 +62,65 @@
     NSData *myObject = [PREFS objectForKey:OAUTH_INFO];
     OAuth *auth = (OAuth *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
     NSLog(@"%@", auth.description);
-
+    
     // TODO: Refresh token/ Expiration time handling later on
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
-   [manager.requestSerializer setAuthorizationHeaderFieldWithCredential:[AFOAuthCredential credentialWithOAuthToken:auth.accessToken tokenType:auth.tokenType]];
+    [manager.requestSerializer setAuthorizationHeaderFieldWithCredential:[AFOAuthCredential credentialWithOAuthToken:auth.accessToken tokenType:auth.tokenType]];
     [manager POST:SHOW_PROFILE_URI
        parameters:@{}
          progress:nil
           success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               NSLog(@"Success: %@", responseObject);
-              [SVProgressHUD dismiss];
               NSDictionary *jsonDict = (NSDictionary *)responseObject;
               if (!jsonDict)
                   return;
               if ([jsonDict isKindOfClass:[NSDictionary class]] == NO)
                   NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([jsonDict class]));
               
-              // User information updated with username, email address, first name, last name, dob
-              User *user = [[User alloc] initWithAttributes:[jsonDict mutableCopy]];
-              NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:user];
-              [PREFS setObject:myEncodedObject forKey:USER_INFO];
-              [PREFS synchronize];
-              NSLog(@"%@", user.description);
-              
-              // Get user info
-              NSData *myObject = [PREFS objectForKey:USER_INFO];
-              user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
-              
-              // Username
-              _userNameLabel.text = [NSString stringWithFormat:@"@%@", user.userName];
-              
-              // Email Address
-              _emailAddressLabel.text = user.emailAddress;
-              
-              // Full Name
-              _fullNameLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
-              
-              // DOB
-              _dobLabel.text = user.dob;
+              NSInteger statusCode = [jsonDict[@"code"] integerValue];
+              if (statusCode == SUCCESS_CODE) {
+                  
+                  // User information updated with username, email address, first name, last name, dob
+                  User *user = [[User alloc] initWithAttributes:[jsonDict mutableCopy]];
+                  NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:user];
+                  [PREFS setObject:myEncodedObject forKey:USER_INFO];
+                  [PREFS synchronize];
+                  NSLog(@"%@", user.description);
+                  
+                  // Get user info
+                  NSData *myObject = [PREFS objectForKey:USER_INFO];
+                  user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
+                  
+                  // Username
+                  _userNameLabel.text = [NSString stringWithFormat:@"@%@", user.userName];
+                  
+                  // Email Address
+                  _emailAddressLabel.text = user.emailAddress;
+                  
+                  // Full Name
+                  _fullNameLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
+                  
+                  // DOB
+                  _dobLabel.text = user.dob;
+                  
+                  [SVProgressHUD showSuccessWithStatus:jsonDict[@"show_message"]];
+              }
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"Failure: %@", error);
+              
+              id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+              
+              NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
+              if (!errorJsonDict)
+                  return;
+              if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
+                  NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
+              
+              NSLog(@"%@",errorJsonDict.description);
+              
+              // TODO: handling later on
+              
           }];
 }
 
