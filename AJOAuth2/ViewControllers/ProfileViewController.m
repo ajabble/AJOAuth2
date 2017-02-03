@@ -63,7 +63,6 @@
     OAuth *auth = (OAuth *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
     NSLog(@"%@", auth.description);
     
-    // TODO: Refresh token/ Expiration time handling later on
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
     [manager.requestSerializer setAuthorizationHeaderFieldWithCredential:[AFOAuthCredential credentialWithOAuthToken:auth.accessToken tokenType:auth.tokenType]];
     [manager POST:SHOW_PROFILE_URI
@@ -105,21 +104,34 @@
                   
                   [SVProgressHUD showSuccessWithStatus:jsonDict[@"show_message"]];
               }
+              
+              [SVProgressHUD dismiss];
           }
           failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
               NSLog(@"Failure: %@", error);
               
-              id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+              NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
+              NSLog(@"%zd", httpResponse.statusCode);
+              [SVProgressHUD dismiss];
               
-              NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
-              if (!errorJsonDict)
-                  return;
-              if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
-                  NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
-              
-              NSLog(@"%@",errorJsonDict.description);
-              
-              // TODO: handling later on
+              // TODO: handling later on with refresh token
+              if (httpResponse.statusCode == UNAUTHORIZED_CODE) {
+                  id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+                  
+                  NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
+                  if (!errorJsonDict)
+                      return;
+                  if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
+                      NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
+                  
+                  NSLog(@"%@",errorJsonDict.description);
+                  
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillAppearNotification object:nil];
+                      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
+                      [SVProgressHUD showSuccessWithStatus:[MCLocalization stringForKey:@"LOGOUT_MSG"]];
+                  });
+              }
               
           }];
 }
@@ -136,4 +148,13 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)handleNotification:(NSNotification *)notification {
+    NSLog(@"Notification received: %@", notification.name);
+    NSLog(@"Status user info key: %@", notification.userInfo[SVProgressHUDStatusUserInfoKey]);
+    
+    if([notification.name isEqualToString:SVProgressHUDWillDisappearNotification]) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:SVProgressHUDWillDisappearNotification object:nil];
+        [self signOut];
+    }
+}
 @end

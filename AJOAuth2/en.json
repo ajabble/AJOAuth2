@@ -22,5 +22,6 @@
     "NO_INTERNET_CONNECTIVITY": "No internet connectivity",
     "LOGIN_SUCCESS_MSG": "Login successfully!",
     "ERROR_MSG": "Failed with Error",
-    "BACK_BAR_BUTTON_ITEM_TITLE": "Back"
+    "BACK_BAR_BUTTON_ITEM_TITLE": "Back",
+    "LOGOUT_MSG": "For some reasons we have been logged out the user. Please try with login again."
 }
