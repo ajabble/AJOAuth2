@@ -28,7 +28,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="oVy-Vi-eXs"/>
                     </constraints>
-                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
@@ -37,7 +37,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="o1f-y7-dXB"/>
                     </constraints>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
@@ -46,7 +46,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="5zf-TG-1gd"/>
                     </constraints>
-                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
@@ -56,7 +56,7 @@
                         <constraint firstAttribute="height" constant="30" id="XtN-Zb-aMZ"/>
                     </constraints>
                     <state key="normal">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleColor" red="0.11389885969999999" green="0.68895354180000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="update:" destination="-1" eventType="touchUpInside" id="aVk-5Q-Orn"/>

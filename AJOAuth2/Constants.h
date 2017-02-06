@@ -38,11 +38,11 @@
 #define ERROR_COLOR [UIColor colorWithRed:0.910 green:0.329 blue:0.271 alpha:1.000]
 #define LINE_COLOR [UIColor colorWithRed:0.482 green:0.800 blue:1.000 alpha:1.000]
 #define BTN_CORNER_RADIUS 3.0f
-#define BTN_BORDER_COLOR [UIColor whiteColor].CGColor
+#define BTN_BORDER_COLOR [UIColor lightGrayColor].CGColor
 #define BTN_BORDER_WIDTH 1.0f
 
 #define PREFS [NSUserDefaults standardUserDefaults]
-#define VIEW_BG_COLOR [UIColor colorWithRed:0.211 green:0.658 blue:0.913 alpha:1.000]
+#define VIEW_BG_COLOR [UIColor whiteColor]
 
 #define BAD_REQUEST_CODE 400
 #define UNAUTHORIZED_CODE 401
