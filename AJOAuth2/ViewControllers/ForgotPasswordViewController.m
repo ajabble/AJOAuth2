@@ -41,6 +41,7 @@
     _emailTextfield.lineColor = LINE_COLOR;
     _emailTextfield.enableMaterialPlaceHolder = YES;
     _emailTextfield.delegate = self;
+    _emailTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
     
     // Reset Password Button title
     [_resetPasswordButton setTitle:[MCLocalization stringForKey:@"reset_password_btn_title"] forState:UIControlStateNormal];

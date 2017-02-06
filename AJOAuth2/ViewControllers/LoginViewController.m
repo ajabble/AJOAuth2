@@ -55,6 +55,7 @@
     _emailTextfield.lineColor = _passwordTextfield.lineColor = LINE_COLOR;
     _emailTextfield.enableMaterialPlaceHolder = _passwordTextfield.enableMaterialPlaceHolder = YES;
     _emailTextfield.delegate = _passwordTextfield.delegate = self;
+    _emailTextfield.clearButtonMode = _passwordTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
     
     // Sign In button
     [_signinButton setTitle:[MCLocalization stringForKey:@"signin_btn_title"] forState:UIControlStateNormal];

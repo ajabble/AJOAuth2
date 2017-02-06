@@ -53,6 +53,7 @@
     // Email Textfield
     _emailTextfield.placeholder = [MCLocalization stringForKey:@"email_placeholder"];
     _emailTextfield.tag = emailTextfieldTag;
+    _emailTextfield.keyboardType = UIKeyboardTypeEmailAddress;
     
     // Password Textfield
     _passwordTextfield.placeholder = [MCLocalization stringForKey:@"password_placeholder"];
@@ -70,7 +71,7 @@
     _firstNameTextfield.autocorrectionType = _lastNameTextfield.autocorrectionType = _emailTextfield.autocorrectionType = _passwordTextfield.autocorrectionType = _displayNameTextfield.autocorrectionType = UITextAutocorrectionTypeNo;
     _firstNameTextfield.returnKeyType = _lastNameTextfield.returnKeyType = _emailTextfield.returnKeyType = _passwordTextfield.returnKeyType = UIReturnKeyNext;
     _displayNameTextfield.returnKeyType = UIReturnKeyDone;
-    
+    _firstNameTextfield.clearButtonMode = _lastNameTextfield.clearButtonMode = _emailTextfield.clearButtonMode = _passwordTextfield.clearButtonMode = _displayNameTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
     
     // DOB - UIPickerView added as input view of UITextfield
     _dobTextfield.placeholder = [MCLocalization stringForKey:@"dob_placeholder"];

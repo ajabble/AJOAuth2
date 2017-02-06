@@ -40,6 +40,10 @@
     
     // image
     _imageView.image = [UIImage imageNamed:@"circle-user"];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
     if ([Helper isConnected])
         [self showProfile];

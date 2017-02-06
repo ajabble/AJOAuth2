@@ -32,5 +32,6 @@
     "passwords_donot_match_error": "New and Confirm passwords donot match.",
     "sign_out":"Sign out",
     "cancel_button_title": "Cancel",
-    "sign_out_prompt_title": "Are you sure you want to sign out from the application?"
+    "sign_out_prompt_title": "Are you sure you want to sign out from the application?",
+    "update_btn_title": "Update"
 }
