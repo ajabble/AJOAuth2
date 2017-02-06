@@ -81,7 +81,10 @@
         return;
     }
     
-    [self requestPassword];
+    if ([Helper isConnected])
+        [self requestPassword];
+    else
+        [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"NO_INTERNET_CONNECTIVITY"]];
     
     //    if ([Helper validateEmail:_emailTextfield.text]) {
     //        [_emailTextfield hideError];

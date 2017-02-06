@@ -135,7 +135,10 @@
         [_emailTextfield hideError];
         NSLog(@"Proceed to next!!");
         
-        [self registerMe];
+        if ([Helper isConnected])
+            [self registerMe];
+        else
+            [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"NO_INTERNET_CONNECTIVITY"]];
     }else {
         [_emailTextfield showError];
     }

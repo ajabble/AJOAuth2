@@ -4,7 +4,6 @@
 
 #import "LeftViewController.h"
 #import "LeftViewCell.h"
-#import "UIViewController+LGSideMenuController.h"
 #import "CenterViewController.h"
 #import "HomeViewController.h"
 #import "MCLocalization.h"
@@ -13,6 +12,7 @@
 #import "ProfileViewController.h"
 #import "Helper.h"
 #import "User.h"
+#import <LGSideMenuController/UIViewController+LGSideMenuController.h>
 
 @interface LeftViewController ()
 

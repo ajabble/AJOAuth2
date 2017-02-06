@@ -11,7 +11,7 @@
 #import "MCLocalization.h"
 #import "LoginViewController.h"
 #import "SignupViewController.h"
-#import "UIViewController+LGSideMenuController.h"
+#import <LGSideMenuController/UIViewController+LGSideMenuController.h>
 
 @interface HomeViewController ()
 

@@ -10,11 +10,11 @@
 #import "HomeViewController.h"
 #import <MCLocalization/MCLocalization.h>
 #import "Constants.h"
-#import "UIViewController+LGSideMenuController.h"
 #import "CenterViewController.h"
 #import "LeftViewController.h"
 #import "SVProgressHUD.h"
 #import "AFNetworkReachabilityManager.h"
+#import <LGSideMenuController/UIViewController+LGSideMenuController.h>
 
 @interface AppDelegate ()
 @end
