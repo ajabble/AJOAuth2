@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JJMaterialTextField.h"
+@import JJMaterialTextField;
 
 @interface ForgotPasswordViewController : UIViewController <UITextFieldDelegate>
 

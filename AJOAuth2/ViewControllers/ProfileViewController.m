@@ -126,25 +126,25 @@
               NSLog(@"%zd", httpResponse.statusCode);
               [SVProgressHUD dismiss];
               
+              id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+              
+              NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
+              if (!errorJsonDict)
+                  return;
+              if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
+                  NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
+              
               // TODO: handling later on with refresh token
               if (httpResponse.statusCode == UNAUTHORIZED_CODE) {
-                  id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
-                  
-                  NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
-                  if (!errorJsonDict)
-                      return;
-                  if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
-                      NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
-                  
                   NSLog(@"%@",errorJsonDict.description);
-                  
                   dispatch_async(dispatch_get_main_queue(), ^{
                       [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillAppearNotification object:nil];
                       [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
                       [SVProgressHUD showSuccessWithStatus:[MCLocalization stringForKey:@"sign_out_message"]];
                   });
+              }else if (httpResponse.statusCode == INTERNAL_SERVER_ERROR_CODE) {
+                  NSLog(@"Error Code: %@; ErrorDescription: %@", errorJsonDict[@"code"], errorJsonDict[@"error_description"]);
               }
-              
           }];
 }
 

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JJMaterialTextfield.h"
+@import JJMaterialTextField;
 
 @interface EditProfileViewController : UIViewController <UITextFieldDelegate>
 

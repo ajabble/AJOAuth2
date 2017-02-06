@@ -198,19 +198,20 @@
               NSLog(@"%zd", httpResponse.statusCode);
               [SVProgressHUD dismiss];
               
+              id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+              
+              NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
+              if (!errorJsonDict)
+                  return;
+              if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
+                  NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
+              
               // TODO: handling later on with refresh token
               if (httpResponse.statusCode == UNAUTHORIZED_CODE) {
-                  id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
-                  
-                  NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
-                  if (!errorJsonDict)
-                      return;
-                  if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
-                      NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
-                  
                   NSLog(@"%@",errorJsonDict.description);
+              }else if (httpResponse.statusCode == INTERNAL_SERVER_ERROR_CODE) {
+                  NSLog(@"Error Code: %@; ErrorDescription: %@", errorJsonDict[@"code"], errorJsonDict[@"error_description"]);
               }
-              
           }];
 }
 

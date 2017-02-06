@@ -164,6 +164,8 @@
                   NSLog(@"%@",errorJsonDict.description);
               } else if (httpResponse.statusCode == BAD_REQUEST_CODE) {
                   [SVProgressHUD showSuccessWithStatus:errorJsonDict[@"show_message"]];
+              }else if (httpResponse.statusCode == INTERNAL_SERVER_ERROR_CODE) {
+                  NSLog(@"Error Code: %@; ErrorDescription: %@", errorJsonDict[@"code"], errorJsonDict[@"error_description"]);
               }
               
           }];
