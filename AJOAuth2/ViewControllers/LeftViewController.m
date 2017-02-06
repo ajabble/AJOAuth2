@@ -49,8 +49,8 @@
     self.tableView.tableHeaderView = [self getTableHeaderView];
     
     if (![PREFS objectForKey:USER_INFO]) {
-        _usernameLabel.text = [MCLocalization stringForKey:@"PERSONALIZED_TITLE_PLACEHOLDER"];
-        _emailLabel.text = [MCLocalization stringForKey:@"PERSONALIZED_SUB_TITLE_PLACEHOLDER"];
+        _usernameLabel.text = [MCLocalization stringForKey:@"personalized_title_placeholder"];
+        _emailLabel.text = [MCLocalization stringForKey:@"personalized_subtitle_placeholder"];
     } else {
         NSData *myObject = [PREFS objectForKey:USER_INFO];
         User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
@@ -78,14 +78,14 @@
     
     // title
     _usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 0, 240 , 30)];
-    _usernameLabel.text = [MCLocalization stringForKey:@"PERSONALIZED_TITLE_PLACEHOLDER"];
+    _usernameLabel.text = [MCLocalization stringForKey:@"personalized_title_placeholder"];
     _usernameLabel.textColor = [UIColor whiteColor];
     _usernameLabel.font = [UIFont boldSystemFontOfSize:14.0f];
     [headerView addSubview:_usernameLabel];
     
     // Sub-title
     _emailLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 20, 240 , 30)];
-    _emailLabel.text = [MCLocalization stringForKey:@"PERSONALIZED_SUB_TITLE_PLACEHOLDER"];
+    _emailLabel.text = [MCLocalization stringForKey:@"personalized_subtitle_placeholder"];
     _emailLabel.textColor = [UIColor whiteColor];
     _emailLabel.font = [UIFont systemFontOfSize:11.0f];
     [headerView addSubview:_emailLabel];

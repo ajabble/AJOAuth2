@@ -15,6 +15,7 @@
                 <outlet property="emailAddressLabel" destination="ThD-9Q-W4X" id="IgS-PY-MtV"/>
                 <outlet property="fullNameLabel" destination="5vf-fs-R1o" id="hE2-O4-Aqr"/>
                 <outlet property="imageView" destination="Duq-kO-cCj" id="bVo-jR-hqF"/>
+                <outlet property="tableView" destination="6d0-Ru-P8f" id="kzM-hx-0Dw"/>
                 <outlet property="userNameLabel" destination="g0Z-3N-Dxu" id="n2r-Te-d51"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -79,12 +80,24 @@
                         <constraint firstAttribute="bottom" secondItem="g0Z-3N-Dxu" secondAttribute="bottom" constant="19" id="ywa-ef-hMX"/>
                     </constraints>
                 </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="6d0-Ru-P8f">
+                    <rect key="frame" x="0.0" y="164" width="320" height="404"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="aKk-VT-chf"/>
+                        <outlet property="delegate" destination="-1" id="vPP-lw-skY"/>
+                    </connections>
+                </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="6d0-Ru-P8f" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="2T6-YH-8in"/>
                 <constraint firstItem="VRi-PU-bfo" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="Fxc-lJ-Z84"/>
+                <constraint firstAttribute="trailing" secondItem="6d0-Ru-P8f" secondAttribute="trailing" id="T5F-HK-KYN"/>
                 <constraint firstItem="VRi-PU-bfo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="WE4-gP-UNc"/>
+                <constraint firstItem="6d0-Ru-P8f" firstAttribute="top" secondItem="VRi-PU-bfo" secondAttribute="bottom" id="Xp3-ib-hbc"/>
                 <constraint firstAttribute="trailing" secondItem="VRi-PU-bfo" secondAttribute="trailing" id="cs1-qL-RdV"/>
+                <constraint firstAttribute="bottom" secondItem="6d0-Ru-P8f" secondAttribute="bottom" id="xxa-Jj-WHf"/>
             </constraints>
             <point key="canvasLocation" x="8" y="-126"/>
         </view>

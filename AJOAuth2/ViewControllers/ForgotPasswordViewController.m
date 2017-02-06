@@ -26,7 +26,7 @@
     
     // Navigation title
     self.navigationItem.title = [MCLocalization stringForKey:@"forgot_password_nav_title"];
-    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"BACK_BAR_BUTTON_ITEM_TITLE"] style:UIBarButtonItemStylePlain target:nil action:nil];
+    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"back_bar_button_item_title"] style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backBarButtonItem;
     
     // View BG Color
@@ -84,7 +84,7 @@
     if ([Helper isConnected])
         [self requestPassword];
     else
-        [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"NO_INTERNET_CONNECTIVITY"]];
+        [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"no_internet_connectivity"]];
     
     //    if ([Helper validateEmail:_emailTextfield.text]) {
     //        [_emailTextfield hideError];
@@ -138,7 +138,7 @@
              }else if (statusCode == INTERNAL_SERVER_ERROR_CODE) {
                  NSLog(@"Error Code: %zd; ErrorDescription: %@", statusCode, errorJsonDict[@"error_description"]);
              }
-             [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"ERROR_MSG"]];
+             [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"error_message"]];
          }];
 }
 

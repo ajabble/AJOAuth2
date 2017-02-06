@@ -14,6 +14,8 @@
 #import "SVProgressHUD.h"
 #import "OAuth.h"
 #import "User.h"
+#import "ChangePasswordViewController.h"
+#import "EditProfileViewController.h"
 
 @interface ProfileViewController ()
 
@@ -24,11 +26,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+   
+    // Navigation title
     self.title = [MCLocalization stringForKey:@"profile_navigation_title"];
     
+    // Back bar button item title
+    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"back_bar_button_item_title"] style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backBarButtonItem;
+    
+    
     // Right Bar Button Item image
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sign-out"] style:UIBarButtonItemStylePlain target:self action:@selector(signOut)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sign-out"] style:UIBarButtonItemStylePlain target:self action:@selector(showAlertBeforeLogOut)];
     
     // image
     _imageView.image = [UIImage imageNamed:@"circle-user"];
@@ -36,7 +44,7 @@
     if ([Helper isConnected])
         [self showProfile];
     else
-        [MCLocalization stringForKey:@"NO_INTERNET_CONNECTIVITY"];
+        [MCLocalization stringForKey:@"no_internet_connectivity"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -129,14 +137,14 @@
                   dispatch_async(dispatch_get_main_queue(), ^{
                       [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillAppearNotification object:nil];
                       [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
-                      [SVProgressHUD showSuccessWithStatus:[MCLocalization stringForKey:@"LOGOUT_MSG"]];
+                      [SVProgressHUD showSuccessWithStatus:[MCLocalization stringForKey:@"sign_out_message"]];
                   });
               }
               
           }];
 }
 
-#pragma mark Sign out
+#pragma mark methods
 
 - (void)signOut {
     // Remove credentials from userdefaults as well as from AFOAuthCredential
@@ -157,4 +165,87 @@
         [self signOut];
     }
 }
+
+- (void)showAlertBeforeLogOut {
+    UIAlertController *alert = [UIAlertController
+                                 alertControllerWithTitle:[MCLocalization stringForKey:@"sign_out_prompt_title"]
+                                 message:nil
+                                 preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *yesButton = [UIAlertAction
+                                actionWithTitle:[MCLocalization stringForKey:@"sign_out"]
+                                style:UIAlertActionStyleDestructive
+                                handler:^(UIAlertAction * action) {
+                                    // Handle your yes button action here
+                                    [self signOut];
+                                }];
+    
+    UIAlertAction *cancelButton = [UIAlertAction
+                               actionWithTitle:[MCLocalization stringForKey:@"cancel_button_title"]
+                               style:UIAlertActionStyleCancel
+                               handler:^(UIAlertAction * action) {
+                                   // Handle cancelButton button
+                            }];
+    
+    [alert addAction:cancelButton];
+    [alert addAction:yesButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 3;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil)
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    
+    if (indexPath.section == 0)
+        cell.textLabel.text = [MCLocalization stringForKey:@"profile_edit_section_header_name"];
+    else if (indexPath.section == 1)
+        cell.textLabel.text = [MCLocalization stringForKey:@"change_password_section_header_name"];
+    else
+        cell.textLabel.text = [MCLocalization stringForKey:@"sign_out"];
+    
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (indexPath.section == 2) {
+        [self showAlertBeforeLogOut];
+        return;
+    }
+    
+    UIViewController *vc = nil;
+    if (indexPath.section == 0)
+        vc = [[EditProfileViewController alloc] initWithNibName:@"EditProfileViewController" bundle:[NSBundle mainBundle]];
+    else if (indexPath.section == 1)
+        vc = [[ChangePasswordViewController alloc] initWithNibName:@"ChangePasswordViewController" bundle:[NSBundle mainBundle]];
+        
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 @end

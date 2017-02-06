@@ -25,6 +25,8 @@
 #define SHOW_PROFILE_URI @"user/profile/show"
 #define USER_REGISTER_URI @"user/register"
 #define REQUEST_PASSWORD_URI @"user/resetting/request/email"
+#define CHANGE_PASSWORD_URI @"user/change/password"
+#define EDIT_PROFILE_URI @"user/profile/edit"
 
 #define LEFT_SIDE_RESTORATION_KEY @"LeftSideViewControllerRestorationKey"
 #define CENTER_NAVIGATION_RESTORATION_KEY @"CenterNavigationControllerRestorationKey"
