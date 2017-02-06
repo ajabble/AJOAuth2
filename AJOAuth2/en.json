@@ -10,6 +10,7 @@
     "forgot_password_nav_title": "Forgot Password",
     "email_placeholder": "Email",
     "password_placeholder": "Password",
+    "old_password_placeholder": "Old Password",
     "new_password_placeholder": "New Password",
     "confirm_password_placeholder": "Confirm Password",
     "signin_btn_title": "Sign In",

@@ -10,6 +10,9 @@
 #import "JJMaterialTextfield.h"
 
 @interface ChangePasswordViewController : UIViewController
+
+@property (weak, nonatomic) IBOutlet JJMaterialTextfield *oldPasswordTextfield;
+
 @property (weak, nonatomic, getter=theNewPasswordTextfield) IBOutlet JJMaterialTextfield *newPasswordTextfield;
 @property (weak, nonatomic) IBOutlet JJMaterialTextfield *confirmPasswordTextfield;
 @property (weak, nonatomic) IBOutlet UIButton *updatePasswordButton;

@@ -14,8 +14,9 @@
 #import "OAuth.h"
 #import "AFOAuth2Manager.h"
 
-#define kNewPasswordTextfieldTag 345
-#define kConfirmPasswordTextfieldTag 346
+#define kOldPasswordTextfieldTag 345
+#define kNewPasswordTextfieldTag 346
+#define kConfirmPasswordTextfieldTag 347
 
 @interface ChangePasswordViewController ()
 
@@ -33,6 +34,9 @@
     // View BG Color
     self.view.backgroundColor = VIEW_BG_COLOR;
     
+    // Old Password Textfield
+    _oldPasswordTextfield.placeholder = [MCLocalization stringForKey:@"old_password_placeholder"];
+    _oldPasswordTextfield.tag = kOldPasswordTextfieldTag;
     
     // New Password Textfield
     _newPasswordTextfield.placeholder = [MCLocalization stringForKey:@"new_password_placeholder"];
@@ -87,6 +91,10 @@
 #pragma mark IBActions
 
 - (IBAction)updatePassword:(id)sender {
+    if (_oldPasswordTextfield.text.length == 0) {
+        [_oldPasswordTextfield showError];
+        return;
+    }
     if (_newPasswordTextfield.text.length == 0) {
         [_newPasswordTextfield showError];
         return;
@@ -117,7 +125,7 @@
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
     [manager.requestSerializer setAuthorizationHeaderFieldWithCredential:[AFOAuthCredential credentialWithOAuthToken:auth.accessToken tokenType:auth.tokenType]];
     [manager POST:CHANGE_PASSWORD_URI
-       parameters:@{@"password": _newPasswordTextfield.text}
+       parameters:@{@"old_password": _oldPasswordTextfield.text, @"password": _newPasswordTextfield.text}
          progress:nil
           success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
               NSLog(@"Success: %@", responseObject);
@@ -143,17 +151,19 @@
               NSLog(@"%zd", httpResponse.statusCode);
               [SVProgressHUD dismiss];
               
+              id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+              
+              NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
+              if (!errorJsonDict)
+                  return;
+              if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
+                  NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
+              
               // TODO: handling later on with refresh token
               if (httpResponse.statusCode == UNAUTHORIZED_CODE) {
-                  id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
-                  
-                  NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
-                  if (!errorJsonDict)
-                      return;
-                  if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
-                      NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
-                  
                   NSLog(@"%@",errorJsonDict.description);
+              } else if (httpResponse.statusCode == BAD_REQUEST_CODE) {
+                  [SVProgressHUD showSuccessWithStatus:errorJsonDict[@"show_message"]];
               }
               
           }];
