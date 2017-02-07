@@ -15,12 +15,12 @@
 #import "User.h"
 #import "OAuth.h"
 
-#define firstNamefieldTag 1234
-#define lastNameTextfieldTag 1235
-#define emailTextfieldTag 1236
-#define passwordTextfieldTag 1237
-#define displayNameTextfieldTag 1238
-#define dobTextfieldTag 1239
+#define kFirstNamefieldTag 1234
+#define kLastNameTextfieldTag 1235
+#define kEmailTextfieldTag 1236
+#define kPasswordTextfieldTag 1237
+#define kDisplayNameTextfieldTag 1238
+#define kDobTextfieldTag 1239
 
 @interface SignupViewController ()
 
@@ -44,25 +44,25 @@
     
     // First Name Textfield
     _firstNameTextfield.placeholder = [MCLocalization stringForKey:@"first_name_placeholder"];
-    _firstNameTextfield.tag = firstNamefieldTag;
+    _firstNameTextfield.tag = kFirstNamefieldTag;
     
     // Last Name Textfield
     _lastNameTextfield.placeholder = [MCLocalization stringForKey:@"last_name_placeholder"];
-    _lastNameTextfield.tag = lastNameTextfieldTag;
+    _lastNameTextfield.tag = kLastNameTextfieldTag;
     
     // Email Textfield
     _emailTextfield.placeholder = [MCLocalization stringForKey:@"email_placeholder"];
-    _emailTextfield.tag = emailTextfieldTag;
+    _emailTextfield.tag = kEmailTextfieldTag;
     _emailTextfield.keyboardType = UIKeyboardTypeEmailAddress;
     
     // Password Textfield
     _passwordTextfield.placeholder = [MCLocalization stringForKey:@"password_placeholder"];
     _passwordTextfield.secureTextEntry = YES;
-    _passwordTextfield.tag = passwordTextfieldTag;
+    _passwordTextfield.tag = kPasswordTextfieldTag;
     
     // Display name Textfield
-    _displayNameTextfield.placeholder = [MCLocalization stringForKey:@"display_name_placeholder"];
-    _displayNameTextfield.tag = displayNameTextfieldTag;
+    _displayNameTextfield.placeholder = [MCLocalization stringForKey:@"user_name_placeholder"];
+    _displayNameTextfield.tag = kDobTextfieldTag;
     
     _firstNameTextfield.errorColor = _lastNameTextfield.errorColor = _emailTextfield.errorColor = _passwordTextfield.errorColor = _displayNameTextfield.errorColor = ERROR_COLOR;
     _firstNameTextfield.lineColor = _lastNameTextfield.lineColor = _emailTextfield.lineColor = _passwordTextfield.lineColor = _displayNameTextfield.lineColor =  LINE_COLOR;
@@ -73,10 +73,11 @@
     _displayNameTextfield.returnKeyType = UIReturnKeyDone;
     _firstNameTextfield.clearButtonMode = _lastNameTextfield.clearButtonMode = _emailTextfield.clearButtonMode = _passwordTextfield.clearButtonMode = _displayNameTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
     
-    // DOB - UIPickerView added as input view of UITextfield
+    // DOB Textfield
     _dobTextfield.placeholder = [MCLocalization stringForKey:@"dob_placeholder"];
-    _dobTextfield.tag = dobTextfieldTag;
+    _dobTextfield.tag = kDobTextfieldTag;
     
+    // DOB - UIPickerView added as input view of UITextfield
     datePicker = [[UIDatePicker alloc] init];
     datePicker.datePickerMode = UIDatePickerModeDate;
     [datePicker addTarget:self action:@selector(updateTextField:)
@@ -133,9 +134,7 @@
         return;
     }
     if ([Helper validateEmail:_emailTextfield.text]) {
-        [_emailTextfield hideError];
         NSLog(@"Proceed to next!!");
-        
         if ([Helper isConnected])
             [self registerMe];
         else
@@ -170,7 +169,7 @@
     return YES;
 }
 - (void)textFieldDidBeginEditing:(JJMaterialTextfield *)textField {
-    if(textField.tag == dobTextfieldTag) {
+    if(textField.tag == kDobTextfieldTag) {
         datePicker = [[UIDatePicker alloc] init];
         datePicker.datePickerMode = UIDatePickerModeDate;
         [datePicker addTarget:self action:@selector(updateTextField:)
@@ -194,7 +193,15 @@
 #pragma mark Registration API
 
 - (void)registerMe {
+    [_firstNameTextfield hideError];
+    [_lastNameTextfield hideError];
+    [_emailTextfield hideError];
+    [_passwordTextfield hideError];
+    [_displayNameTextfield hideError];
+    [_dobTextfield hideError];
+    
     [SVProgressHUD show];
+    
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
     [manager POST:USER_REGISTER_URI
        parameters:@{@"client_id": CLIENT_ID, @"client_secret": SECRET_KEY, @"username": _displayNameTextfield.text, @"password": _passwordTextfield.text, @"email": _emailTextfield.text, @"email_confirmation": EMAIL_CONFIRMATION, @"firstname": _firstNameTextfield.text, @"lastname": _lastNameTextfield.text, @"dob": _dobTextfield.text, @"scope": SCOPE}
@@ -248,6 +255,8 @@
               [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"error_message"]];
           }];
 }
+
+#pragma mark SVProgressHUD
 
 - (void)handleNotification:(NSNotification *)notification {
     NSLog(@"Notification received: %@", notification.name);

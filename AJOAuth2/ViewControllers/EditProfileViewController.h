@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet JJMaterialTextfield *lastNameTextfield;
 @property (weak, nonatomic) IBOutlet JJMaterialTextfield *dobTextfield;
 @property (weak, nonatomic) IBOutlet UIButton *updateButton;
+
 - (IBAction)update:(id)sender;
 
 @end

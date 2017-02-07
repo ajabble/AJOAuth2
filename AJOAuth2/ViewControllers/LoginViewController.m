@@ -16,8 +16,8 @@
 #import "OAuth.h"
 #import "User.h"
 
-#define emailTextfieldTag 1234
-#define passwordTextfieldTag 1235
+#define kEmailTextfieldTag 1234
+#define kPasswordTextfieldTag 1235
 
 @interface LoginViewController ()
 
@@ -40,16 +40,17 @@
     self.navigationItem.backBarButtonItem = backBarButtonItem;
     
     // Email textfield
-    _emailTextfield.placeholder = [MCLocalization stringForKey:@"email_placeholder"];
+    _emailTextfield.placeholder = [NSString stringWithFormat:@"%@ %@ %@", [MCLocalization stringForKey:@"email_placeholder"], [MCLocalization stringForKey:@"or_keyword"], [MCLocalization stringForKey:@"user_name_placeholder"]];
     _emailTextfield.returnKeyType = UIReturnKeyNext;
-    _emailTextfield.tag = emailTextfieldTag;
+    _emailTextfield.tag = kEmailTextfieldTag;
     _emailTextfield.autocorrectionType = UITextAutocorrectionTypeNo;
+    _emailTextfield.keyboardType = UIKeyboardTypeEmailAddress;
     
     // Password textfield
     _passwordTextfield.placeholder = [MCLocalization stringForKey:@"password_placeholder"];
     _passwordTextfield.secureTextEntry = YES;
     _passwordTextfield.returnKeyType = UIReturnKeyDone;
-    _passwordTextfield.tag = passwordTextfieldTag;
+    _passwordTextfield.tag = kPasswordTextfieldTag;
     
     _emailTextfield.errorColor = _passwordTextfield.errorColor = ERROR_COLOR;
     _emailTextfield.lineColor = _passwordTextfield.lineColor = LINE_COLOR;
@@ -100,18 +101,9 @@
     }
     
     if ([Helper isConnected])
-    [self getAccessToken];
+        [self getAccessToken];
     else
-    [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"no_internet_connectivity"]];
-    
-    
-    //    if ([Helper validateEmail:_emailTextfield.text]) {
-    //        [_emailTextfield hideError];
-    //        NSLog(@"Proceed to next!!");
-    //        [self getAccessToken];
-    //    }else {
-    //        [_emailTextfield showError];
-    //    }
+        [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"no_internet_connectivity"]];
 }
 
 - (IBAction)forgotPassword:(id)sender {
@@ -120,14 +112,19 @@
 }
 
 #pragma mark - Access Token with API
+
 - (void)getAccessToken {
+    [_emailTextfield hideError];
+    [_passwordTextfield hideError];
+    
     [SVProgressHUD show];
+    
     // get access token, refresh token, expiration time
     AFOAuth2Manager *OAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL] clientID:CLIENT_ID secret:SECRET_KEY];
     OAuth2Manager.useHTTPBasicAuthentication = NO;
     [OAuth2Manager authenticateUsingOAuthWithURLString:FETCH_ACCESS_TOKEN_URI username:_emailTextfield.text password:_passwordTextfield.text scope:SCOPE success:^(AFOAuthCredential *credential) {
         NSLog(@"Token: %@", credential.description);
-       
+        
         // Store credential
         [AFOAuthCredential storeCredential:credential withIdentifier:SERVICE_PROVIDER_IDENTIFIER];
         
@@ -170,6 +167,8 @@
     }];
 }
 
+#pragma mark SVProgressHUD
+
 - (void)handleNotification:(NSNotification *)notification {
     NSLog(@"Notification received: %@", notification.name);
     NSLog(@"Status user info key: %@", notification.userInfo[SVProgressHUDStatusUserInfoKey]);
@@ -184,17 +183,17 @@
 
 - (void)textFieldDidEndEditing:(JJMaterialTextfield *)textField {
     if (textField.text.length == 0)
-    [textField showError];
+        [textField showError];
     else
-    [textField hideError];
+        [textField hideError];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     UIView *view = [self.view viewWithTag:textField.tag + 1];
     if (!view)
-       [textField resignFirstResponder];
+        [textField resignFirstResponder];
     else
-      [view becomeFirstResponder];
+        [view becomeFirstResponder];
     
     return YES;
 }

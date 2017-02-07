@@ -15,9 +15,9 @@
 #import "OAuth.h"
 #import "AFOAuth2Manager.h"
 
-#define firstNamefieldTag 1234
-#define lastNameTextfieldTag 1235
-#define dobTextfieldTag 1237
+#define kFirstNamefieldTag 1234
+#define kLastNameTextfieldTag 1235
+#define kDobTextfieldTag 1237
 
 @interface EditProfileViewController () {
     UIDatePicker *datePicker;
@@ -25,6 +25,8 @@
 @end
 
 @implementation EditProfileViewController
+
+#pragma mark View-Life Cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,16 +44,16 @@
     
     // First Name Textfield
     _firstNameTextfield.placeholder = [MCLocalization stringForKey:@"first_name_placeholder"];
-    _firstNameTextfield.tag = firstNamefieldTag;
+    _firstNameTextfield.tag = kFirstNamefieldTag;
     _firstNameTextfield.text = user.firstName;
     
     // Last Name Textfield
     _lastNameTextfield.placeholder = [MCLocalization stringForKey:@"last_name_placeholder"];
-    _lastNameTextfield.tag = lastNameTextfieldTag;
+    _lastNameTextfield.tag = kLastNameTextfieldTag;
     _lastNameTextfield.text = user.lastName;
     
     _firstNameTextfield.errorColor = _lastNameTextfield.errorColor = ERROR_COLOR;
-    _firstNameTextfield.lineColor = _lastNameTextfield.lineColor  = _dobTextfield.lineColor  =  LINE_COLOR;
+    _firstNameTextfield.lineColor = _lastNameTextfield.lineColor = _dobTextfield.lineColor = LINE_COLOR;
     _firstNameTextfield.enableMaterialPlaceHolder = _lastNameTextfield.enableMaterialPlaceHolder = YES;
     _firstNameTextfield.autocorrectionType = _lastNameTextfield.autocorrectionType = UITextAutocorrectionTypeNo;
     _firstNameTextfield.returnKeyType = UIReturnKeyNext;
@@ -59,14 +61,16 @@
     _firstNameTextfield.clearButtonMode = _lastNameTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
     _firstNameTextfield.delegate = _lastNameTextfield.delegate = _dobTextfield.delegate = self;
     
-    // DOB - UIPickerView added as input view of UITextfield
+    // DOB Textfield
     _dobTextfield.placeholder = [MCLocalization stringForKey:@"dob_placeholder"];
-    _dobTextfield.tag = dobTextfieldTag;
+    _dobTextfield.tag = kDobTextfieldTag;
     
     // Convert string to date object
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM/dd/yyyy"];
     NSDate *date = [dateFormatter dateFromString:user.dob];
+    
+    // DOB - UIPickerView added as input view of UITextfield
     datePicker = [[UIDatePicker alloc] init];
     datePicker.datePickerMode = UIDatePickerModeDate;
     datePicker.date = date;
@@ -110,6 +114,8 @@
     [datePicker removeFromSuperview];
 }
 
+#pragma mark UITextfield
+
 - (BOOL)textFieldShouldReturn:(JJMaterialTextfield *)textField {
     UIView *view = [self.view viewWithTag:textField.tag + 1];
     if (!view)
@@ -121,7 +127,7 @@
 }
 
 - (void)textFieldDidBeginEditing:(JJMaterialTextfield *)textField {
-    if(textField.tag == dobTextfieldTag) {
+    if(textField.tag == kDobTextfieldTag) {
         NSData *myObject = [PREFS objectForKey:USER_INFO];
         User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
         
@@ -162,6 +168,9 @@
 
 - (void)updateProfile {
     [datePicker removeFromSuperview];
+    [_firstNameTextfield hideError];
+    [_lastNameTextfield hideError];
+    [_dobTextfield hideError];
     
     [SVProgressHUD show];
     
@@ -215,7 +224,7 @@
           }];
 }
 
-#pragma mark SVProgressHUD Notification methods
+#pragma mark SVProgressHUD
 
 - (void)handleNotification:(NSNotification *)notification {
     NSLog(@"Notification received: %@", notification.name);

@@ -19,8 +19,8 @@
 @property (weak, nonatomic) IBOutlet JJMaterialTextfield *passwordTextfield;
 @property (weak, nonatomic) IBOutlet JJMaterialTextfield *displayNameTextfield;
 @property (weak, nonatomic) IBOutlet JJMaterialTextfield *dobTextfield;
-
 @property (weak, nonatomic) IBOutlet UIButton *signupButton;
+
 - (IBAction)signup:(id)sender;
 
 @end

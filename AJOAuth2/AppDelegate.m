@@ -38,8 +38,8 @@
     
     
     // SVProgressHUD
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-    [SVProgressHUD setDefaultAnimationType:SVProgressHUDAnimationTypeNative];
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];
+    [SVProgressHUD setDefaultAnimationType:SVProgressHUDAnimationTypeFlat];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
     // Go to Drawer

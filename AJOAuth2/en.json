@@ -20,7 +20,7 @@
     "update_password_btn_title": "Update Password",
     "first_name_placeholder": "First Name",
     "last_name_placeholder": "Last Name",
-    "display_name_placeholder": "Display Name",
+    "user_name_placeholder": "Username",
     "dob_placeholder": "DOB",
     "profile_navigation_title": "My Account",
     "no_internet_connectivity": "No internet connectivity",
@@ -34,5 +34,6 @@
     "sign_out":"Sign out",
     "cancel_button_title": "Cancel",
     "sign_out_prompt_title": "Are you sure you want to sign out from the application?",
-    "update_btn_title": "Update"
+    "update_btn_title": "Update",
+    "or_keyword": "or"
 }

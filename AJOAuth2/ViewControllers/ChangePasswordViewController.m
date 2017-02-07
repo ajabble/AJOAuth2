@@ -24,6 +24,8 @@
 
 @implementation ChangePasswordViewController
 
+#pragma mark View-Life Cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -116,6 +118,10 @@
 #pragma mark API
 
 - (void)changePassword {
+    [_oldPasswordTextfield hideError];
+    [_newPasswordTextfield hideError];
+    [_confirmPasswordTextfield hideError];
+    
     [SVProgressHUD show];
     
     NSData *myObject = [PREFS objectForKey:OAUTH_INFO];
@@ -171,7 +177,7 @@
           }];
 }
 
-#pragma mark SVProgressHUD Notification methods
+#pragma mark SVProgressHUD
 
 - (void)handleNotification:(NSNotification *)notification {
     NSLog(@"Notification received: %@", notification.name);

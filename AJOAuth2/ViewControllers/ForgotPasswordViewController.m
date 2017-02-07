@@ -19,6 +19,8 @@
 
 @implementation ForgotPasswordViewController
 
+#pragma mark View-Life Cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -33,8 +35,7 @@
     self.view.backgroundColor = VIEW_BG_COLOR;
     
     // Email Textfield
-    _emailTextfield.enableMaterialPlaceHolder = YES;
-    _emailTextfield.placeholder = [MCLocalization stringForKey:@"email_placeholder"];
+    _emailTextfield.placeholder = [NSString stringWithFormat:@"%@ %@ %@", [MCLocalization stringForKey:@"email_placeholder"], [MCLocalization stringForKey:@"or_keyword"], [MCLocalization stringForKey:@"user_name_placeholder"]];
     _emailTextfield.returnKeyType = UIReturnKeyNext;
     _emailTextfield.autocorrectionType = UITextAutocorrectionTypeNo;
     _emailTextfield.errorColor = ERROR_COLOR;
@@ -42,6 +43,7 @@
     _emailTextfield.enableMaterialPlaceHolder = YES;
     _emailTextfield.delegate = self;
     _emailTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _emailTextfield.keyboardType = UIKeyboardTypeEmailAddress;
     
     // Reset Password Button title
     [_resetPasswordButton setTitle:[MCLocalization stringForKey:@"reset_password_btn_title"] forState:UIControlStateNormal];
@@ -86,18 +88,13 @@
         [self requestPassword];
     else
         [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"no_internet_connectivity"]];
-    
-    //    if ([Helper validateEmail:_emailTextfield.text]) {
-    //        [_emailTextfield hideError];
-    //        NSLog(@"Proceed to next!!");
-    //    } else {
-    //        [_emailTextfield showError];
-    //    }
 }
 
 #pragma mark Request Password API method
 
 - (void)requestPassword {
+    [_emailTextfield hideError];
+    
     [SVProgressHUD show];
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
     [manager GET:REQUEST_PASSWORD_URI parameters:@{@"username": _emailTextfield.text}
@@ -142,6 +139,8 @@
              [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"error_message"]];
          }];
 }
+
+#pragma mark SVProgressHUD
 
 - (void)handleNotification:(NSNotification *)notification {
     NSLog(@"Notification received: %@", notification.name);

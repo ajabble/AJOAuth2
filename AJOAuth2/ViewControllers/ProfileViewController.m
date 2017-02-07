@@ -160,21 +160,11 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)handleNotification:(NSNotification *)notification {
-    NSLog(@"Notification received: %@", notification.name);
-    NSLog(@"Status user info key: %@", notification.userInfo[SVProgressHUDStatusUserInfoKey]);
-    
-    if([notification.name isEqualToString:SVProgressHUDWillDisappearNotification]) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:SVProgressHUDWillDisappearNotification object:nil];
-        [self signOut];
-    }
-}
-
 - (void)showAlertBeforeLogOut {
     UIAlertController *alert = [UIAlertController
-                                 alertControllerWithTitle:[MCLocalization stringForKey:@"sign_out_prompt_title"]
-                                 message:nil
-                                 preferredStyle:UIAlertControllerStyleActionSheet];
+                                alertControllerWithTitle:[MCLocalization stringForKey:@"sign_out_prompt_title"]
+                                message:nil
+                                preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *yesButton = [UIAlertAction
                                 actionWithTitle:[MCLocalization stringForKey:@"sign_out"]
@@ -185,16 +175,28 @@
                                 }];
     
     UIAlertAction *cancelButton = [UIAlertAction
-                               actionWithTitle:[MCLocalization stringForKey:@"cancel_button_title"]
-                               style:UIAlertActionStyleCancel
-                               handler:^(UIAlertAction * action) {
-                                   // Handle cancelButton button
-                            }];
+                                   actionWithTitle:[MCLocalization stringForKey:@"cancel_button_title"]
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction * action) {
+                                       // Handle cancelButton button
+                                   }];
     
     [alert addAction:cancelButton];
     [alert addAction:yesButton];
     
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark SVProgressHUD
+
+- (void)handleNotification:(NSNotification *)notification {
+    NSLog(@"Notification received: %@", notification.name);
+    NSLog(@"Status user info key: %@", notification.userInfo[SVProgressHUDStatusUserInfoKey]);
+    
+    if([notification.name isEqualToString:SVProgressHUDWillDisappearNotification]) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:SVProgressHUDWillDisappearNotification object:nil];
+        [self signOut];
+    }
 }
 
 #pragma mark - UITableViewDataSource
