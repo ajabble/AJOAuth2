@@ -49,28 +49,19 @@
 }
 
 - (void)goToLGDrawer {
+    self.window.backgroundColor = THEME_BG_COLOR;
+    
     CenterViewController *rootViewController = [CenterViewController new];
     LeftViewController *leftViewController = [LeftViewController new];
-    //RightViewController *rightViewController = [RightViewController new];
-    
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
     
     LGSideMenuController *sideMenuController = [LGSideMenuController sideMenuControllerWithRootViewController:navigationController leftViewController:leftViewController rightViewController:nil];
     
     // Left hand side view
-    sideMenuController.leftViewWidth = 280.0; // width of the left drawer
-    sideMenuController.leftViewBackgroundImage = [UIImage imageNamed:@"imageLeft"]; // bg image
+    sideMenuController.leftViewWidth = LEFT_DRAWER_WIDTH; // width of the left drawer
     sideMenuController.leftViewSwipeGestureRange = LGSideMenuSwipeGestureRangeMake(0.0, 88.0);
     sideMenuController.leftViewPresentationStyle = LGSideMenuPresentationStyleScaleFromBig;
     sideMenuController.leftViewAnimationSpeed = 1.0; // speed of animation
-    sideMenuController.leftViewBackgroundColor = [UIColor colorWithRed:0.5 green:0.75 blue:0.5 alpha:1.0];
-    sideMenuController.leftViewBackgroundImageInitialScale = 1.5;
-    sideMenuController.leftViewInititialOffsetX = -200.0;
-    sideMenuController.leftViewInititialScale = 1.5;
-    sideMenuController.leftViewBackgroundAlpha = 1.0;
-    
-    //sideMenuController.leftViewCoverBlurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-    //sideMenuController.leftViewBackgroundImage = nil;
     
     // Root view properties (actually the one view which slides after "LEFT" click)
     sideMenuController.rootViewLayerBorderWidth = 5.0; // view border outline
@@ -81,21 +72,6 @@
     sideMenuController.rootViewCoverBlurEffectForLeftView = [UIBlurEffect effectWithStyle:UIBlurEffectStyleProminent];
     sideMenuController.rootViewCoverAlphaForLeftView = 0.1;
     
-    //sideMenuController.rightViewSwipeGestureRange = LGSideMenuSwipeGestureRangeMake(88.0, 0.0);
-    //sideMenuController.rightViewPresentationStyle = LGSideMenuPresentationStyleSlideAbove;
-    //sideMenuController.rightViewAnimationSpeed = 0.25;
-    //sideMenuController.rightViewBackgroundColor = [UIColor colorWithRed:0.75 green:0.5 blue:0.75 alpha:1.0];
-    //sideMenuController.rightViewLayerBorderWidth = 3.0;
-    //sideMenuController.rightViewLayerBorderColor = [UIColor blackColor];
-    //sideMenuController.rightViewLayerShadowRadius = 10.0;
-    
-    //sideMenuController.rootViewCoverColorForRightView = [UIColor colorWithRed:0.0 green:0.5 blue:1.0 alpha:0.3];
-    //sideMenuController.rootViewCoverBlurEffectForRightView = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    //sideMenuController.rootViewCoverAlphaForRightView = 0.9;
-    
-    
-    //    sideMenuController.rightViewWidth = 100.0;
-    //    sideMenuController.leftViewPresentationStyle = LGSideMenuPresentationStyleSlideBelow;
     self.window.rootViewController = sideMenuController;
     [self.window makeKeyAndVisible];
 }

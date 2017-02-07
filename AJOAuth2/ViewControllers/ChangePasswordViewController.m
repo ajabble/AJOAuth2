@@ -48,6 +48,12 @@
     _confirmPasswordTextfield.placeholder = [MCLocalization stringForKey:@"confirm_password_placeholder"];
     _confirmPasswordTextfield.tag = kConfirmPasswordTextfieldTag;
     
+    _oldPasswordTextfield.textColor = _newPasswordTextfield.textColor = _confirmPasswordTextfield.textColor = TEXT_LABEL_COLOR;
+    _oldPasswordTextfield.errorColor = _newPasswordTextfield.errorColor = _confirmPasswordTextfield.errorColor = ERROR_LINE_COLOR;
+    _oldPasswordTextfield.delegate = _newPasswordTextfield.delegate = _confirmPasswordTextfield.delegate = self;
+   // _oldPasswordTextfield.lineColor = _newPasswordTextfield.lineColor = _confirmPasswordTextfield.lineColor = THEME_BG_COLOR;
+    _oldPasswordTextfield.enableMaterialPlaceHolder = _newPasswordTextfield.enableMaterialPlaceHolder = _confirmPasswordTextfield.enableMaterialPlaceHolder = YES;
+    
     // Update Password Button
     [_updatePasswordButton setTitle:[MCLocalization stringForKey:@"update_password_btn_title"] forState:UIControlStateNormal];
     _updatePasswordButton.layer.cornerRadius = BTN_CORNER_RADIUS;

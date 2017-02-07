@@ -23,6 +23,8 @@
 
 @implementation ProfileViewController
 
+#pragma mark View-Life Cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -34,12 +36,14 @@
     UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"back_bar_button_item_title"] style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backBarButtonItem;
     
-    
     // Right Bar Button Item image
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sign-out"] style:UIBarButtonItemStylePlain target:self action:@selector(showAlertBeforeLogOut)];
     
     // image
     _imageView.image = [UIImage imageNamed:@"circle-user"];
+    
+    // Basic Infoview
+    self.basicInfoView.backgroundColor = THEME_BG_COLOR;
 }
 
 - (void)viewWillAppear:(BOOL)animated {

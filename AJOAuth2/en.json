@@ -35,5 +35,6 @@
     "cancel_button_title": "Cancel",
     "sign_out_prompt_title": "Are you sure you want to sign out from the application?",
     "update_btn_title": "Update",
-    "or_keyword": "or"
+    "or_keyword": "or",
+    "settings_title": "Settings"
 }

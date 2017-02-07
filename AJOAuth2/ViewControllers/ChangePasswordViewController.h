@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @import JJMaterialTextField;
 
-@interface ChangePasswordViewController : UIViewController
+@interface ChangePasswordViewController : UIViewController <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet JJMaterialTextfield *oldPasswordTextfield;
 @property (weak, nonatomic, getter=theNewPasswordTextfield) IBOutlet JJMaterialTextfield *newPasswordTextfield;

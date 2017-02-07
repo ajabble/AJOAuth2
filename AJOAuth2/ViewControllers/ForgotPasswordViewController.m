@@ -38,12 +38,13 @@
     _emailTextfield.placeholder = [NSString stringWithFormat:@"%@ %@ %@", [MCLocalization stringForKey:@"email_placeholder"], [MCLocalization stringForKey:@"or_keyword"], [MCLocalization stringForKey:@"user_name_placeholder"]];
     _emailTextfield.returnKeyType = UIReturnKeyNext;
     _emailTextfield.autocorrectionType = UITextAutocorrectionTypeNo;
-    _emailTextfield.errorColor = ERROR_COLOR;
-    _emailTextfield.lineColor = LINE_COLOR;
+    _emailTextfield.errorColor = ERROR_LINE_COLOR;
+    //_emailTextfield.lineColor = TEXT_LABEL_COLOR;
     _emailTextfield.enableMaterialPlaceHolder = YES;
     _emailTextfield.delegate = self;
     _emailTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
     _emailTextfield.keyboardType = UIKeyboardTypeEmailAddress;
+    _emailTextfield.textColor = TEXT_LABEL_COLOR;
     
     // Reset Password Button title
     [_resetPasswordButton setTitle:[MCLocalization stringForKey:@"reset_password_btn_title"] forState:UIControlStateNormal];

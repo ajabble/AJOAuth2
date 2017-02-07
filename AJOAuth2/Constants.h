@@ -28,15 +28,12 @@
 #define CHANGE_PASSWORD_URI @"user/change/password"
 #define EDIT_PROFILE_URI @"user/profile/edit"
 
-#define LEFT_SIDE_RESTORATION_KEY @"LeftSideViewControllerRestorationKey"
-#define CENTER_NAVIGATION_RESTORATION_KEY @"CenterNavigationControllerRestorationKey"
-#define LEFT_NAVIGATION_RESTORATION_KEY @"LeftNavigationControllerRestorationKey"
-#define MM_DRAWER_RESTORATION_KEY @"MMDrawerRestorationKey"
 
-#define LEFT_DRAWER_WIDTH 240
+#define LEFT_DRAWER_WIDTH 280
+#define ERROR_LINE_COLOR [UIColor colorWithRed:0.910 green:0.329 blue:0.271 alpha:1.000]
+#define THEME_BG_COLOR [UIColor colorWithRed:0.113 green:0.792 blue:1.000 alpha:1.000]
+#define TEXT_LABEL_COLOR [UIColor colorWithRed:0.113 green:0.792 blue:1.000 alpha:1.000]
 
-#define ERROR_COLOR [UIColor colorWithRed:0.910 green:0.329 blue:0.271 alpha:1.000]
-#define LINE_COLOR [UIColor colorWithRed:0.482 green:0.800 blue:1.000 alpha:1.000]
 #define BTN_CORNER_RADIUS 3.0f
 #define BTN_BORDER_COLOR [UIColor lightGrayColor].CGColor
 #define BTN_BORDER_WIDTH 1.0f

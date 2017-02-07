@@ -52,15 +52,6 @@
     _lastNameTextfield.tag = kLastNameTextfieldTag;
     _lastNameTextfield.text = user.lastName;
     
-    _firstNameTextfield.errorColor = _lastNameTextfield.errorColor = ERROR_COLOR;
-    _firstNameTextfield.lineColor = _lastNameTextfield.lineColor = _dobTextfield.lineColor = LINE_COLOR;
-    _firstNameTextfield.enableMaterialPlaceHolder = _lastNameTextfield.enableMaterialPlaceHolder = YES;
-    _firstNameTextfield.autocorrectionType = _lastNameTextfield.autocorrectionType = UITextAutocorrectionTypeNo;
-    _firstNameTextfield.returnKeyType = UIReturnKeyNext;
-    _lastNameTextfield.returnKeyType = UIReturnKeyDone;
-    _firstNameTextfield.clearButtonMode = _lastNameTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
-    _firstNameTextfield.delegate = _lastNameTextfield.delegate = _dobTextfield.delegate = self;
-    
     // DOB Textfield
     _dobTextfield.placeholder = [MCLocalization stringForKey:@"dob_placeholder"];
     _dobTextfield.tag = kDobTextfieldTag;
@@ -80,6 +71,16 @@
     
     _dobTextfield.text = [dateFormatter stringFromDate:datePicker.date];
     
+    _firstNameTextfield.errorColor = _lastNameTextfield.errorColor = ERROR_LINE_COLOR;
+    //_firstNameTextfield.lineColor = _lastNameTextfield.lineColor = _dobTextfield.lineColor = THEME_BG_COLOR;
+    _firstNameTextfield.enableMaterialPlaceHolder = _lastNameTextfield.enableMaterialPlaceHolder = YES;
+    _firstNameTextfield.autocorrectionType = _lastNameTextfield.autocorrectionType = UITextAutocorrectionTypeNo;
+    _firstNameTextfield.returnKeyType = UIReturnKeyNext;
+    _lastNameTextfield.returnKeyType = UIReturnKeyDone;
+    _firstNameTextfield.clearButtonMode = _lastNameTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _firstNameTextfield.delegate = _lastNameTextfield.delegate = _dobTextfield.delegate = self;
+    _firstNameTextfield.textColor = _lastNameTextfield.textColor = _dobTextfield.textColor = TEXT_LABEL_COLOR;
+ 
     // Update button title
     [_updateButton setTitle:[MCLocalization stringForKey:@"update_btn_title"] forState:UIControlStateNormal];
     _updateButton.layer.cornerRadius = BTN_CORNER_RADIUS;
@@ -140,6 +141,13 @@
              forControlEvents:UIControlEventValueChanged];
         [_dobTextfield setInputView:datePicker];
     }
+}
+
+- (void)textFieldDidEndEditing:(JJMaterialTextfield *)textField {
+    if (textField.text.length == 0)
+        [textField showError];
+    else
+        [textField hideError];
 }
 
 #pragma mark IBActions

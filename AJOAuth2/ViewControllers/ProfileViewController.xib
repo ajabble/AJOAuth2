@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileViewController">
             <connections>
+                <outlet property="basicInfoView" destination="VRi-PU-bfo" id="wl1-AY-8ap"/>
                 <outlet property="dobLabel" destination="ZxD-y5-VOC" id="zHi-h8-uNd"/>
                 <outlet property="emailAddressLabel" destination="ThD-9Q-W4X" id="IgS-PY-MtV"/>
                 <outlet property="fullNameLabel" destination="5vf-fs-R1o" id="hE2-O4-Aqr"/>
@@ -60,7 +61,6 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.11389885974117409" green="0.68895354176547041" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="100" id="3z7-I8-HFR"/>
                         <constraint firstAttribute="trailing" secondItem="5vf-fs-R1o" secondAttribute="trailing" constant="20" id="7PX-9s-utA"/>
