@@ -18,9 +18,8 @@
 #define EMAIL_CONFIRMATION @"0"
 #define API_VERSION @"1.0"
 #define ACCEPT_VERSION_HEADER_FIELD_KEY @"X-Accept-Version" 
-#define SERVICE_PROVIDER_IDENTIFIER [[[UIDevice currentDevice] identifierForVendor] UUIDString]
+#define CREDENTIAL_IDENTIFIER [[[UIDevice currentDevice] identifierForVendor] UUIDString]
 #define USER_INFO @"UserInformation"
-#define OAUTH_INFO @"OAuthInformation"
 
 #define FETCH_ACCESS_TOKEN_URI @"user/access/token"
 #define CHANGE_PASSWORD_URI @"user/change/password"

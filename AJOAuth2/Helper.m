@@ -30,14 +30,6 @@ static SVProgressHUD *HUD;
     return [emailTest evaluateWithObject:candidate];
 }
 
-+ (void)oAuthInfoSaveInDefaults:(NSDictionary *)oAuthInfoDict {
-    OAuth *auth = [[OAuth alloc] initWithAttributes:[oAuthInfoDict mutableCopy]];
-    NSLog(@"%@", auth.description);
-    NSData *myOAuthEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:auth];
-    [PREFS setObject:myOAuthEncodedObject forKey:OAUTH_INFO];
-    [PREFS synchronize];
-}
-
 + (void)userInfoSaveInDefaults:(NSDictionary *)userInfoDict {
     User *user = [[User alloc] initWithAttributes:[userInfoDict mutableCopy]];
     NSLog(@"%@", user.description);

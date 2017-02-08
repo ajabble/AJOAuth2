@@ -12,7 +12,6 @@
 #import "Constants.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
-#import "OAuth.h"
 #import "User.h"
 #import "ChangePasswordViewController.h"
 #import "EditProfileViewController.h"
@@ -75,12 +74,9 @@
 - (void)showProfile {
     [SVProgressHUD show];
     
-    NSData *myObject = [PREFS objectForKey:OAUTH_INFO];
-    OAuth *auth = (OAuth *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
-    NSLog(@"%@", auth.description);
-    
+    AFOAuthCredential *credential = [AFOAuthCredential retrieveCredentialWithIdentifier:CREDENTIAL_IDENTIFIER];
     AFOAuth2Manager *oAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
-    [oAuth2Manager.requestSerializer setAuthorizationHeaderFieldWithCredential:[AFOAuthCredential credentialWithOAuthToken:auth.accessToken tokenType:auth.tokenType]];
+    [oAuth2Manager.requestSerializer setAuthorizationHeaderFieldWithCredential:credential];
     [oAuth2Manager.requestSerializer setValue:API_VERSION forHTTPHeaderField:ACCEPT_VERSION_HEADER_FIELD_KEY];
     [oAuth2Manager POST:SHOW_PROFILE_URI
        parameters:@{}
@@ -156,10 +152,9 @@
 #pragma mark methods
 
 - (void)signOut {
-    // Remove credentials from userdefaults as well as from AFOAuthCredential
-    [AFOAuthCredential deleteCredentialWithIdentifier:SERVICE_PROVIDER_IDENTIFIER];
+    // Remove credentials from NSUserDefaults as well as from AFOAuthCredential
+    [AFOAuthCredential deleteCredentialWithIdentifier:CREDENTIAL_IDENTIFIER];
     [PREFS removeObjectForKey:USER_INFO];
-    [PREFS removeObjectForKey:OAUTH_INFO];
     [PREFS synchronize];
     
     [self.navigationController popViewControllerAnimated:YES];

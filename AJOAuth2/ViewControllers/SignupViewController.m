@@ -13,7 +13,6 @@
 #import "AFOAuth2Manager.h"
 #import "SVProgressHUD.h"
 #import "User.h"
-#import "OAuth.h"
 
 #define kFirstNamefieldTag 1234
 #define kLastNameTextfieldTag 1235
@@ -219,13 +218,14 @@
               
               NSInteger statusCode = [jsonDict[@"code"] integerValue];
               if (statusCode == SUCCESS_CODE) {
-                  // TODO: Expiration time (Pending)
+                  AFOAuthCredential *credential = [AFOAuthCredential credentialWithOAuthToken:jsonDict[@"oauth"][@"access_token"] tokenType:jsonDict[@"oauth"][@"token_type"]];
+                  [credential setRefreshToken:jsonDict[@"oauth"][@"refresh_token"]];
                   
-                  // Oauth info stored in NSUserDefaults
-                  NSDictionary *oAuthInfoDict = @{@"access_token":jsonDict[@"oauth"][@"access_token"], @"refresh_token":jsonDict[@"oauth"][@"refresh_token"], @"token_type":jsonDict[@"oauth"][@"token_type"], @"scope": SCOPE};
-                  [Helper oAuthInfoSaveInDefaults:oAuthInfoDict];
+                  // Store credential
+                  [AFOAuthCredential storeCredential:credential withIdentifier:CREDENTIAL_IDENTIFIER];
+                  NSLog(@"%@", [AFOAuthCredential retrieveCredentialWithIdentifier:CREDENTIAL_IDENTIFIER]);
                   
-                  // User info stored in NSUserDefaults
+                  // User info stored in NSUserDefaults i.e to access basic info on left drawer
                   NSDictionary *userInfoDict = @{@"username": _displayNameTextfield.text, @"email": _emailTextfield.text};
                   [Helper userInfoSaveInDefaults:userInfoDict];
                   

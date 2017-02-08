@@ -13,7 +13,6 @@
 #import "AFOAuth2Manager.h"
 #import "SVProgressHUD.h"
 #import "Helper.h"
-#import "OAuth.h"
 #import "User.h"
 
 #define kEmailTextfieldTag 1234
@@ -120,7 +119,7 @@
     
     [SVProgressHUD show];
     
-    // get access token, refresh token, expiration time
+    // get access token, refresh token, token type
     AFOAuth2Manager *oAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL] clientID:CLIENT_ID secret:SECRET_KEY];
     [oAuth2Manager.requestSerializer setValue:API_VERSION forHTTPHeaderField:ACCEPT_VERSION_HEADER_FIELD_KEY];
     oAuth2Manager.useHTTPBasicAuthentication = NO;
@@ -128,15 +127,9 @@
         NSLog(@"Token: %@", credential.description);
         
         // Store credential
-        [AFOAuthCredential storeCredential:credential withIdentifier:SERVICE_PROVIDER_IDENTIFIER];
+        [AFOAuthCredential storeCredential:credential withIdentifier:CREDENTIAL_IDENTIFIER];
         
-        // TODO: Expiration time (Pending) and reponse it actually not parse by an API
-        
-        // Oauth info stored in NSUserDefaults
-        NSDictionary *oAuthInfoDict = @{@"access_token":credential.accessToken, @"refresh_token":credential.refreshToken, @"token_type":credential.tokenType, @"scope": SCOPE};
-        [Helper oAuthInfoSaveInDefaults:oAuthInfoDict];
-        
-        // User info stored in NSUserDefaults
+        // User info stored in NSUserDefaults i.e to access basic info on left drawer
         NSDictionary *userInfoDict = @{@"username": _emailTextfield.text};
         [Helper userInfoSaveInDefaults:userInfoDict];
         

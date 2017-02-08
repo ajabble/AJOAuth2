@@ -12,7 +12,6 @@
 #import "User.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
-#import "OAuth.h"
 #import "AFOAuth2Manager.h"
 
 #define kFirstNamefieldTag 1234
@@ -182,12 +181,9 @@
     
     [SVProgressHUD show];
     
-    NSData *myObject = [PREFS objectForKey:OAUTH_INFO];
-    OAuth *auth = (OAuth *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
-    NSLog(@"%@", auth.description);
-    
+    AFOAuthCredential *credential = [AFOAuthCredential retrieveCredentialWithIdentifier:CREDENTIAL_IDENTIFIER];
     AFOAuth2Manager *oAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
-    [oAuth2Manager.requestSerializer setAuthorizationHeaderFieldWithCredential:[AFOAuthCredential credentialWithOAuthToken:auth.accessToken tokenType:auth.tokenType]];
+    [oAuth2Manager.requestSerializer setAuthorizationHeaderFieldWithCredential:[AFOAuthCredential credentialWithOAuthToken:credential.accessToken tokenType:credential.tokenType]];
     [oAuth2Manager.requestSerializer setValue:API_VERSION forHTTPHeaderField:ACCEPT_VERSION_HEADER_FIELD_KEY];
     [oAuth2Manager POST:EDIT_PROFILE_URI
        parameters:@{@"firstname": _firstNameTextfield.text, @"lastname": _lastNameTextfield.text, @"dob": _dobTextfield.text}
