@@ -204,8 +204,9 @@
     
     [SVProgressHUD show];
     
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
-    [manager POST:USER_REGISTER_URI
+    AFOAuth2Manager *oAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
+    [oAuth2Manager.requestSerializer setValue:API_VERSION forHTTPHeaderField:ACCEPT_VERSION_HEADER_FIELD_KEY];
+    [oAuth2Manager POST:USER_REGISTER_URI
        parameters:@{@"client_id": CLIENT_ID, @"client_secret": SECRET_KEY, @"username": _displayNameTextfield.text, @"password": _passwordTextfield.text, @"email": _emailTextfield.text, @"email_confirmation": EMAIL_CONFIRMATION, @"firstname": _firstNameTextfield.text, @"lastname": _lastNameTextfield.text, @"dob": _dobTextfield.text, @"scope": SCOPE}
          progress:nil
           success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

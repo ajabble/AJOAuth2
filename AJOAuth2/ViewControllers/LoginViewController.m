@@ -121,9 +121,10 @@
     [SVProgressHUD show];
     
     // get access token, refresh token, expiration time
-    AFOAuth2Manager *OAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL] clientID:CLIENT_ID secret:SECRET_KEY];
-    OAuth2Manager.useHTTPBasicAuthentication = NO;
-    [OAuth2Manager authenticateUsingOAuthWithURLString:FETCH_ACCESS_TOKEN_URI username:_emailTextfield.text password:_passwordTextfield.text scope:SCOPE success:^(AFOAuthCredential *credential) {
+    AFOAuth2Manager *oAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL] clientID:CLIENT_ID secret:SECRET_KEY];
+    [oAuth2Manager.requestSerializer setValue:API_VERSION forHTTPHeaderField:ACCEPT_VERSION_HEADER_FIELD_KEY];
+    oAuth2Manager.useHTTPBasicAuthentication = NO;
+    [oAuth2Manager authenticateUsingOAuthWithURLString:FETCH_ACCESS_TOKEN_URI username:_emailTextfield.text password:_passwordTextfield.text scope:SCOPE success:^(AFOAuthCredential *credential) {
         NSLog(@"Token: %@", credential.description);
         
         // Store credential

@@ -97,8 +97,9 @@
     [_emailTextfield hideError];
     
     [SVProgressHUD show];
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
-    [manager GET:REQUEST_PASSWORD_URI parameters:@{@"username": _emailTextfield.text}
+    AFOAuth2Manager *oAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
+    [oAuth2Manager.requestSerializer setValue:API_VERSION forHTTPHeaderField:ACCEPT_VERSION_HEADER_FIELD_KEY];
+    [oAuth2Manager GET:REQUEST_PASSWORD_URI parameters:@{@"username": _emailTextfield.text}
         progress:nil
          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
              NSLog(@"Success: %@", responseObject);
