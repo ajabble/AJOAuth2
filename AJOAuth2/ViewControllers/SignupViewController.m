@@ -10,7 +10,6 @@
 #import "MCLocalization.h"
 #import "Constants.h"
 #import "Helper.h"
-#import "AFOAuth2Manager.h"
 #import "SVProgressHUD.h"
 #import "User.h"
 #import "AJOauth2ApiClient.h"

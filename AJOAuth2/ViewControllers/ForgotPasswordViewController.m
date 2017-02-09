@@ -7,7 +7,6 @@
 //
 
 #import "ForgotPasswordViewController.h"
-#import "AFOAuth2Manager.h"
 #import "MCLocalization.h"
 #import "Constants.h"
 #import "Helper.h"

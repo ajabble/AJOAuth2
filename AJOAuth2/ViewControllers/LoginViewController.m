@@ -10,7 +10,6 @@
 #import "ForgotPasswordViewController.h"
 #import "MCLocalization.h"
 #import "Constants.h"
-#import "AFOAuth2Manager.h"
 #import "SVProgressHUD.h"
 #import "Helper.h"
 #import "User.h"

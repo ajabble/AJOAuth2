@@ -12,7 +12,6 @@
 #import "User.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
-#import "AFOAuth2Manager.h"
 #import "AJOauth2ApiClient.h"
 
 #define kFirstNamefieldTag 1234

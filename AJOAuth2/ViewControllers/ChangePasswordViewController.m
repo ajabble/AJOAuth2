@@ -11,7 +11,6 @@
 #import "Constants.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
-#import "AFOAuth2Manager.h"
 #import "AJOauth2ApiClient.h"
 
 #define kOldPasswordTextfieldTag 345
