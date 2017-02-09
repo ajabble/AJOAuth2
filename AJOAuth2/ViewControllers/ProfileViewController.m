@@ -15,6 +15,7 @@
 #import "User.h"
 #import "ChangePasswordViewController.h"
 #import "EditProfileViewController.h"
+#import "AJOauth2ApiClient.h"
 
 @interface ProfileViewController ()
 
@@ -27,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-   
+    
     // Navigation title
     self.title = [MCLocalization stringForKey:@"profile_navigation_title"];
     
@@ -73,87 +74,85 @@
 
 - (void)showProfile {
     [SVProgressHUD show];
-    
-    AFOAuthCredential *credential = [AFOAuthCredential retrieveCredentialWithIdentifier:CREDENTIAL_IDENTIFIER];
-    AFOAuth2Manager *oAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
-    [oAuth2Manager.requestSerializer setAuthorizationHeaderFieldWithCredential:credential];
-    [oAuth2Manager.requestSerializer setValue:API_VERSION forHTTPHeaderField:ACCEPT_VERSION_HEADER_FIELD_KEY];
-    [oAuth2Manager POST:SHOW_PROFILE_URI
-       parameters:@{}
-         progress:nil
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              NSLog(@"Success: %@", responseObject);
-              NSDictionary *jsonDict = (NSDictionary *)responseObject;
-              if (!jsonDict)
-                  return;
-              if ([jsonDict isKindOfClass:[NSDictionary class]] == NO)
-                  NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([jsonDict class]));
-              
-              NSInteger statusCode = [jsonDict[@"code"] integerValue];
-              if (statusCode == SUCCESS_CODE) {
-                  
-                  // User information updated with username, email address, first name, last name, dob
-                  User *user = [[User alloc] initWithAttributes:[jsonDict mutableCopy]];
-                  NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:user];
-                  [PREFS setObject:myEncodedObject forKey:USER_INFO];
-                  [PREFS synchronize];
-                  NSLog(@"%@", user.description);
-                  
-                  // Get user info
-                  NSData *myObject = [PREFS objectForKey:USER_INFO];
-                  user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
-                  
-                  // Username
-                  _userNameLabel.text = [NSString stringWithFormat:@"@%@", user.userName];
-                  
-                  // Email Address
-                  _emailAddressLabel.text = user.emailAddress;
-                  
-                  // Full Name
-                  _fullNameLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
-                  
-                  // DOB
-                  _dobLabel.text = user.dob;
-                  
-                  [SVProgressHUD showSuccessWithStatus:jsonDict[@"show_message"]];
-              }
-              
-              [SVProgressHUD dismiss];
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              NSLog(@"Failure: %@", error);
-              
-              NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
-              NSLog(@"%zd", httpResponse.statusCode);
-              [SVProgressHUD dismiss];
-              
-              id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
-              
-              NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
-              if (!errorJsonDict)
-                  return;
-              if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
-                  NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
-              
-              // TODO: handling later on with refresh token
-              if (httpResponse.statusCode == UNAUTHORIZED_CODE) {
-                  NSLog(@"%@",errorJsonDict.description);
-                  dispatch_async(dispatch_get_main_queue(), ^{
-                      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillAppearNotification object:nil];
-                      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
-                      [SVProgressHUD showSuccessWithStatus:[MCLocalization stringForKey:@"sign_out_message"]];
-                  });
-              }else if (httpResponse.statusCode == INTERNAL_SERVER_ERROR_CODE) {
-                  NSLog(@"Error Code: %@; ErrorDescription: %@", errorJsonDict[@"code"], errorJsonDict[@"error_description"]);
-              }
-          }];
+    AJOauth2ApiClient *client = [AJOauth2ApiClient sharedClient];
+    [client showProfile:^(NSURLSessionDataTask *task, id responseObject) {
+        NSDictionary *jsonDict = (NSDictionary *)responseObject;
+        if (!jsonDict)
+            return;
+        if ([jsonDict isKindOfClass:[NSDictionary class]] == NO)
+            NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([jsonDict class]));
+        
+        NSInteger statusCode = [jsonDict[@"code"] integerValue];
+        if (statusCode == SUCCESS_CODE) {
+            // User information stored in NSUserDefaults
+            [Helper userInfoSaveInDefaults:jsonDict];
+            
+            // Get user info
+            NSData *myObject = [PREFS objectForKey:USER_INFO];
+            User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
+            
+            // Username
+            _userNameLabel.text = [NSString stringWithFormat:@"@%@", user.userName];
+            
+            // Email Address
+            _emailAddressLabel.text = user.emailAddress;
+            
+            // Full Name
+            _fullNameLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
+            
+            // DOB
+            _dobLabel.text = user.dob;
+            
+            [SVProgressHUD showSuccessWithStatus:jsonDict[@"show_message"]];
+        } else {
+            [SVProgressHUD dismiss];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
+        NSLog(@"%zd", httpResponse.statusCode);
+        id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+        
+        NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
+        if (!errorJsonDict)
+            return;
+        if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
+            NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
+        
+        if (httpResponse.statusCode == UNAUTHORIZED_CODE) {
+            NSLog(@"%@",errorJsonDict.description);
+            client.useHTTPBasicAuthentication = NO;
+            [client refreshTokenWithSuccess:^(AFOAuthCredential *newCredential) {
+                [self showProfile];
+            } failure:^(NSError *error) {
+                [SVProgressHUD dismiss];
+                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
+                NSLog(@"%zd", httpResponse.statusCode);
+                id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+                
+                NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
+                if (!errorJsonDict)
+                    return;
+                if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
+                    NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
+                
+                NSLog(@"Error Code: %@; ErrorDescription: %@", errorJsonDict[@"code"], errorJsonDict[@"error_description"]);
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
+                    [SVProgressHUD showSuccessWithStatus:[MCLocalization stringForKey:@"sign_out_message"]];
+                });
+            }];
+        }else if (httpResponse.statusCode == INTERNAL_SERVER_ERROR_CODE) {
+            NSLog(@"Error Code: %@; ErrorDescription: %@", errorJsonDict[@"code"], errorJsonDict[@"error_description"]);
+        }
+    }];
 }
 
 #pragma mark methods
 
 - (void)signOut {
     // Remove credentials from NSUserDefaults as well as from AFOAuthCredential
-    [AFOAuthCredential deleteCredentialWithIdentifier:CREDENTIAL_IDENTIFIER];
+    [AFOAuthCredential deleteCredentialWithIdentifier:[AJOauth2ApiClient sharedClient].serviceProviderIdentifier];
     [PREFS removeObjectForKey:USER_INFO];
     [PREFS synchronize];
     
@@ -193,7 +192,7 @@
     NSLog(@"Notification received: %@", notification.name);
     NSLog(@"Status user info key: %@", notification.userInfo[SVProgressHUDStatusUserInfoKey]);
     
-    if([notification.name isEqualToString:SVProgressHUDWillDisappearNotification]) {
+    if ([notification.name isEqualToString:SVProgressHUDWillDisappearNotification]) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:SVProgressHUDWillDisappearNotification object:nil];
         [self signOut];
     }
@@ -206,7 +205,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     return 1;
 }
 
@@ -250,7 +248,7 @@
         vc = [[EditProfileViewController alloc] initWithNibName:@"EditProfileViewController" bundle:[NSBundle mainBundle]];
     else if (indexPath.section == 1)
         vc = [[ChangePasswordViewController alloc] initWithNibName:@"ChangePasswordViewController" bundle:[NSBundle mainBundle]];
-        
+    
     [self.navigationController pushViewController:vc animated:YES];
 }
 

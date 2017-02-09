@@ -12,6 +12,7 @@
 #import "Constants.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
+#import "AJOauth2ApiClient.h"
 
 @interface ForgotPasswordViewController ()
 
@@ -70,11 +71,7 @@
 #pragma mark UITextfield
 
 - (void)textFieldDidEndEditing:(JJMaterialTextfield *)textField {
-    if (textField.text.length == 0)
-        [textField showError];
-    else
-        [textField hideError];
-    
+    (textField.text.length == 0) ? [textField showError] : [textField hideError];
 }
 
 #pragma mark IBActions
@@ -97,49 +94,43 @@
     [_emailTextfield hideError];
     
     [SVProgressHUD show];
-    AFOAuth2Manager *oAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
-    [oAuth2Manager.requestSerializer setValue:API_VERSION forHTTPHeaderField:ACCEPT_VERSION_HEADER_FIELD_KEY];
-    [oAuth2Manager GET:REQUEST_PASSWORD_URI parameters:@{@"username": _emailTextfield.text}
-        progress:nil
-         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-             NSLog(@"Success: %@", responseObject);
-             NSDictionary *jsonDict = (NSDictionary *)responseObject;
-             if (!jsonDict)
-                 return;
-             if ([jsonDict isKindOfClass:[NSDictionary class]] == NO)
-                 NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([jsonDict class]));
-             
-             NSInteger statusCode = [jsonDict[@"code"] integerValue];
-             if (statusCode == SUCCESS_CODE) {
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillAppearNotification object:nil];
-                     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
-                     [SVProgressHUD showSuccessWithStatus:jsonDict[@"show_message"]];
-                 });
-             }
-         }
-         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-             NSLog(@"Failure: %@", error);
-             
-             id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
-             
-             NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
-             if (!errorJsonDict)
-                 return;
-             if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
-                 NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
-             
-             NSLog(@"%@",errorJsonDict.description);
-             
-             NSInteger statusCode = [errorJsonDict[@"code"] integerValue];
-             if (statusCode == BAD_REQUEST_CODE) {
-                 [SVProgressHUD showErrorWithStatus:errorJsonDict[@"show_message"]];
-                 return;
-             }else if (statusCode == INTERNAL_SERVER_ERROR_CODE) {
-                 NSLog(@"Error Code: %zd; ErrorDescription: %@", statusCode, errorJsonDict[@"error_description"]);
-             }
-             [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"error_message"]];
-         }];
+    AJOauth2ApiClient *client = [AJOauth2ApiClient sharedClient];
+    [client requestPassword:_emailTextfield.text success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSDictionary *jsonDict = (NSDictionary *)responseObject;
+        if (!jsonDict)
+            return;
+        if ([jsonDict isKindOfClass:[NSDictionary class]] == NO)
+            NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([jsonDict class]));
+        
+        NSInteger statusCode = [jsonDict[@"code"] integerValue];
+        if (statusCode == SUCCESS_CODE) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
+                [SVProgressHUD showSuccessWithStatus:jsonDict[@"show_message"]];
+            });
+        }else {
+            [SVProgressHUD dismiss];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+        
+        NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
+        if (!errorJsonDict)
+            return;
+        if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
+            NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
+        
+        NSLog(@"%@",errorJsonDict.description);
+        
+        NSInteger statusCode = [errorJsonDict[@"code"] integerValue];
+        if (statusCode == BAD_REQUEST_CODE) {
+            [SVProgressHUD showErrorWithStatus:errorJsonDict[@"show_message"]];
+            return;
+        }else if (statusCode == INTERNAL_SERVER_ERROR_CODE) {
+            NSLog(@"Error Code: %zd; ErrorDescription: %@", statusCode, errorJsonDict[@"error_description"]);
+        }
+        [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"error_message"]];
+    }];
 }
 
 #pragma mark SVProgressHUD
@@ -148,7 +139,7 @@
     NSLog(@"Notification received: %@", notification.name);
     NSLog(@"Status user info key: %@", notification.userInfo[SVProgressHUDStatusUserInfoKey]);
     
-    if([notification.name isEqualToString:SVProgressHUDWillDisappearNotification]) {
+    if ([notification.name isEqualToString:SVProgressHUDWillDisappearNotification]) {
         [self.navigationController popViewControllerAnimated:YES];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:SVProgressHUDWillDisappearNotification object:nil];
     }

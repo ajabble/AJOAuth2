@@ -16,6 +16,7 @@
 #import "AFNetworkReachabilityManager.h"
 #import <LGSideMenuController/UIViewController+LGSideMenuController.h>
 #import "AFOAuthCredential.h"
+#import "AJOauth2ApiClient.h"
 
 @interface AppDelegate ()
 @end
@@ -120,8 +121,9 @@
 
 - (void)deleteOauthCredentialsFromKeychainItems {
     if (![PREFS objectForKey:USER_INFO])
-        [AFOAuthCredential deleteCredentialWithIdentifier:CREDENTIAL_IDENTIFIER];
+        [AFOAuthCredential deleteCredentialWithIdentifier:[AJOauth2ApiClient sharedClient].serviceProviderIdentifier];
     else
         NSLog(@"No action needed");
 }
+
 @end

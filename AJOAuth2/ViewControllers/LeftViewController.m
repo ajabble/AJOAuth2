@@ -45,8 +45,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    NSLog(@"%@", [AFOAuthCredential retrieveCredentialWithIdentifier:CREDENTIAL_IDENTIFIER]);
-    
     // Table header view
     self.tableView.tableHeaderView = [self getTableHeaderView];
     

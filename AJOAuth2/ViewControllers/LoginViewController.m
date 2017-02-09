@@ -14,6 +14,7 @@
 #import "SVProgressHUD.h"
 #import "Helper.h"
 #import "User.h"
+#import "AJOauth2ApiClient.h"
 
 #define kEmailTextfieldTag 1234
 #define kPasswordTextfieldTag 1235
@@ -119,28 +120,18 @@
     
     [SVProgressHUD show];
     
-    // get access token, refresh token, token type
-    AFOAuth2Manager *oAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL] clientID:CLIENT_ID secret:SECRET_KEY];
-    [oAuth2Manager.requestSerializer setValue:API_VERSION forHTTPHeaderField:ACCEPT_VERSION_HEADER_FIELD_KEY];
-    oAuth2Manager.useHTTPBasicAuthentication = NO;
-    [oAuth2Manager authenticateUsingOAuthWithURLString:FETCH_ACCESS_TOKEN_URI username:_emailTextfield.text password:_passwordTextfield.text scope:SCOPE success:^(AFOAuthCredential *credential) {
-        NSLog(@"Token: %@", credential.description);
-        
-        // Store credential
-        [AFOAuthCredential storeCredential:credential withIdentifier:CREDENTIAL_IDENTIFIER];
+    AJOauth2ApiClient *client = [AJOauth2ApiClient sharedClient];
+    [client signInWithUsernameAndPassword:_emailTextfield.text password:_passwordTextfield.text success:^(AFOAuthCredential *credential) {
         
         // User info stored in NSUserDefaults i.e to access basic info on left drawer
         NSDictionary *userInfoDict = @{@"username": _emailTextfield.text};
         [Helper userInfoSaveInDefaults:userInfoDict];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillAppearNotification object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
             [SVProgressHUD showSuccessWithStatus:[MCLocalization stringForKey:@"login_success_message"]];
         });
     } failure:^(NSError *error) {
-        NSLog(@"Error: %@", error.description);
-        
         id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
         
         NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
@@ -168,7 +159,7 @@
     NSLog(@"Notification received: %@", notification.name);
     NSLog(@"Status user info key: %@", notification.userInfo[SVProgressHUDStatusUserInfoKey]);
     
-    if([notification.name isEqualToString:SVProgressHUDWillDisappearNotification]) {
+    if ([notification.name isEqualToString:SVProgressHUDWillDisappearNotification]) {
         [self.navigationController popToRootViewControllerAnimated:YES];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:SVProgressHUDWillDisappearNotification object:nil];
     }
@@ -177,19 +168,13 @@
 #pragma mark UITextfield
 
 - (void)textFieldDidEndEditing:(JJMaterialTextfield *)textField {
-    if (textField.text.length == 0)
-        [textField showError];
-    else
-        [textField hideError];
+    (textField.text.length == 0) ? [textField showError] : [textField hideError];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     UIView *view = [self.view viewWithTag:textField.tag + 1];
-    if (!view)
-        [textField resignFirstResponder];
-    else
-        [view becomeFirstResponder];
-    
+    (!view) ? [textField resignFirstResponder] : [view becomeFirstResponder];
+   
     return YES;
 }
 

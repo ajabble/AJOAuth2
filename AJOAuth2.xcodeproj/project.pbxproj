@@ -20,6 +20,7 @@
 		381A7E001E48594200DD48C4 /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 381A7DFE1E48594200DD48C4 /* EditProfileViewController.xib */; };
 		381A7E041E4863CD00DD48C4 /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381A7E021E4863CD00DD48C4 /* ChangePasswordViewController.m */; };
 		381A7E051E4863CD00DD48C4 /* ChangePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 381A7E031E4863CD00DD48C4 /* ChangePasswordViewController.xib */; };
+		381A7E081E4B610300DD48C4 /* AJOauth2ApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 381A7E071E4B610300DD48C4 /* AJOauth2ApiClient.m */; };
 		38CE70BC1E309514009195D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70BB1E309514009195D9 /* main.m */; };
 		38CE70BF1E309514009195D9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70BE1E309514009195D9 /* AppDelegate.m */; };
 		38CE70C51E309514009195D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38CE70C31E309514009195D9 /* Main.storyboard */; };
@@ -77,6 +78,8 @@
 		381A7E011E4863CD00DD48C4 /* ChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordViewController.h; sourceTree = "<group>"; };
 		381A7E021E4863CD00DD48C4 /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ChangePasswordViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		381A7E031E4863CD00DD48C4 /* ChangePasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangePasswordViewController.xib; sourceTree = "<group>"; };
+		381A7E061E4B610300DD48C4 /* AJOauth2ApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJOauth2ApiClient.h; sourceTree = "<group>"; };
+		381A7E071E4B610300DD48C4 /* AJOauth2ApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJOauth2ApiClient.m; sourceTree = "<group>"; };
 		38CE70B71E309514009195D9 /* AJOAuth2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AJOAuth2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38CE70BB1E309514009195D9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		38CE70BD1E309514009195D9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -257,6 +260,8 @@
 			children = (
 				38F7E87A1E3624F6006041DC /* Helper.h */,
 				38F7E87B1E3624F6006041DC /* Helper.m */,
+				381A7E061E4B610300DD48C4 /* AJOauth2ApiClient.h */,
+				381A7E071E4B610300DD48C4 /* AJOauth2ApiClient.m */,
 			);
 			name = Custom;
 			sourceTree = "<group>";
@@ -584,6 +589,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				381952771E32122B00ACB611 /* LoginViewController.m in Sources */,
+				381A7E081E4B610300DD48C4 /* AJOauth2ApiClient.m in Sources */,
 				38CE70BF1E309514009195D9 /* AppDelegate.m in Sources */,
 				381A7DFF1E48594200DD48C4 /* EditProfileViewController.m in Sources */,
 				38CE71311E30C800009195D9 /* HomeViewController.m in Sources */,
