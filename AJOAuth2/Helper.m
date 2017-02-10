@@ -7,11 +7,8 @@
 //
 
 #import "Helper.h"
-#import "SVProgressHUD.h"
 #import "AFNetworkReachabilityManager.h"
 #import "Constants.h"
-
-static SVProgressHUD *HUD;
 
 @implementation Helper
 
@@ -38,4 +35,15 @@ static SVProgressHUD *HUD;
     [PREFS synchronize];
 }
 
++ (BOOL)checkResponseObject:(id)responseObject {
+    NSDictionary *jsonDict = (NSDictionary *)responseObject;
+    if (!jsonDict)
+        return NO;
+    if ([jsonDict isKindOfClass:[NSDictionary class]] == NO)
+        NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([jsonDict class]));
+    
+    NSLog(@"%@", jsonDict);
+    
+    return YES;
+}
 @end

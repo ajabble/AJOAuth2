@@ -95,12 +95,10 @@
     [SVProgressHUD show];
     AJOauth2ApiClient *client = [AJOauth2ApiClient sharedClient];
     [client requestPassword:_emailTextfield.text success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSDictionary *jsonDict = (NSDictionary *)responseObject;
-        if (!jsonDict)
-            return;
-        if ([jsonDict isKindOfClass:[NSDictionary class]] == NO)
-            NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([jsonDict class]));
+        if (![Helper checkResponseObject:responseObject])
+            return ;
         
+        NSDictionary *jsonDict = (NSDictionary *)responseObject;
         NSInteger statusCode = [jsonDict[@"code"] integerValue];
         if (statusCode == SUCCESS_CODE) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -113,14 +111,10 @@
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
         
+        if (![Helper checkResponseObject:errorJson])
+            return ;
+        
         NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
-        if (!errorJsonDict)
-            return;
-        if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
-            NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
-        
-        NSLog(@"%@",errorJsonDict.description);
-        
         NSInteger statusCode = [errorJsonDict[@"code"] integerValue];
         if (statusCode == BAD_REQUEST_CODE) {
             [SVProgressHUD showErrorWithStatus:errorJsonDict[@"show_message"]];

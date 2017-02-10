@@ -120,10 +120,7 @@
 #pragma mark AFOAuthCredential
 
 - (void)deleteOauthCredentialsFromKeychainItems {
-    if (![PREFS objectForKey:USER_INFO])
-        [AFOAuthCredential deleteCredentialWithIdentifier:[AJOauth2ApiClient sharedClient].serviceProviderIdentifier];
-    else
-        NSLog(@"No action needed");
+    (![PREFS objectForKey:USER_INFO]) ? [AFOAuthCredential deleteCredentialWithIdentifier:[AJOauth2ApiClient sharedClient].serviceProviderIdentifier] : NSLog(@"No action needed");
 }
 
 @end

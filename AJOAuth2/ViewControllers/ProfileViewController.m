@@ -75,12 +75,10 @@
     [SVProgressHUD show];
     AJOauth2ApiClient *client = [AJOauth2ApiClient sharedClient];
     [client showProfile:^(NSURLSessionDataTask *task, id responseObject) {
-        NSDictionary *jsonDict = (NSDictionary *)responseObject;
-        if (!jsonDict)
-            return;
-        if ([jsonDict isKindOfClass:[NSDictionary class]] == NO)
-            NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([jsonDict class]));
+        if (![Helper checkResponseObject:responseObject])
+            return ;
         
+        NSDictionary *jsonDict = (NSDictionary *)responseObject;
         NSInteger statusCode = [jsonDict[@"code"] integerValue];
         if (statusCode == SUCCESS_CODE) {
             // User information stored in NSUserDefaults
@@ -107,16 +105,12 @@
             [SVProgressHUD dismiss];
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+        if (![Helper checkResponseObject:errorJson])
+            return ;
+        NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
         NSLog(@"%zd", httpResponse.statusCode);
-        id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
-        
-        NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
-        if (!errorJsonDict)
-            return;
-        if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
-            NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
-        
         if (httpResponse.statusCode == UNAUTHORIZED_CODE) {
             NSLog(@"%@",errorJsonDict.description);
             client.useHTTPBasicAuthentication = NO;

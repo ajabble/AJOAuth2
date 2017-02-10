@@ -14,5 +14,6 @@
 + (BOOL)isConnected;
 + (BOOL)validateEmail:(NSString *)candidate;
 + (void)userInfoSaveInDefaults:(NSDictionary *)userInfoDict;
++ (BOOL)checkResponseObject:(id)responseObject;
 
 @end

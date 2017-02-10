@@ -163,7 +163,7 @@
 - (BOOL)textFieldShouldReturn:(JJMaterialTextfield *)textField {
     UIView *view = [self.view viewWithTag:textField.tag + 1];
     (!view) ? [textField resignFirstResponder] : [view becomeFirstResponder];
-   
+    
     return YES;
 }
 
@@ -202,12 +202,10 @@
     [SVProgressHUD show];
     AJOauth2ApiClient *client = [AJOauth2ApiClient sharedClient];
     [client registerMe:_displayNameTextfield.text password:_passwordTextfield.text email:_emailTextfield.text firstName:_firstNameTextfield.text lastName:_lastNameTextfield.text dob:_dobTextfield.text success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSDictionary *jsonDict = (NSDictionary *)responseObject;
-        if (!jsonDict)
-            return;
-        if ([jsonDict isKindOfClass:[NSDictionary class]] == NO)
-            NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([jsonDict class]));
+        if (![Helper checkResponseObject:responseObject])
+            return ;
         
+        NSDictionary *jsonDict = (NSDictionary *)responseObject;
         NSInteger statusCode = [jsonDict[@"code"] integerValue];
         if (statusCode == SUCCESS_CODE) {
             AFOAuthCredential *credential = [AFOAuthCredential credentialWithOAuthToken:jsonDict[@"oauth"][@"access_token"] tokenType:jsonDict[@"oauth"][@"token_type"]];
@@ -229,16 +227,12 @@
             [SVProgressHUD dismiss];
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+        id errorObject = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
         
-        NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
-        if (!errorJsonDict)
+        if(![Helper checkResponseObject:errorObject])
             return;
-        if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
-            NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
         
-        NSLog(@"%@",errorJsonDict.description);
-        
+        NSDictionary *errorJsonDict = (NSDictionary *)errorObject;
         NSInteger statusCode = [errorJsonDict[@"code"] integerValue];
         if (statusCode == BAD_REQUEST_CODE) {
             [SVProgressHUD showErrorWithStatus:errorJsonDict[@"show_message"]];

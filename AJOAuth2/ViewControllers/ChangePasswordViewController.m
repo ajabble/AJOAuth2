@@ -124,12 +124,10 @@
     [SVProgressHUD show];
     AJOauth2ApiClient *client = [AJOauth2ApiClient sharedClient];
     [client changePassword:_newPasswordTextfield.text oldPassword:_oldPasswordTextfield.text success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSDictionary *jsonDict = (NSDictionary *)responseObject;
-        if (!jsonDict)
-            return;
-        if ([jsonDict isKindOfClass:[NSDictionary class]] == NO)
-            NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([jsonDict class]));
+        if (![Helper checkResponseObject:responseObject])
+            return ;
         
+        NSDictionary *jsonDict = (NSDictionary *)responseObject;
         NSInteger statusCode = [jsonDict[@"code"] integerValue];
         if (statusCode == SUCCESS_CODE) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -140,17 +138,14 @@
             [SVProgressHUD dismiss];
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
-        NSLog(@"%zd", httpResponse.statusCode);
         [SVProgressHUD dismiss];
         
         id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
-        
+        if (![Helper checkResponseObject:errorJson])
+            return ;
         NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
-        if (!errorJsonDict)
-            return;
-        if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
-            NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
+        NSLog(@"%zd", httpResponse.statusCode);
         
         // TODO: handling later on with refresh token
         if (httpResponse.statusCode == UNAUTHORIZED_CODE) {

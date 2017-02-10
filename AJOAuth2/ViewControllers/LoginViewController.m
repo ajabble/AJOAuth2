@@ -133,14 +133,10 @@
     } failure:^(NSError *error) {
         id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
         
+        if (![Helper checkResponseObject:errorJson])
+            return ;
+        
         NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
-        if (!errorJsonDict)
-            return;
-        if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
-            NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
-        
-        NSLog(@"%@",errorJsonDict.description);
-        
         NSInteger statusCode = [errorJsonDict[@"code"] integerValue];
         if (statusCode == BAD_REQUEST_CODE) {
             [SVProgressHUD showErrorWithStatus:errorJsonDict[@"show_message"]];
