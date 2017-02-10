@@ -55,8 +55,7 @@
         self.tableView.dataSource = nil;
         self.tableView.delegate = nil;
     } else {
-        NSData *myObject = [PREFS objectForKey:USER_INFO];
-        User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
+        User *user = [Helper getUserPrefs];
         
         // Username
         _usernameLabel.text = user.userName;

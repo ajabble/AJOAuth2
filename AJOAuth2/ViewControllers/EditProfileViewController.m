@@ -38,8 +38,7 @@
     self.view.backgroundColor = VIEW_BG_COLOR;
     
     // Get user info
-    NSData *myObject = [PREFS objectForKey:USER_INFO];
-    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
+    User *user = [Helper getUserPrefs];
     
     // First Name Textfield
     _firstNameTextfield.placeholder = [MCLocalization stringForKey:@"first_name_placeholder"];
@@ -125,8 +124,7 @@
 
 - (void)textFieldDidBeginEditing:(JJMaterialTextfield *)textField {
     if(textField.tag == kDobTextfieldTag) {
-        NSData *myObject = [PREFS objectForKey:USER_INFO];
-        User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
+        User *user = [Helper getUserPrefs];
         
         // Convert string to date object
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -182,6 +180,12 @@
         NSDictionary *jsonDict = (NSDictionary *)responseObject;
         NSInteger statusCode = [jsonDict[@"code"] integerValue];
         if (statusCode == SUCCESS_CODE) {
+            // Username and email fields used as old one as they are non-editable fields; this is only to show local info items
+            User *user = [Helper getUserPrefs];
+            // User info  stored in prefs
+            NSDictionary *userDict = @{@"firstname": _firstNameTextfield.text, @"lastname": _lastNameTextfield.text, @"dob": _dobTextfield.text, @"username": user.userName, @"email":user.emailAddress};
+            [Helper userInfoSaveInDefaults:userDict];
+            
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
                 [SVProgressHUD showSuccessWithStatus:jsonDict[@"show_message"]];

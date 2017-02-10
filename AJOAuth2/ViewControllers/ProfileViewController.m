@@ -43,15 +43,18 @@
     
     // Basic Infoview
     self.basicInfoView.backgroundColor = THEME_BG_COLOR;
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
     
     if ([Helper isConnected])
         [self showProfile];
     else
         [MCLocalization stringForKey:@"no_internet_connectivity"];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    // User display info
+    [self userDisplayInfo];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,6 +72,24 @@
  // Pass the selected object to the new view controller.
  }
  */
+
+- (void)userDisplayInfo {
+    // Get user info
+    User *user = [Helper getUserPrefs];
+    
+    // Username
+    _userNameLabel.text = [NSString stringWithFormat:@"@%@", user.userName];
+    
+    // Email Address
+    _emailAddressLabel.text = user.emailAddress;
+    
+    // Full Name
+    _fullNameLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
+    
+    // DOB
+    _dobLabel.text = user.dob;
+}
+
 #pragma mark /ME - API
 
 - (void)showProfile {
@@ -84,21 +105,8 @@
             // User information stored in NSUserDefaults
             [Helper userInfoSaveInDefaults:jsonDict];
             
-            // Get user info
-            NSData *myObject = [PREFS objectForKey:USER_INFO];
-            User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
-            
-            // Username
-            _userNameLabel.text = [NSString stringWithFormat:@"@%@", user.userName];
-            
-            // Email Address
-            _emailAddressLabel.text = user.emailAddress;
-            
-            // Full Name
-            _fullNameLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
-            
-            // DOB
-            _dobLabel.text = user.dob;
+            // Display info
+            [self userDisplayInfo];
             
             [SVProgressHUD showSuccessWithStatus:jsonDict[@"show_message"]];
         } else {
@@ -108,12 +116,11 @@
         id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
         if (![Helper checkResponseObject:errorJson])
             return ;
+        
         NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
         NSLog(@"%zd", httpResponse.statusCode);
         if (httpResponse.statusCode == UNAUTHORIZED_CODE) {
-            NSLog(@"%@",errorJsonDict.description);
-            client.useHTTPBasicAuthentication = NO;
             [client refreshTokenWithSuccess:^(AFOAuthCredential *newCredential) {
                 [self showProfile];
             } failure:^(NSError *error) {
@@ -122,12 +129,9 @@
                 NSLog(@"%zd", httpResponse.statusCode);
                 id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
                 
+                if (![Helper checkResponseObject:errorJson])
+                    return ;
                 NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
-                if (!errorJsonDict)
-                    return;
-                if ([errorJsonDict isKindOfClass:[NSDictionary class]] == NO)
-                    NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([errorJsonDict class]));
-                
                 NSLog(@"Error Code: %@; ErrorDescription: %@", errorJsonDict[@"code"], errorJsonDict[@"error_description"]);
                 
                 dispatch_async(dispatch_get_main_queue(), ^{

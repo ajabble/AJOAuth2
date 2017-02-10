@@ -195,6 +195,7 @@
     }
     
     NSLog(@"[%@ %@]: refreshing credential, credential.refreshToken: %@", [self class], REFRESH_TOKEN_URI, credential.refreshToken);
+    [AJOauth2ApiClient sharedClient].useHTTPBasicAuthentication = NO;
     [self authenticateUsingOAuthWithURLString:REFRESH_TOKEN_URI refreshToken:credential.refreshToken success:^(AFOAuthCredential * _Nonnull newCredential) {
         NSLog(@"[%@ %@]: refreshed access token %@", [self class], REFRESH_TOKEN_URI, newCredential.accessToken);
         [AFOAuthCredential storeCredential:newCredential withIdentifier:self.serviceProviderIdentifier];

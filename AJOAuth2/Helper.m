@@ -46,4 +46,12 @@
     
     return YES;
 }
+
++ (User *)getUserPrefs {
+    NSData *myObject = [PREFS objectForKey:USER_INFO];
+    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
+    
+    return user;
+}
+
 @end

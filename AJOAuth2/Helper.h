@@ -15,5 +15,6 @@
 + (BOOL)validateEmail:(NSString *)candidate;
 + (void)userInfoSaveInDefaults:(NSDictionary *)userInfoDict;
 + (BOOL)checkResponseObject:(id)responseObject;
++ (User *)getUserPrefs;
 
 @end
