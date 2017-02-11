@@ -22,8 +22,8 @@
 #define REFRESH_TOKEN_URI @"user/refresh/token"
 #define SHOW_PROFILE_URI @"user/profile/show"
 #define USER_REGISTER_URI @"user/register"
-#define REQUEST_PASSWORD_URI @"user/resetting/request/email"
-#define CHANGE_PASSWORD_URI @"user/change/password"
+#define REQUEST_PASSWORD_URI @"user/resetting/request"
+#define CHANGE_PASSWORD_URI @"user/profile/change-password"
 #define UPDATE_PROFILE_URI @"user/profile/edit"
 
 #define locale [MCLocalization sharedInstance].language
