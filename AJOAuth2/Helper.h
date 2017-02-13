@@ -16,5 +16,6 @@
 + (void)userInfoSaveInDefaults:(NSDictionary *)userInfoDict;
 + (BOOL)checkResponseObject:(id)responseObject;
 + (User *)getUserPrefs;
++ (void)removeUserPrefs;
 
 @end

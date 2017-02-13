@@ -125,20 +125,19 @@
                 [self showProfile];
             } failure:^(NSError *error) {
                 [SVProgressHUD dismiss];
-                NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
-                NSLog(@"%zd", httpResponse.statusCode);
                 id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
                 
                 if (![Helper checkResponseObject:errorJson])
                     return ;
                 NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
                 NSLog(@"Error Code: %@; ErrorDescription: %@", errorJsonDict[@"code"], errorJsonDict[@"error_description"]);
-                
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
                     [SVProgressHUD showSuccessWithStatus:[MCLocalization stringForKey:@"sign_out_message"]];
                 });
             }];
+        }else if (httpResponse.statusCode == BAD_REQUEST_CODE) {
+            NSLog(@"Error Code: %@; ErrorDescription: %@", errorJsonDict[@"code"], errorJsonDict[@"error_description"]);
         }else if (httpResponse.statusCode == INTERNAL_SERVER_ERROR_CODE) {
             NSLog(@"Error Code: %@; ErrorDescription: %@", errorJsonDict[@"code"], errorJsonDict[@"error_description"]);
         }
@@ -148,11 +147,7 @@
 #pragma mark methods
 
 - (void)signOut {
-    // Remove credentials from NSUserDefaults as well as from AFOAuthCredential
-    [AFOAuthCredential deleteCredentialWithIdentifier:[AJOauth2ApiClient sharedClient].serviceProviderIdentifier];
-    [PREFS removeObjectForKey:USER_INFO];
-    [PREFS synchronize];
-    
+    [Helper removeUserPrefs];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

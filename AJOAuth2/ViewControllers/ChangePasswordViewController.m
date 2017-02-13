@@ -147,9 +147,23 @@
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
         NSLog(@"%zd", httpResponse.statusCode);
         
-        // TODO: handling later on with refresh token
         if (httpResponse.statusCode == UNAUTHORIZED_CODE) {
-            NSLog(@"%@",errorJsonDict.description);
+            [client refreshTokenWithSuccess:^(AFOAuthCredential *newCredential) {
+                [self changePassword];
+            } failure:^(NSError *error) {
+                [SVProgressHUD dismiss];
+                id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+                
+                if (![Helper checkResponseObject:errorJson])
+                    return ;
+                NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
+                NSLog(@"Error Code: %@; ErrorDescription: %@", errorJsonDict[@"code"], errorJsonDict[@"error_description"]);
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillAppearNotification object:nil];
+                    [SVProgressHUD showSuccessWithStatus:[MCLocalization stringForKey:@"sign_out_message"]];
+                });
+            }];
         } else if (httpResponse.statusCode == BAD_REQUEST_CODE) {
             [SVProgressHUD showSuccessWithStatus:errorJsonDict[@"show_message"]];
         }else if (httpResponse.statusCode == INTERNAL_SERVER_ERROR_CODE) {
@@ -167,6 +181,10 @@
     if ([notification.name isEqualToString:SVProgressHUDWillDisappearNotification]) {
         [[NSNotificationCenter defaultCenter] removeObserver:self name:SVProgressHUDWillDisappearNotification object:nil];
         [self.navigationController popViewControllerAnimated:YES];
+    }else if ([notification.name isEqualToString:SVProgressHUDWillAppearNotification]) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:SVProgressHUDWillAppearNotification object:nil];
+        [Helper removeUserPrefs];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
 

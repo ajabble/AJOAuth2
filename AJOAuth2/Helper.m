@@ -9,6 +9,8 @@
 #import "Helper.h"
 #import "AFNetworkReachabilityManager.h"
 #import "Constants.h"
+#import "AFOAuthCredential.h"
+#import "AJOauth2ApiClient.h"
 
 @implementation Helper
 
@@ -52,6 +54,13 @@
     User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
     
     return user;
+}
+
++ (void)removeUserPrefs {
+    // Remove credentials from NSUserDefaults as well as from AFOAuthCredential
+    [AFOAuthCredential deleteCredentialWithIdentifier:[AJOauth2ApiClient sharedClient].serviceProviderIdentifier];
+    [PREFS removeObjectForKey:USER_INFO];
+    [PREFS synchronize];
 }
 
 @end
