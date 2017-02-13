@@ -8,12 +8,13 @@
 
 #import "ProfileViewController.h"
 #import "MCLocalization.h"
-#import "AFOAuth2Manager.h"
 #import "Constants.h"
-#import "User.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
-
+#import "User.h"
+#import "ChangePasswordViewController.h"
+#import "EditProfileViewController.h"
+#import "AJOauth2ApiClient.h"
 
 @interface ProfileViewController ()
 
@@ -21,33 +22,39 @@
 
 @implementation ProfileViewController
 
+#pragma mark View-Life Cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    // Navigation title
     self.title = [MCLocalization stringForKey:@"profile_navigation_title"];
-
+    
+    // Back bar button item title
+    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"back_bar_button_item_title"] style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backBarButtonItem;
+    
     // Right Bar Button Item image
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sign-out"] style:UIBarButtonItemStylePlain target:self action:@selector(signOut)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sign-out"] style:UIBarButtonItemStylePlain target:self action:@selector(showAlertBeforeLogOut)];
     
     // image
     _imageView.image = [UIImage imageNamed:@"circle-user"];
     
-//    // Get user info from NSUserDefaults
-//    NSData *myObject = [PREFS objectForKey:USER_INFORMATION];
-//    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
-//    NSLog(@"%@", user.description);
-//    
-//    // Username
-//    _userName.text = user.userName;
-//    
-//    // Email
-//    _emailAddress.text = user.emailAddress;
+    // Basic Infoview
+    self.basicInfoView.backgroundColor = THEME_BG_COLOR;
     
     if ([Helper isConnected])
         [self showProfile];
     else
-        [MCLocalization stringForKey:@"NO_INTERNET_CONNECTIVITY"];
+        [MCLocalization stringForKey:@"no_internet_connectivity"];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    // User display info
+    [self userDisplayInfo];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,81 +64,184 @@
 
 
 /*
-#pragma mark - Navigation
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)userDisplayInfo {
+    // Get user info
+    User *user = [Helper getUserPrefs];
+    
+    // Username
+    _userNameLabel.text = [NSString stringWithFormat:@"@%@", user.userName];
+    
+    // Email Address
+    _emailAddressLabel.text = user.emailAddress;
+    
+    // Full Name
+    _fullNameLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
+    
+    // DOB
+    _dobLabel.text = user.dob;
 }
-*/
+
 #pragma mark /ME - API
 
 - (void)showProfile {
     [SVProgressHUD show];
-    NSData *myObject = [PREFS objectForKey:USER_INFORMATION];
-    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
-    NSLog(@"%@", user.description);
-    
-    // TODO: Refresh token/ Expiration time handling later on
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
-    [manager.requestSerializer setAuthorizationHeaderFieldWithCredential:[AFOAuthCredential credentialWithOAuthToken:user.accessToken tokenType:user.tokenType]];
-    [manager POST:SHOW_PROFILE_URI
-       parameters:@{}
-         progress:nil
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              NSLog(@"Success: %@", responseObject);
-              [SVProgressHUD dismiss];
-              NSDictionary *jsonDict = (NSDictionary *)responseObject;
-              if (!jsonDict)
-                  return;
-              if ([jsonDict isKindOfClass:[NSDictionary class]] == NO)
-                  NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([jsonDict class]));
-              
-              // Adding user credential dict into response dict
-              NSDictionary *dict = @{@"accessToken":user.accessToken, @"refreshToken":user.refreshToken, @"tokenType":user.tokenType};
-              NSMutableDictionary * mutableDict = [NSMutableDictionary dictionary];
-              [mutableDict addEntriesFromDictionary:dict];
-              [mutableDict addEntriesFromDictionary:jsonDict];
-              NSLog(@"Mutable Dict: %@", mutableDict);
-              
-              // User information updated with username, email address, first name, last name, dob
-              User *user = [[User alloc] initWithAttributes:mutableDict];
-              NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:user];
-              [PREFS setObject:myEncodedObject forKey:USER_INFORMATION];
-              [PREFS synchronize];
-              NSLog(@"%@", user.description);
-              
-              // Get user info
-              NSData *myObject = [PREFS objectForKey:USER_INFORMATION];
-              user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
-              
-              // Username
-              _userNameLabel.text = [NSString stringWithFormat:@"@%@", user.userName];
-              
-              // Email Address
-              _emailAddressLabel.text = user.emailAddress;
-              
-              // Full Name
-              _fullNameLabel.text = [NSString stringWithFormat:@"%@ %@", user.firstName, user.lastName];
-              
-              // DOB
-              // TODO: DOB format should fix from API side
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              NSLog(@"Failure: %@", error);
-          }];
+    AJOauth2ApiClient *client = [AJOauth2ApiClient sharedClient];
+    [client showProfile:^(NSURLSessionDataTask *task, id responseObject) {
+        if (![Helper checkResponseObject:responseObject])
+            return ;
+        
+        NSDictionary *jsonDict = (NSDictionary *)responseObject;
+        NSInteger statusCode = [jsonDict[@"code"] integerValue];
+        if (statusCode == SUCCESS_CODE) {
+            // User information stored in NSUserDefaults
+            [Helper userInfoSaveInDefaults:jsonDict];
+            
+            // Display info
+            [self userDisplayInfo];
+            
+            [SVProgressHUD showSuccessWithStatus:jsonDict[@"show_message"]];
+        } else {
+            [SVProgressHUD dismiss];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+        if (![Helper checkResponseObject:errorJson])
+            return ;
+        
+        NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
+        NSLog(@"%zd", httpResponse.statusCode);
+        if (httpResponse.statusCode == UNAUTHORIZED_CODE) {
+            [client refreshTokenWithSuccess:^(AFOAuthCredential *newCredential) {
+                [self showProfile];
+            } failure:^(NSError *error) {
+                [SVProgressHUD dismiss];
+                id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+                
+                if (![Helper checkResponseObject:errorJson])
+                    return ;
+                NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
+                NSLog(@"Error Code: %@; ErrorDescription: %@", errorJsonDict[@"code"], errorJsonDict[@"error_description"]);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
+                    [SVProgressHUD showSuccessWithStatus:[MCLocalization stringForKey:@"sign_out_message"]];
+                });
+            }];
+        }else if (httpResponse.statusCode == BAD_REQUEST_CODE) {
+            NSLog(@"Error Code: %@; ErrorDescription: %@", errorJsonDict[@"code"], errorJsonDict[@"error_description"]);
+        }else if (httpResponse.statusCode == INTERNAL_SERVER_ERROR_CODE) {
+            NSLog(@"Error Code: %@; ErrorDescription: %@", errorJsonDict[@"code"], errorJsonDict[@"error_description"]);
+        }
+    }];
 }
 
-#pragma mark Sign out
+#pragma mark methods
 
 - (void)signOut {
-    // Remove credentials from userdefaults as well as from AFOAuthCredential
-    [AFOAuthCredential deleteCredentialWithIdentifier:SERVICE_PROVIDER_IDENTIFIER];
-    [PREFS removeObjectForKey:USER_INFORMATION];
-    [PREFS synchronize];
-    
+    [Helper removeUserPrefs];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)showAlertBeforeLogOut {
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:[MCLocalization stringForKey:@"sign_out_prompt_title"]
+                                message:nil
+                                preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *yesButton = [UIAlertAction
+                                actionWithTitle:[MCLocalization stringForKey:@"sign_out"]
+                                style:UIAlertActionStyleDestructive
+                                handler:^(UIAlertAction * action) {
+                                    // Handle your yes button action here
+                                    [self signOut];
+                                }];
+    
+    UIAlertAction *cancelButton = [UIAlertAction
+                                   actionWithTitle:[MCLocalization stringForKey:@"cancel_button_title"]
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction * action) {
+                                       // Handle cancelButton button
+                                   }];
+    
+    [alert addAction:cancelButton];
+    [alert addAction:yesButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark SVProgressHUD
+
+- (void)handleNotification:(NSNotification *)notification {
+    NSLog(@"Notification received: %@", notification.name);
+    NSLog(@"Status user info key: %@", notification.userInfo[SVProgressHUDStatusUserInfoKey]);
+    
+    if ([notification.name isEqualToString:SVProgressHUDWillDisappearNotification]) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:SVProgressHUDWillDisappearNotification object:nil];
+        [self signOut];
+    }
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 3;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *cellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil)
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    
+    if (indexPath.section == 0)
+        cell.textLabel.text = [MCLocalization stringForKey:@"profile_edit_section_header_name"];
+    else if (indexPath.section == 1)
+        cell.textLabel.text = [MCLocalization stringForKey:@"change_password_section_header_name"];
+    else
+        cell.textLabel.text = [MCLocalization stringForKey:@"sign_out"];
+    
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (indexPath.section == 2) {
+        [self showAlertBeforeLogOut];
+        return;
+    }
+    
+    UIViewController *vc = nil;
+    if (indexPath.section == 0)
+        vc = [[EditProfileViewController alloc] initWithNibName:@"EditProfileViewController" bundle:[NSBundle mainBundle]];
+    else if (indexPath.section == 1)
+        vc = [[ChangePasswordViewController alloc] initWithNibName:@"ChangePasswordViewController" bundle:[NSBundle mainBundle]];
+    
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end

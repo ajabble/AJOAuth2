@@ -7,10 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "User.h"
 
 @interface Helper : NSObject
 
 + (BOOL)isConnected;
 + (BOOL)validateEmail:(NSString *)candidate;
++ (void)userInfoSaveInDefaults:(NSDictionary *)userInfoDict;
++ (BOOL)checkResponseObject:(id)responseObject;
++ (User *)getUserPrefs;
++ (void)removeUserPrefs;
 
 @end

@@ -10,13 +10,13 @@
 #import "ForgotPasswordViewController.h"
 #import "MCLocalization.h"
 #import "Constants.h"
-#import "AFOAuth2Manager.h"
 #import "SVProgressHUD.h"
 #import "Helper.h"
 #import "User.h"
+#import "AJOauth2ApiClient.h"
 
-#define emailTextfieldTag 1234
-#define passwordTextfieldTag 1235
+#define kEmailTextfieldTag 1234
+#define kPasswordTextfieldTag 1235
 
 @interface LoginViewController ()
 
@@ -35,25 +35,28 @@
     
     // Navigation title
     self.navigationItem.title = [MCLocalization stringForKey:@"login_nav_title"];
-    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"BACK_BAR_BUTTON_ITEM_TITLE"] style:UIBarButtonItemStylePlain target:nil action:nil];
+    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"back_bar_button_item_title"] style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backBarButtonItem;
     
     // Email textfield
-    _emailTextfield.placeholder = [MCLocalization stringForKey:@"email_placeholder"];
+    _emailTextfield.placeholder = [NSString stringWithFormat:@"%@ %@ %@", [MCLocalization stringForKey:@"email_placeholder"], [MCLocalization stringForKey:@"or_keyword"], [MCLocalization stringForKey:@"user_name_placeholder"]];
     _emailTextfield.returnKeyType = UIReturnKeyNext;
-    _emailTextfield.tag = emailTextfieldTag;
+    _emailTextfield.tag = kEmailTextfieldTag;
     _emailTextfield.autocorrectionType = UITextAutocorrectionTypeNo;
+    _emailTextfield.keyboardType = UIKeyboardTypeEmailAddress;
     
     // Password textfield
     _passwordTextfield.placeholder = [MCLocalization stringForKey:@"password_placeholder"];
     _passwordTextfield.secureTextEntry = YES;
     _passwordTextfield.returnKeyType = UIReturnKeyDone;
-    _passwordTextfield.tag = passwordTextfieldTag;
+    _passwordTextfield.tag = kPasswordTextfieldTag;
     
-    _emailTextfield.errorColor = _passwordTextfield.errorColor = ERROR_COLOR;
-    _emailTextfield.lineColor = _passwordTextfield.lineColor = LINE_COLOR;
+    _emailTextfield.errorColor = _passwordTextfield.errorColor = ERROR_LINE_COLOR;
+    //_emailTextfield.lineColor = _passwordTextfield.lineColor = THEME_BG_COLOR;
     _emailTextfield.enableMaterialPlaceHolder = _passwordTextfield.enableMaterialPlaceHolder = YES;
     _emailTextfield.delegate = _passwordTextfield.delegate = self;
+    _emailTextfield.clearButtonMode = _passwordTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _emailTextfield.textColor = _passwordTextfield.textColor = TEXT_LABEL_COLOR;
     
     // Sign In button
     [_signinButton setTitle:[MCLocalization stringForKey:@"signin_btn_title"] forState:UIControlStateNormal];
@@ -63,11 +66,6 @@
     
     // Forgot Password button title
     [_forgotPasswordButton setTitle:[MCLocalization stringForKey:@"forgot_password_btn_title"] forState:UIControlStateNormal];
-    
-    if(DEV_ENV) {
-        _emailTextfield.text = @"ajabble";
-        _passwordTextfield.text = @"aj123";
-    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -98,18 +96,9 @@
     }
     
     if ([Helper isConnected])
-    [self getAccessToken];
+        [self getAccessToken];
     else
-    [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"NO_INTERNET_CONNECTIVITY"]];
-    
-    
-    //    if ([Helper validateEmail:_emailTextfield.text]) {
-    //        [_emailTextfield hideError];
-    //        NSLog(@"Proceed to next!!");
-    //        [self getAccessToken];
-    //    }else {
-    //        [_emailTextfield showError];
-    //    }
+        [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"no_internet_connectivity"]];
 }
 
 - (IBAction)forgotPassword:(id)sender {
@@ -118,39 +107,49 @@
 }
 
 #pragma mark - Access Token with API
+
 - (void)getAccessToken {
+    [_emailTextfield hideError];
+    [_passwordTextfield hideError];
+    
     [SVProgressHUD show];
-    // get access token, refresh token, expiration time
-    AFOAuth2Manager *OAuth2Manager = [[AFOAuth2Manager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL] clientID:CLIENT_ID secret:SECRET_KEY];
-    OAuth2Manager.useHTTPBasicAuthentication = NO;
-    [OAuth2Manager authenticateUsingOAuthWithURLString:FETCH_ACCESS_TOKEN_URI username:_emailTextfield.text password:_passwordTextfield.text scope:@""success:^(AFOAuthCredential *credential) {
-        NSLog(@"Token: %@", credential.description);
-        NSDictionary *dict = @{@"accessToken":credential.accessToken, @"refreshToken":credential.refreshToken, @"tokenType":credential.tokenType};
+    
+    AJOauth2ApiClient *client = [AJOauth2ApiClient sharedClient];
+    [client signInWithUsernameAndPassword:_emailTextfield.text password:_passwordTextfield.text success:^(AFOAuthCredential *credential) {
+        
+        // User info stored in NSUserDefaults i.e to access basic info on left drawer
+        NSDictionary *userInfoDict = @{@"username": _emailTextfield.text};
+        [Helper userInfoSaveInDefaults:userInfoDict];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillAppearNotification object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
-            [SVProgressHUD showSuccessWithStatus:[MCLocalization stringForKey:@"LOGIN_SUCCESS_MSG"]];
+            [SVProgressHUD showSuccessWithStatus:[MCLocalization stringForKey:@"login_success_message"]];
         });
-        
-        // Store credential
-        [AFOAuthCredential storeCredential:credential withIdentifier:SERVICE_PROVIDER_IDENTIFIER];
-        User *user = [[User alloc] initWithAttributes:[dict mutableCopy]];
-        NSLog(@"%@", user.description);
-       
-        NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:user];
-        [PREFS setObject:myEncodedObject forKey:USER_INFORMATION];
     } failure:^(NSError *error) {
-        NSLog(@"Error: %@", error.description);
-        [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"ERROR_MSG"]];
+        id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+        
+        if (![Helper checkResponseObject:errorJson])
+            return ;
+        
+        NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
+        NSInteger statusCode = [errorJsonDict[@"code"] integerValue];
+        if (statusCode == BAD_REQUEST_CODE) {
+            [SVProgressHUD showErrorWithStatus:errorJsonDict[@"show_message"]];
+            return;
+        }else if (statusCode == INTERNAL_SERVER_ERROR_CODE) {
+            NSLog(@"Error Code: %zd; ErrorDescription: %@", statusCode, errorJsonDict[@"error_description"]);
+        }
+        [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"error_message"]];
     }];
 }
+
+#pragma mark SVProgressHUD
 
 - (void)handleNotification:(NSNotification *)notification {
     NSLog(@"Notification received: %@", notification.name);
     NSLog(@"Status user info key: %@", notification.userInfo[SVProgressHUDStatusUserInfoKey]);
     
-    if([notification.name isEqualToString:SVProgressHUDWillDisappearNotification]) {
+    if ([notification.name isEqualToString:SVProgressHUDWillDisappearNotification]) {
         [self.navigationController popToRootViewControllerAnimated:YES];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:SVProgressHUDWillDisappearNotification object:nil];
     }
@@ -159,19 +158,13 @@
 #pragma mark UITextfield
 
 - (void)textFieldDidEndEditing:(JJMaterialTextfield *)textField {
-    if (textField.text.length == 0)
-    [textField showError];
-    else
-    [textField hideError];
+    (textField.text.length == 0) ? [textField showError] : [textField hideError];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     UIView *view = [self.view viewWithTag:textField.tag + 1];
-    if (!view)
-       [textField resignFirstResponder];
-    else
-      [view becomeFirstResponder];
-    
+    (!view) ? [textField resignFirstResponder] : [view becomeFirstResponder];
+   
     return YES;
 }
 

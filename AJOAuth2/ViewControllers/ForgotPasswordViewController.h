@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "JJMaterialTextField.h"
+@import JJMaterialTextField;
 
 @interface ForgotPasswordViewController : UIViewController <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet JJMaterialTextfield *emailTextfield;
 @property (weak, nonatomic) IBOutlet UIButton *resetPasswordButton;
+
 - (IBAction)reset:(id)sender;
 @end

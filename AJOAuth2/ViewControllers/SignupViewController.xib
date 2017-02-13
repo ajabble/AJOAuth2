@@ -26,61 +26,81 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sMX-ct-hyd" customClass="JJMaterialTextfield">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sMX-ct-hyd" customClass="JJMaterialTextfield">
                     <rect key="frame" x="20" y="90" width="280" height="30"/>
-                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="xaj-Xq-A4N"/>
+                    </constraints>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="hVo-XP-mzq"/>
                     </connections>
                 </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yHv-5w-ypg" customClass="JJMaterialTextfield">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yHv-5w-ypg" customClass="JJMaterialTextfield">
                     <rect key="frame" x="20" y="150" width="280" height="30"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="FWJ-H3-bwu"/>
+                    </constraints>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="UDk-gs-EUc"/>
                     </connections>
                 </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AtR-Gq-2iT" customClass="JJMaterialTextfield">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AtR-Gq-2iT" customClass="JJMaterialTextfield">
                     <rect key="frame" x="20" y="210" width="280" height="30"/>
-                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="vxu-8L-SIf"/>
+                    </constraints>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="Pth-62-rWf"/>
                     </connections>
                 </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CMR-yL-jBh" customClass="JJMaterialTextfield">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CMR-yL-jBh" customClass="JJMaterialTextfield">
                     <rect key="frame" x="20" y="270" width="280" height="30"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="F0R-hb-Bgp"/>
+                    </constraints>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="R2s-iR-LYn"/>
                     </connections>
                 </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4ke-MZ-s5T" customClass="JJMaterialTextfield">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4ke-MZ-s5T" customClass="JJMaterialTextfield">
                     <rect key="frame" x="20" y="330" width="280" height="30"/>
-                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="5vG-tk-Eyq"/>
+                    </constraints>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="vDt-3q-ub5"/>
                     </connections>
                 </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rC8-bQ-A0p" customClass="JJMaterialTextfield">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rC8-bQ-A0p" customClass="JJMaterialTextfield">
                     <rect key="frame" x="20" y="390" width="280" height="30"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="iB5-9M-4zV"/>
+                    </constraints>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lQS-Np-Wkk">
-                    <rect key="frame" x="20" y="460" width="280" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lQS-Np-Wkk">
+                    <rect key="frame" x="20" y="450" width="280" height="30"/>
                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <state key="normal" title="Button"/>
+                    <state key="normal" title="Button">
+                        <color key="titleColor" red="0.11389885969999999" green="0.68895354180000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
                     <connections>
                         <action selector="signup:" destination="-1" eventType="touchUpInside" id="RdC-tD-qtV"/>
                     </connections>
@@ -88,37 +108,27 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="4ke-MZ-s5T" firstAttribute="top" secondItem="CMR-yL-jBh" secondAttribute="bottom" constant="30" id="5Ap-7a-Vnt"/>
-                <constraint firstItem="CMR-yL-jBh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="7IL-tS-IOU"/>
-                <constraint firstItem="AtR-Gq-2iT" firstAttribute="width" secondItem="sMX-ct-hyd" secondAttribute="width" id="7w6-fu-w31"/>
-                <constraint firstItem="sMX-ct-hyd" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="90" id="8fs-sd-MTR"/>
-                <constraint firstAttribute="trailing" secondItem="rC8-bQ-A0p" secondAttribute="trailing" constant="20" id="CX0-7X-v4z"/>
-                <constraint firstItem="4ke-MZ-s5T" firstAttribute="height" secondItem="sMX-ct-hyd" secondAttribute="height" id="DYM-OL-kid"/>
-                <constraint firstItem="lQS-Np-Wkk" firstAttribute="top" secondItem="rC8-bQ-A0p" secondAttribute="bottom" constant="40" id="EFN-ce-Ucj"/>
-                <constraint firstItem="lQS-Np-Wkk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="FC6-nk-5Oi"/>
-                <constraint firstAttribute="trailing" secondItem="4ke-MZ-s5T" secondAttribute="trailing" constant="20" id="GPD-Uf-eU3"/>
-                <constraint firstItem="rC8-bQ-A0p" firstAttribute="top" secondItem="4ke-MZ-s5T" secondAttribute="bottom" constant="30" id="Gwp-hp-e9a"/>
-                <constraint firstItem="sMX-ct-hyd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="JGE-Dm-VrK"/>
-                <constraint firstItem="4ke-MZ-s5T" firstAttribute="width" secondItem="sMX-ct-hyd" secondAttribute="width" id="JTu-nW-HQ8"/>
-                <constraint firstItem="CMR-yL-jBh" firstAttribute="top" secondItem="AtR-Gq-2iT" secondAttribute="bottom" constant="30" id="Mqb-xp-XQL"/>
-                <constraint firstItem="yHv-5w-ypg" firstAttribute="width" secondItem="sMX-ct-hyd" secondAttribute="width" id="TbB-7J-hyB"/>
-                <constraint firstItem="CMR-yL-jBh" firstAttribute="width" secondItem="sMX-ct-hyd" secondAttribute="width" id="VDP-BB-Up5"/>
-                <constraint firstItem="yHv-5w-ypg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="X5V-jy-ZSI"/>
-                <constraint firstAttribute="trailing" secondItem="AtR-Gq-2iT" secondAttribute="trailing" constant="20" id="XdG-oj-DoD"/>
-                <constraint firstItem="AtR-Gq-2iT" firstAttribute="height" secondItem="sMX-ct-hyd" secondAttribute="height" id="Xdc-Ex-5ru"/>
-                <constraint firstItem="AtR-Gq-2iT" firstAttribute="top" secondItem="yHv-5w-ypg" secondAttribute="bottom" constant="30" id="bhx-lZ-jH4"/>
-                <constraint firstAttribute="trailing" secondItem="CMR-yL-jBh" secondAttribute="trailing" constant="20" id="bwe-N7-Fzo"/>
-                <constraint firstItem="rC8-bQ-A0p" firstAttribute="height" secondItem="sMX-ct-hyd" secondAttribute="height" id="cAw-HM-fS8"/>
-                <constraint firstItem="AtR-Gq-2iT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="fA7-GF-Ref"/>
-                <constraint firstItem="rC8-bQ-A0p" firstAttribute="width" secondItem="sMX-ct-hyd" secondAttribute="width" id="fkW-hP-NjL"/>
-                <constraint firstAttribute="trailing" secondItem="sMX-ct-hyd" secondAttribute="trailing" constant="20" id="i6v-VM-eqt"/>
-                <constraint firstItem="yHv-5w-ypg" firstAttribute="top" secondItem="sMX-ct-hyd" secondAttribute="bottom" constant="30" id="izQ-Co-cO0"/>
-                <constraint firstItem="rC8-bQ-A0p" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="kzM-Vh-3TC"/>
-                <constraint firstAttribute="trailing" secondItem="lQS-Np-Wkk" secondAttribute="trailing" constant="20" id="lMj-fk-3FT"/>
-                <constraint firstAttribute="trailing" secondItem="yHv-5w-ypg" secondAttribute="trailing" constant="20" id="ltd-uR-c4v"/>
-                <constraint firstItem="4ke-MZ-s5T" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="mjv-Kt-Lta"/>
-                <constraint firstItem="yHv-5w-ypg" firstAttribute="height" secondItem="sMX-ct-hyd" secondAttribute="height" id="rrt-v9-bdi"/>
-                <constraint firstItem="CMR-yL-jBh" firstAttribute="height" secondItem="sMX-ct-hyd" secondAttribute="height" id="wig-2n-LeB"/>
+                <constraint firstItem="4ke-MZ-s5T" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="0GA-RX-mBf"/>
+                <constraint firstItem="CMR-yL-jBh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="62j-9q-saS"/>
+                <constraint firstItem="sMX-ct-hyd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="6Jn-KC-3t3"/>
+                <constraint firstItem="AtR-Gq-2iT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="9Uq-gh-owT"/>
+                <constraint firstItem="AtR-Gq-2iT" firstAttribute="top" secondItem="yHv-5w-ypg" secondAttribute="bottom" constant="30" id="BaB-ZI-cOq"/>
+                <constraint firstItem="rC8-bQ-A0p" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="DsW-sh-BLc"/>
+                <constraint firstItem="yHv-5w-ypg" firstAttribute="top" secondItem="sMX-ct-hyd" secondAttribute="bottom" constant="30" id="EUq-LC-8IQ"/>
+                <constraint firstAttribute="trailing" secondItem="CMR-yL-jBh" secondAttribute="trailing" constant="20" id="Eoc-Fp-JiL"/>
+                <constraint firstAttribute="trailing" secondItem="AtR-Gq-2iT" secondAttribute="trailing" constant="20" id="R58-N4-T2R"/>
+                <constraint firstItem="rC8-bQ-A0p" firstAttribute="top" secondItem="4ke-MZ-s5T" secondAttribute="bottom" constant="30" id="b40-er-hCz"/>
+                <constraint firstAttribute="trailing" secondItem="4ke-MZ-s5T" secondAttribute="trailing" constant="20" id="gfg-7s-udS"/>
+                <constraint firstAttribute="trailing" secondItem="rC8-bQ-A0p" secondAttribute="trailing" constant="20" id="hsM-Fy-Ywz"/>
+                <constraint firstItem="lQS-Np-Wkk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="ibB-MS-agn"/>
+                <constraint firstItem="sMX-ct-hyd" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="90" id="jZq-D4-Dpo"/>
+                <constraint firstItem="lQS-Np-Wkk" firstAttribute="top" secondItem="rC8-bQ-A0p" secondAttribute="bottom" constant="30" id="kMG-NP-CoG"/>
+                <constraint firstAttribute="trailing" secondItem="yHv-5w-ypg" secondAttribute="trailing" constant="20" id="lXw-nT-Q3Y"/>
+                <constraint firstItem="CMR-yL-jBh" firstAttribute="top" secondItem="AtR-Gq-2iT" secondAttribute="bottom" constant="30" id="o8E-x4-aJu"/>
+                <constraint firstItem="yHv-5w-ypg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="qLT-OM-nr5"/>
+                <constraint firstItem="4ke-MZ-s5T" firstAttribute="top" secondItem="CMR-yL-jBh" secondAttribute="bottom" constant="30" id="qmZ-i7-5eF"/>
+                <constraint firstAttribute="trailing" secondItem="sMX-ct-hyd" secondAttribute="trailing" constant="20" id="u5b-qz-h5a"/>
+                <constraint firstAttribute="trailing" secondItem="lQS-Np-Wkk" secondAttribute="trailing" constant="20" id="xP5-ja-JgD"/>
             </constraints>
             <point key="canvasLocation" x="34.5" y="113.5"/>
         </view>

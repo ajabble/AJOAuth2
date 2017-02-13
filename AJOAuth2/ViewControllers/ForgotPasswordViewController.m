@@ -7,17 +7,19 @@
 //
 
 #import "ForgotPasswordViewController.h"
-#import "AFOAuth2Manager.h"
 #import "MCLocalization.h"
 #import "Constants.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
+#import "AJOauth2ApiClient.h"
 
 @interface ForgotPasswordViewController ()
 
 @end
 
 @implementation ForgotPasswordViewController
+
+#pragma mark View-Life Cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -26,21 +28,23 @@
     
     // Navigation title
     self.navigationItem.title = [MCLocalization stringForKey:@"forgot_password_nav_title"];
-    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"BACK_BAR_BUTTON_ITEM_TITLE"] style:UIBarButtonItemStylePlain target:nil action:nil];
+    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"back_bar_button_item_title"] style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backBarButtonItem;
     
     // View BG Color
     self.view.backgroundColor = VIEW_BG_COLOR;
     
     // Email Textfield
-    _emailTextfield.enableMaterialPlaceHolder = YES;
-    _emailTextfield.placeholder = [MCLocalization stringForKey:@"email_placeholder"];
+    _emailTextfield.placeholder = [NSString stringWithFormat:@"%@ %@ %@", [MCLocalization stringForKey:@"email_placeholder"], [MCLocalization stringForKey:@"or_keyword"], [MCLocalization stringForKey:@"user_name_placeholder"]];
     _emailTextfield.returnKeyType = UIReturnKeyNext;
     _emailTextfield.autocorrectionType = UITextAutocorrectionTypeNo;
-    _emailTextfield.errorColor = ERROR_COLOR;
-    _emailTextfield.lineColor = LINE_COLOR;
+    _emailTextfield.errorColor = ERROR_LINE_COLOR;
+    //_emailTextfield.lineColor = TEXT_LABEL_COLOR;
     _emailTextfield.enableMaterialPlaceHolder = YES;
     _emailTextfield.delegate = self;
+    _emailTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _emailTextfield.keyboardType = UIKeyboardTypeEmailAddress;
+    _emailTextfield.textColor = TEXT_LABEL_COLOR;
     
     // Reset Password Button title
     [_resetPasswordButton setTitle:[MCLocalization stringForKey:@"reset_password_btn_title"] forState:UIControlStateNormal];
@@ -66,11 +70,7 @@
 #pragma mark UITextfield
 
 - (void)textFieldDidEndEditing:(JJMaterialTextfield *)textField {
-    if (textField.text.length == 0)
-        [textField showError];
-    else
-        [textField hideError];
-    
+    (textField.text.length == 0) ? [textField showError] : [textField hideError];
 }
 
 #pragma mark IBActions
@@ -81,49 +81,58 @@
         return;
     }
     
-    [self requestPassword];
-    
-//    if ([Helper validateEmail:_emailTextfield.text]) {
-//        [_emailTextfield hideError];
-//        NSLog(@"Proceed to next!!");
-//    } else {
-//        [_emailTextfield showError];
-//    }
+    if ([Helper isConnected])
+        [self requestPassword];
+    else
+        [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"no_internet_connectivity"]];
 }
 
 #pragma mark Request Password API method
 
 - (void)requestPassword {
+    [_emailTextfield hideError];
+    
     [SVProgressHUD show];
-    AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:[NSURL URLWithString:BASE_URL]];
-     [manager POST:REQUEST_PASSWORD_URI
-       parameters:@{@"username": _emailTextfield.text}
-         progress:nil
-          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-              NSLog(@"Success: %@", responseObject);
-              NSDictionary *jsonDict = (NSDictionary *)responseObject;
-              if (!jsonDict)
-                  return;
-              if ([jsonDict isKindOfClass:[NSDictionary class]] == NO)
-                  NSAssert(NO, @"Expected an Dictionary, got %@", NSStringFromClass([jsonDict class]));
-              
-              dispatch_async(dispatch_get_main_queue(), ^{
-                  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillAppearNotification object:nil];
-                  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
-                  [SVProgressHUD showSuccessWithStatus:jsonDict[@"msg"]];
-              });
-          }
-          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-              NSLog(@"Failure: %@", error);
-              [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"ERROR_MSG"]];
-          }];
+    AJOauth2ApiClient *client = [AJOauth2ApiClient sharedClient];
+    [client requestPassword:_emailTextfield.text success:^(NSURLSessionDataTask *task, id responseObject) {
+        if (![Helper checkResponseObject:responseObject])
+            return ;
+        
+        NSDictionary *jsonDict = (NSDictionary *)responseObject;
+        NSInteger statusCode = [jsonDict[@"code"] integerValue];
+        if (statusCode == SUCCESS_CODE) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
+                [SVProgressHUD showSuccessWithStatus:jsonDict[@"show_message"]];
+            });
+        }else {
+            [SVProgressHUD dismiss];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+        
+        if (![Helper checkResponseObject:errorJson])
+            return ;
+        
+        NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
+        NSInteger statusCode = [errorJsonDict[@"code"] integerValue];
+        if (statusCode == BAD_REQUEST_CODE) {
+            [SVProgressHUD showErrorWithStatus:errorJsonDict[@"show_message"]];
+            return;
+        }else if (statusCode == INTERNAL_SERVER_ERROR_CODE) {
+            NSLog(@"Error Code: %zd; ErrorDescription: %@", statusCode, errorJsonDict[@"error_description"]);
+        }
+        [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"error_message"]];
+    }];
 }
+
+#pragma mark SVProgressHUD
 
 - (void)handleNotification:(NSNotification *)notification {
     NSLog(@"Notification received: %@", notification.name);
     NSLog(@"Status user info key: %@", notification.userInfo[SVProgressHUDStatusUserInfoKey]);
     
-    if([notification.name isEqualToString:SVProgressHUDWillDisappearNotification]) {
+    if ([notification.name isEqualToString:SVProgressHUDWillDisappearNotification]) {
         [self.navigationController popViewControllerAnimated:YES];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:SVProgressHUDWillDisappearNotification object:nil];
     }

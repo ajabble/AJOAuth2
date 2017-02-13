@@ -16,6 +16,11 @@
 		381952841E3219E300ACB611 /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381952821E3219E300ACB611 /* ForgotPasswordViewController.m */; };
 		381952851E3219E300ACB611 /* ForgotPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 381952831E3219E300ACB611 /* ForgotPasswordViewController.xib */; };
 		381952881E3243D000ACB611 /* hi.json in Resources */ = {isa = PBXBuildFile; fileRef = 381952871E3243D000ACB611 /* hi.json */; };
+		381A7DFF1E48594200DD48C4 /* EditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381A7DFD1E48594200DD48C4 /* EditProfileViewController.m */; };
+		381A7E001E48594200DD48C4 /* EditProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 381A7DFE1E48594200DD48C4 /* EditProfileViewController.xib */; };
+		381A7E041E4863CD00DD48C4 /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381A7E021E4863CD00DD48C4 /* ChangePasswordViewController.m */; };
+		381A7E051E4863CD00DD48C4 /* ChangePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 381A7E031E4863CD00DD48C4 /* ChangePasswordViewController.xib */; };
+		381A7E081E4B610300DD48C4 /* AJOauth2ApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 381A7E071E4B610300DD48C4 /* AJOauth2ApiClient.m */; };
 		38CE70BC1E309514009195D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70BB1E309514009195D9 /* main.m */; };
 		38CE70BF1E309514009195D9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70BE1E309514009195D9 /* AppDelegate.m */; };
 		38CE70C51E309514009195D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38CE70C31E309514009195D9 /* Main.storyboard */; };
@@ -29,7 +34,6 @@
 		38DC4FC81E35ECED00C7FA3F /* LeftViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DC4FBD1E35ECED00C7FA3F /* LeftViewCell.m */; };
 		38DC4FC91E35ECED00C7FA3F /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DC4FBF1E35ECED00C7FA3F /* LeftViewController.m */; };
 		38DC4FD01E35ED1100C7FA3F /* CenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DC4FCF1E35ED1100C7FA3F /* CenterViewController.m */; };
-		38DC4FD51E35ED2E00C7FA3F /* imageLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 38DC4FD21E35ED2E00C7FA3F /* imageLeft.png */; };
 		38F7E87C1E3624F6006041DC /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F7E87B1E3624F6006041DC /* Helper.m */; };
 		38F7E8801E364452006041DC /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F7E87F1E364452006041DC /* User.m */; };
 		38F7E8841E36983E006041DC /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F7E8821E36983E006041DC /* ProfileViewController.m */; };
@@ -68,6 +72,14 @@
 		381952821E3219E300ACB611 /* ForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ForgotPasswordViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		381952831E3219E300ACB611 /* ForgotPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgotPasswordViewController.xib; sourceTree = "<group>"; };
 		381952871E3243D000ACB611 /* hi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = hi.json; sourceTree = "<group>"; };
+		381A7DFC1E48594200DD48C4 /* EditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileViewController.h; sourceTree = "<group>"; };
+		381A7DFD1E48594200DD48C4 /* EditProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = EditProfileViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		381A7DFE1E48594200DD48C4 /* EditProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditProfileViewController.xib; sourceTree = "<group>"; };
+		381A7E011E4863CD00DD48C4 /* ChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordViewController.h; sourceTree = "<group>"; };
+		381A7E021E4863CD00DD48C4 /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ChangePasswordViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		381A7E031E4863CD00DD48C4 /* ChangePasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangePasswordViewController.xib; sourceTree = "<group>"; };
+		381A7E061E4B610300DD48C4 /* AJOauth2ApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJOauth2ApiClient.h; sourceTree = "<group>"; };
+		381A7E071E4B610300DD48C4 /* AJOauth2ApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJOauth2ApiClient.m; sourceTree = "<group>"; };
 		38CE70B71E309514009195D9 /* AJOAuth2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AJOAuth2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38CE70BB1E309514009195D9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		38CE70BD1E309514009195D9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -83,9 +95,9 @@
 		38CE70DF1E309514009195D9 /* AJOAuth2UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AJOAuth2UITests.m; sourceTree = "<group>"; };
 		38CE70E11E309514009195D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		38CE70F11E30A7FE009195D9 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		38CE71221E30C69F009195D9 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		38CE71221E30C69F009195D9 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Constants.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		38CE71231E30C69F009195D9 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
-		38CE71241E30C69F009195D9 /* en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = en.json; sourceTree = "<group>"; };
+		38CE71241E30C69F009195D9 /* en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; lineEnding = 0; path = en.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.javascript; };
 		38CE712F1E30C800009195D9 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		38CE71301E30C800009195D9 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = HomeViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38DC4FBC1E35ECED00C7FA3F /* LeftViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftViewCell.h; sourceTree = "<group>"; };
@@ -94,13 +106,12 @@
 		38DC4FBF1E35ECED00C7FA3F /* LeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LeftViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38DC4FCE1E35ED1100C7FA3F /* CenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CenterViewController.h; sourceTree = "<group>"; };
 		38DC4FCF1E35ED1100C7FA3F /* CenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CenterViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		38DC4FD21E35ED2E00C7FA3F /* imageLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageLeft.png; sourceTree = "<group>"; };
 		38F7E87A1E3624F6006041DC /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
 		38F7E87B1E3624F6006041DC /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
 		38F7E87E1E364452006041DC /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		38F7E87F1E364452006041DC /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		38F7E8811E36983E006041DC /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
-		38F7E8821E36983E006041DC /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		38F7E8821E36983E006041DC /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ProfileViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38F7E8831E36983E006041DC /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		6A517ED11854943A0AE8AB59 /* Pods-AJOAuth2UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AJOAuth2UITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AJOAuth2UITests/Pods-AJOAuth2UITests.debug.xcconfig"; sourceTree = "<group>"; };
 		721B5967C8E86645C431B85D /* Pods-AJOAuth2UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AJOAuth2UITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AJOAuth2UITests/Pods-AJOAuth2UITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -188,7 +199,6 @@
 				38CE71231E30C69F009195D9 /* PrefixHeader.pch */,
 				38CE71241E30C69F009195D9 /* en.json */,
 				381952871E3243D000ACB611 /* hi.json */,
-				38DC4FD21E35ED2E00C7FA3F /* imageLeft.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -235,6 +245,12 @@
 				38F7E8811E36983E006041DC /* ProfileViewController.h */,
 				38F7E8821E36983E006041DC /* ProfileViewController.m */,
 				38F7E8831E36983E006041DC /* ProfileViewController.xib */,
+				381A7DFC1E48594200DD48C4 /* EditProfileViewController.h */,
+				381A7DFD1E48594200DD48C4 /* EditProfileViewController.m */,
+				381A7DFE1E48594200DD48C4 /* EditProfileViewController.xib */,
+				381A7E011E4863CD00DD48C4 /* ChangePasswordViewController.h */,
+				381A7E021E4863CD00DD48C4 /* ChangePasswordViewController.m */,
+				381A7E031E4863CD00DD48C4 /* ChangePasswordViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -244,6 +260,8 @@
 			children = (
 				38F7E87A1E3624F6006041DC /* Helper.h */,
 				38F7E87B1E3624F6006041DC /* Helper.m */,
+				381A7E061E4B610300DD48C4 /* AJOauth2ApiClient.h */,
+				381A7E071E4B610300DD48C4 /* AJOauth2ApiClient.m */,
 			);
 			name = Custom;
 			sourceTree = "<group>";
@@ -395,15 +413,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				381A7E051E4863CD00DD48C4 /* ChangePasswordViewController.xib in Resources */,
 				38CE70CA1E309514009195D9 /* LaunchScreen.storyboard in Resources */,
 				38CE70C71E309514009195D9 /* Assets.xcassets in Resources */,
 				38CE71251E30C69F009195D9 /* en.json in Resources */,
 				381952851E3219E300ACB611 /* ForgotPasswordViewController.xib in Resources */,
 				38CE70C51E309514009195D9 /* Main.storyboard in Resources */,
 				381952731E31F6F900ACB611 /* HomeViewController.xib in Resources */,
-				38DC4FD51E35ED2E00C7FA3F /* imageLeft.png in Resources */,
 				381952781E32122B00ACB611 /* LoginViewController.xib in Resources */,
 				381952801E32124E00ACB611 /* SignupViewController.xib in Resources */,
+				381A7E001E48594200DD48C4 /* EditProfileViewController.xib in Resources */,
 				381952881E3243D000ACB611 /* hi.json in Resources */,
 				38F7E8851E36983E006041DC /* ProfileViewController.xib in Resources */,
 				38CE70F31E30A7FE009195D9 /* README.md in Resources */,
@@ -570,7 +589,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				381952771E32122B00ACB611 /* LoginViewController.m in Sources */,
+				381A7E081E4B610300DD48C4 /* AJOauth2ApiClient.m in Sources */,
 				38CE70BF1E309514009195D9 /* AppDelegate.m in Sources */,
+				381A7DFF1E48594200DD48C4 /* EditProfileViewController.m in Sources */,
 				38CE71311E30C800009195D9 /* HomeViewController.m in Sources */,
 				38DC4FC91E35ECED00C7FA3F /* LeftViewController.m in Sources */,
 				38DC4FC81E35ECED00C7FA3F /* LeftViewCell.m in Sources */,
@@ -580,6 +601,7 @@
 				38F7E87C1E3624F6006041DC /* Helper.m in Sources */,
 				381952841E3219E300ACB611 /* ForgotPasswordViewController.m in Sources */,
 				38F7E8841E36983E006041DC /* ProfileViewController.m in Sources */,
+				381A7E041E4863CD00DD48C4 /* ChangePasswordViewController.m in Sources */,
 				38DC4FD01E35ED1100C7FA3F /* CenterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -4,15 +4,14 @@
 
 #import "LeftViewController.h"
 #import "LeftViewCell.h"
-#import "UIViewController+LGSideMenuController.h"
 #import "CenterViewController.h"
 #import "HomeViewController.h"
 #import "MCLocalization.h"
 #import "Constants.h"
-#import "AFOAuth2Manager.h"
 #import "ProfileViewController.h"
 #import "Helper.h"
 #import "User.h"
+#import <LGSideMenuController/UIViewController+LGSideMenuController.h>
 
 @interface LeftViewController ()
 
@@ -29,10 +28,10 @@
 - (id)init {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
-        // Forcefully stop to call table data source and delegates
+        // TODO: Forcefully stop to call table data source and delegates
         self.tableView.dataSource = nil;
         self.tableView.delegate = nil;
-        
+        [self.tableView registerClass:[LeftViewCell class] forCellReuseIdentifier:@"cell"];
         self.tableView.contentInset = UIEdgeInsetsMake(44.0, 0.0, 44.0, 0.0);
         self.view.backgroundColor = self.tableView.backgroundColor = [UIColor clearColor];
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -48,18 +47,26 @@
     // Table header view
     self.tableView.tableHeaderView = [self getTableHeaderView];
     
-    if (![PREFS objectForKey:USER_INFORMATION]) {
-        _usernameLabel.text = [MCLocalization stringForKey:@"PERSONALIZED_TITLE_PLACEHOLDER"];
-        _emailLabel.text = [MCLocalization stringForKey:@"PERSONALIZED_SUB_TITLE_PLACEHOLDER"];
-    }else {
-        NSData *myObject = [PREFS objectForKey:USER_INFORMATION];
-        User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
+    if (![PREFS objectForKey:USER_INFO]) {
+        _usernameLabel.text = [MCLocalization stringForKey:@"personalized_title_placeholder"];
+        _emailLabel.text = [MCLocalization stringForKey:@"personalized_subtitle_placeholder"];
+        
+        self.titlesArray = nil;
+        self.tableView.dataSource = nil;
+        self.tableView.delegate = nil;
+    } else {
+        User *user = [Helper getUserPrefs];
         
         // Username
         _usernameLabel.text = user.userName;
         
         // Email Address
         _emailLabel.text = user.emailAddress;
+        
+        // Left title array on cell
+        self.titlesArray = @[@"", [MCLocalization stringForKey:@"settings_title"]];
+        self.tableView.dataSource = self;
+        self.tableView.delegate = self;
     }
     
     // Tap gesture added to TableHeaderView
@@ -78,14 +85,14 @@
     
     // title
     _usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 0, 240 , 30)];
-    _usernameLabel.text = [MCLocalization stringForKey:@"PERSONALIZED_TITLE_PLACEHOLDER"];
+    _usernameLabel.text = [MCLocalization stringForKey:@"personalized_title_placeholder"];
     _usernameLabel.textColor = [UIColor whiteColor];
     _usernameLabel.font = [UIFont boldSystemFontOfSize:14.0f];
     [headerView addSubview:_usernameLabel];
     
     // Sub-title
     _emailLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 20, 240 , 30)];
-    _emailLabel.text = [MCLocalization stringForKey:@"PERSONALIZED_SUB_TITLE_PLACEHOLDER"];
+    _emailLabel.text = [MCLocalization stringForKey:@"personalized_subtitle_placeholder"];
     _emailLabel.textColor = [UIColor whiteColor];
     _emailLabel.font = [UIFont systemFontOfSize:11.0f];
     [headerView addSubview:_emailLabel];
@@ -98,6 +105,8 @@
     return headerView;
 }
 
+#pragma mark - UITapGestureRecognizer
+
 - (UITapGestureRecognizer *)tableHeaderViewRecognizer {
     UITapGestureRecognizer *singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureHandler:)];
     singleTapRecognizer.numberOfTouchesRequired = 1;
@@ -106,12 +115,10 @@
     return singleTapRecognizer;
 }
 
-#pragma mark - UITapGestureRecognizer
-
 - (void)gestureHandler:(UIGestureRecognizer *)gestureRecognizer {
     UIViewController *rightSideVC = nil;
     
-    if (![PREFS objectForKey:USER_INFORMATION]) {
+    if (![PREFS objectForKey:USER_INFO]) {
         rightSideVC = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:[NSBundle mainBundle]];
     }else {
         rightSideVC = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
@@ -148,25 +155,25 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LeftViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell.textLabel.text = self.titlesArray[indexPath.row];
-
+    cell.separatorView.hidden = (indexPath.row == 0);
+    cell.userInteractionEnabled = (indexPath.row == self.titlesArray.count - 1);
+    
     return cell;
 }
 
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return  44.0;
+    return (indexPath.row == self.titlesArray.count - 1) ? 22.0 : 44.0;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // New controller
-    UIViewController *viewController = [UIViewController new];
-    viewController.view.backgroundColor = [UIColor whiteColor];
-    viewController.title = self.titlesArray[indexPath.row];
-    
-    UINavigationController *navigationController = (UINavigationController *)self.sideMenuController.rootViewController;
-    [navigationController pushViewController:viewController animated:YES];
-    [self.sideMenuController hideLeftViewAnimated:YES completionHandler:nil];
+    if (indexPath.row == self.titlesArray.count - 1) {
+        ProfileViewController *rightSideVC = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
+        UINavigationController *navigationController = (UINavigationController *)self.sideMenuController.rootViewController;
+        [navigationController pushViewController:rightSideVC animated:YES];
+        [self.sideMenuController hideLeftViewAnimated:YES completionHandler:nil];
+    }
 }
 
 @end
