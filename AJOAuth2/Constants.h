@@ -9,7 +9,6 @@
 #ifndef Constants_h
 #define Constants_h
 
-#define DEV_ENV 1
 #define USER_INFO @"UserInformation"
 
 #define LEFT_DRAWER_WIDTH 280

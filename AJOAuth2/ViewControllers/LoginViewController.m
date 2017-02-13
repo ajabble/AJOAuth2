@@ -66,11 +66,6 @@
     
     // Forgot Password button title
     [_forgotPasswordButton setTitle:[MCLocalization stringForKey:@"forgot_password_btn_title"] forState:UIControlStateNormal];
-    
-    if(DEV_ENV) {
-        _emailTextfield.text = @"ajabble";
-        _passwordTextfield.text = @"aj123";
-    }
 }
 
 - (void)didReceiveMemoryWarning {
