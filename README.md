@@ -3,11 +3,11 @@
 AJOAuth2 example is showing the process of authenticating against an OAuth 2 provider.
 
 ### Description
-This project makes it easy to:
+This project makes it easy to integrate:
 > User Component
 * oAuth2 - process of authenticating and authorization.
 
-This example is based on OAuth 2.0 Protocol. It implements the native application which is written in ObjC and supports end-user authorization and authentication. Furthermore it also supports the user credentials flow from end-user for their username and password and use them directly to obtain an access token thereafter show profile, you can change edit the profile and change password of user.
+This example is based on [OAuth 2.0 Protocol](https://tools.ietf.org/html/draft-ietf-oauth-v2-10). It implements the native application which is written in ObjC and supports end-user authorization and authentication. Furthermore it also supports the user credentials flow from end-user for their username and password and use them directly to obtain an access token thereafter show profile and you can change edit the profile and change password of user.
 
 ## Getting Started
 #### Requirements
@@ -19,8 +19,18 @@ This example is based on OAuth 2.0 Protocol. It implements the native applicatio
 1. Firstly, Download this code either as zip or Git Clone. Here is the [link](https://ajabble@bitbucket.org/ajabble/oauth2.git)
 2. `pod install` or `pod update`
 
+#### Set up Web API
+[Link]()
+
 #### Configure your client
-Add *BASE_URL, CLIENT_ID, SECRET_KEY* constants in **AJOauth2ApiClient** file to access API.
+Once you are set up with web part and had added valid OAuth2.0 client and secret. Please do required changes in **AJOauth2ApiClient** file
+
+```ruby
+BASE_URL @"YOUR_WEB_HOSTED_URL"
+CLIENT_ID @"YOUR_CLIENT_ID"
+SECRET_KEY @"YOUR_SECRET_KEY"
+API_VERSION @"YOUR_API_VERSION"
+```
 
 #### Requesting Access to a Service
 Once you have configured your client you are ready to request access to one of those services. The AJOauth2ApiClient provides different methods for this:
@@ -40,7 +50,7 @@ Once you have configured your client you are ready to request access to one of t
 > refreshTokenWithSuccess - to get access token when invalid. [POST]
 
 **For example:**
-```
+```ruby
 [[AJOauth2ApiClient sharedClient] signInWithUsernameAndPassword:@"YOUR_USERNAME_OR_EMAIL" password:@"YOUR_PASSWORD" success:^(AFOAuthCredential *credential) {
     } failure:^(NSError *error) {
     }];
@@ -69,7 +79,7 @@ Copy *key pairs*  which is case-sensitive from `en.json` and add values to their
 
 Load `hi.json` file in *AppDelegate.h* with default language
 
-```
+```ruby
 NSDictionary * languageURLPairs = @{@"en":[[NSBundle mainBundle] URLForResource:@"en.json" withExtension:nil],@"hi":[[NSBundle mainBundle] URLForResource:@"hi.json" withExtension:nil]};
 [MCLocalization loadFromLanguageURLPairs:languageURLPairs defaultLanguage:@"hi"];
 [MCLocalization sharedInstance].language = @"hi";
