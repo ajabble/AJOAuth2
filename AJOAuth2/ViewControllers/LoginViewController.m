@@ -126,6 +126,10 @@
             [SVProgressHUD showSuccessWithStatus:[MCLocalization stringForKey:@"login_success_message"]];
         });
     } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        if (![Helper isWebUrlValid:error])
+            return;
+
         id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
         
         if (![Helper checkResponseObject:errorJson])

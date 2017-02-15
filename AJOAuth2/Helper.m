@@ -11,6 +11,7 @@
 #import "Constants.h"
 #import "AFOAuthCredential.h"
 #import "AJOauth2ApiClient.h"
+#import "SVProgressHUD.h"
 
 @implementation Helper
 
@@ -48,7 +49,14 @@
     
     return YES;
 }
-
++ (BOOL)isWebUrlValid:(NSError *)error {
+    if (error.code == -1002 || error.code == -1003) {
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        return NO;
+    }
+    
+    return YES;
+}
 + (User *)getUserPrefs {
     NSData *myObject = [PREFS objectForKey:USER_INFO];
     User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
