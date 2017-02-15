@@ -19,14 +19,14 @@ This example is based on [OAuth 2.0 Protocol](https://tools.ietf.org/html/draft-
 1. Firstly, download this code either as zip or Git Clone. Here is the [link](https://ajabble@bitbucket.org/ajabble/oauth2.git)
 2. `pod install` or `pod update`
 
-#### Set up Symfony 2 RESTful API Project with FOSUserBundle + FOSRestBundle + FOSOauthServerBundle for Mobile and Web Clients
-[Link](https://github.com/nerdapplabs/authOauth)
+#### Set up Symfony 2 RESTful API Project for iOS Client
+[Set up guide for API configuration](https://github.com/nerdapplabs/authOauth)
 
 #### Configure your client
 Once you are set up with web part and had added valid OAuth2.0 client and secret. Please do required changes in **AJOauth2ApiClient** file
 
 ```ruby
-BASE_URL @"YOUR_WEB_HOSTED_URL"
+BASE_URL @"(http|https)/YOUR_WEB_SERVER_URL/"
 CLIENT_ID @"YOUR_CLIENT_ID"
 SECRET_KEY @"YOUR_SECRET_KEY"
 API_VERSION @"YOUR_API_VERSION"

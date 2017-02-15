@@ -8,7 +8,6 @@
 
 #import "ProfileViewController.h"
 #import "MCLocalization.h"
-#import "Constants.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
 #import "User.h"
@@ -103,7 +102,7 @@
         NSInteger statusCode = [jsonDict[@"code"] integerValue];
         if (statusCode == SUCCESS_CODE) {
             // User information stored in NSUserDefaults
-            [Helper userInfoSaveInDefaults:jsonDict];
+            [Helper saveUserInfoInDefaults:jsonDict];
             
             // Display info
             [self userDisplayInfo];
@@ -113,6 +112,9 @@
             [SVProgressHUD dismiss];
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (![Helper isWebUrlValid:error])
+            return;
+
         id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
         if (![Helper checkResponseObject:errorJson])
             return ;
@@ -125,6 +127,9 @@
                 [self showProfile];
             } failure:^(NSError *error) {
                 [SVProgressHUD dismiss];
+                if (![Helper isWebUrlValid:error])
+                    return;
+
                 id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
                 
                 if (![Helper checkResponseObject:errorJson])

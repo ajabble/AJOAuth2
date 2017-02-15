@@ -7,7 +7,6 @@
 #import "CenterViewController.h"
 #import "HomeViewController.h"
 #import "MCLocalization.h"
-#import "Constants.h"
 #import "ProfileViewController.h"
 #import "Helper.h"
 #import "User.h"

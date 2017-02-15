@@ -8,18 +8,17 @@
 
 #import "SignupViewController.h"
 #import "MCLocalization.h"
-#import "Constants.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
 #import "User.h"
 #import "AJOauth2ApiClient.h"
 
-#define kFirstNamefieldTag 1234
-#define kLastNameTextfieldTag 1235
-#define kEmailTextfieldTag 1236
-#define kPasswordTextfieldTag 1237
-#define kDisplayNameTextfieldTag 1238
-#define kDobTextfieldTag 1239
+NSInteger const kFirstNamefieldTag = 1234;
+NSInteger const kLastNameTextfieldTag = 1235;
+NSInteger const kEmailTextfieldTag = 1236;
+NSInteger const kPasswordTextfieldTag = 1237;
+NSInteger const kDisplayNameTextfieldTag = 1238;
+NSInteger const kDobTextfieldTag = 1239;
 
 @interface SignupViewController ()
 
@@ -217,7 +216,7 @@
             
             // User info stored in NSUserDefaults i.e to access basic info on left drawer
             NSDictionary *userInfoDict = @{@"username": _displayNameTextfield.text, @"email": _emailTextfield.text};
-            [Helper userInfoSaveInDefaults:userInfoDict];
+            [Helper saveUserInfoInDefaults:userInfoDict];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
@@ -227,6 +226,10 @@
             [SVProgressHUD dismiss];
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [SVProgressHUD dismiss];
+        if (![Helper isWebUrlValid:error])
+            return;
+
         id errorObject = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
         
         if(![Helper checkResponseObject:errorObject])

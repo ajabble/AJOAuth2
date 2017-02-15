@@ -7,24 +7,23 @@
 //
 
 #import "AJOauth2ApiClient.h"
-#import "Constants.h"
 #import <MCLocalization/MCLocalization.h>
 
-#define BASE_URL @"http://localhost/auth/web/api/"
-#define CLIENT_ID @"1_2k8ywxl01wg0sgk40o4owww8k8gw8gk88ok84o00go004ocgoc"
-#define SECRET_KEY @"3713b2m9o944k4sssgk8wsgck00c480ggwkc4g00c8osoow4g4"
-#define SCOPE @"API"
-#define EMAIL_CONFIRMATION @"0"
-#define API_VERSION @"1.0"
-#define ACCEPT_VERSION_HEADER_FIELD_KEY @"X-Accept-Version"
+NSString *const BASE_URL = @"http://YOUR_WEB_SERVER_URL/";
+NSString *const CLIENT_ID = @"YOUR_CLIENT_ID";
+NSString *const SECRET_KEY = @"YOUR_SECRET_KEY";
+NSString *const API_VERSION = @"YOUR_API_VERSION";
+NSString *const SCOPE = @"API";
+NSString *const EMAIL_CONFIRMATION = @"0";
+NSString *const ACCEPT_VERSION_HEADER_FIELD_KEY = @"X-Accept-Version";
 
-#define FETCH_ACCESS_TOKEN_URI @"user/access/token"
-#define REFRESH_TOKEN_URI @"user/refresh/token"
-#define SHOW_PROFILE_URI @"user/profile/show"
-#define USER_REGISTER_URI @"user/register"
-#define REQUEST_PASSWORD_URI @"user/resetting/request"
-#define CHANGE_PASSWORD_URI @"user/profile/change-password"
-#define UPDATE_PROFILE_URI @"user/profile/edit"
+NSString *const FETCH_ACCESS_TOKEN_URI = @"user/access/token";
+NSString *const REFRESH_TOKEN_URI = @"user/refresh/token";
+NSString *const SHOW_PROFILE_URI = @"user/profile/show";
+NSString *const USER_REGISTER_URI = @"user/register";
+NSString *const REQUEST_PASSWORD_URI = @"user/resetting/request";
+NSString *const CHANGE_PASSWORD_URI = @"user/profile/change-password";
+NSString *const UPDATE_PROFILE_URI = @"user/profile/edit";
 
 #define locale [MCLocalization sharedInstance].language
 

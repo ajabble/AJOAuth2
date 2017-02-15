@@ -7,7 +7,6 @@
 //
 
 #import "HomeViewController.h"
-#import "Constants.h"
 #import "MCLocalization.h"
 #import "LoginViewController.h"
 #import "SignupViewController.h"

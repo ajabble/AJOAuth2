@@ -9,14 +9,13 @@
 #import "LoginViewController.h"
 #import "ForgotPasswordViewController.h"
 #import "MCLocalization.h"
-#import "Constants.h"
 #import "SVProgressHUD.h"
 #import "Helper.h"
 #import "User.h"
 #import "AJOauth2ApiClient.h"
 
-#define kEmailTextfieldTag 1234
-#define kPasswordTextfieldTag 1235
+NSInteger const kEmailFieldTag = 1234;
+NSInteger const kPasswordFieldTag = 1235;
 
 @interface LoginViewController ()
 
@@ -41,7 +40,7 @@
     // Email textfield
     _emailTextfield.placeholder = [NSString stringWithFormat:@"%@ %@ %@", [MCLocalization stringForKey:@"email_placeholder"], [MCLocalization stringForKey:@"or_keyword"], [MCLocalization stringForKey:@"user_name_placeholder"]];
     _emailTextfield.returnKeyType = UIReturnKeyNext;
-    _emailTextfield.tag = kEmailTextfieldTag;
+    _emailTextfield.tag = kEmailFieldTag;
     _emailTextfield.autocorrectionType = UITextAutocorrectionTypeNo;
     _emailTextfield.keyboardType = UIKeyboardTypeEmailAddress;
     
@@ -49,7 +48,7 @@
     _passwordTextfield.placeholder = [MCLocalization stringForKey:@"password_placeholder"];
     _passwordTextfield.secureTextEntry = YES;
     _passwordTextfield.returnKeyType = UIReturnKeyDone;
-    _passwordTextfield.tag = kPasswordTextfieldTag;
+    _passwordTextfield.tag = kPasswordFieldTag;
     
     _emailTextfield.errorColor = _passwordTextfield.errorColor = ERROR_LINE_COLOR;
     //_emailTextfield.lineColor = _passwordTextfield.lineColor = THEME_BG_COLOR;
@@ -119,13 +118,17 @@
         
         // User info stored in NSUserDefaults i.e to access basic info on left drawer
         NSDictionary *userInfoDict = @{@"username": _emailTextfield.text};
-        [Helper userInfoSaveInDefaults:userInfoDict];
+        [Helper saveUserInfoInDefaults:userInfoDict];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
             [SVProgressHUD showSuccessWithStatus:[MCLocalization stringForKey:@"login_success_message"]];
         });
     } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        if (![Helper isWebUrlValid:error])
+            return;
+
         id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
         
         if (![Helper checkResponseObject:errorJson])

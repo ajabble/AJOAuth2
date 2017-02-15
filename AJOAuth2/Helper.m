@@ -8,9 +8,12 @@
 
 #import "Helper.h"
 #import "AFNetworkReachabilityManager.h"
-#import "Constants.h"
 #import "AFOAuthCredential.h"
 #import "AJOauth2ApiClient.h"
+#import "SVProgressHUD.h"
+
+NSInteger const kErrorUnsupportedURL = -1002;
+NSInteger const kErrorCannotFindHost = -1003;
 
 @implementation Helper
 
@@ -29,8 +32,8 @@
     return [emailTest evaluateWithObject:candidate];
 }
 
-+ (void)userInfoSaveInDefaults:(NSDictionary *)userInfoDict {
-    User *user = [[User alloc] initWithAttributes:[userInfoDict mutableCopy]];
++ (void)saveUserInfoInDefaults:(NSDictionary *)userInfo {
+    User *user = [[User alloc] initWithAttributes:[userInfo mutableCopy]];
     NSLog(@"%@", user.description);
     NSData *myUserEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:user];
     [PREFS setObject:myUserEncodedObject forKey:USER_INFO];
@@ -48,10 +51,17 @@
     
     return YES;
 }
-
++ (BOOL)isWebUrlValid:(NSError *)error {
+    if (error.code == kErrorUnsupportedURL || error.code == kErrorCannotFindHost) {
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        return NO;
+    }
+    
+    return YES;
+}
 + (User *)getUserPrefs {
-    NSData *myObject = [PREFS objectForKey:USER_INFO];
-    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
+    NSData *userInfoObject = [PREFS objectForKey:USER_INFO];
+    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData:userInfoObject];
     
     return user;
 }

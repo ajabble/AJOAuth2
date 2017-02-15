@@ -13,9 +13,10 @@
 
 + (BOOL)isConnected;
 + (BOOL)validateEmail:(NSString *)candidate;
-+ (void)userInfoSaveInDefaults:(NSDictionary *)userInfoDict;
 + (BOOL)checkResponseObject:(id)responseObject;
++ (BOOL)isWebUrlValid:(NSError *)error;
 + (User *)getUserPrefs;
++ (void)saveUserInfoInDefaults:(NSDictionary *)userInfo;
 + (void)removeUserPrefs;
 
 @end
