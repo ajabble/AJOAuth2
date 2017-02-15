@@ -8,18 +8,17 @@
 
 #import "SignupViewController.h"
 #import "MCLocalization.h"
-#import "Constants.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
 #import "User.h"
 #import "AJOauth2ApiClient.h"
 
-#define kFirstNamefieldTag 1234
-#define kLastNameTextfieldTag 1235
-#define kEmailTextfieldTag 1236
-#define kPasswordTextfieldTag 1237
-#define kDisplayNameTextfieldTag 1238
-#define kDobTextfieldTag 1239
+NSInteger const kFirstNamefieldTag = 1234;
+NSInteger const kLastNameTextfieldTag = 1235;
+NSInteger const kEmailTextfieldTag = 1236;
+NSInteger const kPasswordTextfieldTag = 1237;
+NSInteger const kDisplayNameTextfieldTag = 1238;
+NSInteger const kDobTextfieldTag = 1239;
 
 @interface SignupViewController ()
 

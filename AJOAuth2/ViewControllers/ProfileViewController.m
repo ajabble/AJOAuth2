@@ -8,7 +8,6 @@
 
 #import "ProfileViewController.h"
 #import "MCLocalization.h"
-#import "Constants.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
 #import "User.h"

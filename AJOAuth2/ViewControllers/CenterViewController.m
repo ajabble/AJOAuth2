@@ -4,7 +4,6 @@
 
 #import "CenterViewController.h"
 #import "MCLocalization.h"
-#import "Constants.h"
 #import <LGSideMenuController/UIViewController+LGSideMenuController.h>
 
 @interface CenterViewController ()

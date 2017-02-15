@@ -8,7 +8,6 @@
 
 #import "ForgotPasswordViewController.h"
 #import "MCLocalization.h"
-#import "Constants.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
 #import "AJOauth2ApiClient.h"
@@ -36,7 +35,7 @@
     
     // Email Textfield
     _emailTextfield.placeholder = [NSString stringWithFormat:@"%@ %@ %@", [MCLocalization stringForKey:@"email_placeholder"], [MCLocalization stringForKey:@"or_keyword"], [MCLocalization stringForKey:@"user_name_placeholder"]];
-    _emailTextfield.returnKeyType = UIReturnKeyNext;
+    _emailTextfield.returnKeyType = UIReturnKeySend;
     _emailTextfield.autocorrectionType = UITextAutocorrectionTypeNo;
     _emailTextfield.errorColor = ERROR_LINE_COLOR;
     //_emailTextfield.lineColor = TEXT_LABEL_COLOR;
@@ -71,6 +70,18 @@
 
 - (void)textFieldDidEndEditing:(JJMaterialTextfield *)textField {
     (textField.text.length == 0) ? [textField showError] : [textField hideError];
+}
+
+- (BOOL)textFieldShouldReturn:(JJMaterialTextfield *)textField {
+    (textField.text.length == 0) ? [textField becomeFirstResponder] : [textField resignFirstResponder];
+    
+    if (textField.text.length > 0) {
+        [textField hideError];
+        [self requestPassword];
+    }else {
+        [textField showError];
+    }
+    return YES;
 }
 
 #pragma mark IBActions

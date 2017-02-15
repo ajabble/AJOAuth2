@@ -8,11 +8,11 @@
 
 #import "User.h"
 
-#define USERNAME @"username"
-#define FIRST_NAME @"firstname"
-#define LAST_NAME @"lastname"
-#define EMAIL_ADDRESS @"email"
-#define DOB @"dob"
+NSString *const USERNAME = @"username";
+NSString *const FIRST_NAME = @"firstname";
+NSString *const LAST_NAME = @"lastname";
+NSString *const EMAIL_ADDRESS = @"email";
+NSString *const DOB = @"dob";
 
 @implementation User
 

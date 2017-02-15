@@ -8,14 +8,13 @@
 
 #import "ChangePasswordViewController.h"
 #import "MCLocalization.h"
-#import "Constants.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
 #import "AJOauth2ApiClient.h"
 
-#define kOldPasswordTextfieldTag 345
-#define kNewPasswordTextfieldTag 346
-#define kConfirmPasswordTextfieldTag 347
+NSInteger const kOldPasswordTextfieldTag = 345;
+NSInteger const kNewPasswordTextfieldTag = 346;
+NSInteger const kConfirmPasswordTextfieldTag = 347;
 
 @interface ChangePasswordViewController ()
 
@@ -52,6 +51,8 @@
     _oldPasswordTextfield.delegate = _newPasswordTextfield.delegate = _confirmPasswordTextfield.delegate = self;
     // _oldPasswordTextfield.lineColor = _newPasswordTextfield.lineColor = _confirmPasswordTextfield.lineColor = THEME_BG_COLOR;
     _oldPasswordTextfield.enableMaterialPlaceHolder = _newPasswordTextfield.enableMaterialPlaceHolder = _confirmPasswordTextfield.enableMaterialPlaceHolder = YES;
+    _oldPasswordTextfield.returnKeyType = _newPasswordTextfield.returnKeyType = UIReturnKeyNext;
+    _confirmPasswordTextfield.returnKeyType = UIReturnKeyDone;
     
     // Update Password Button
     [_updatePasswordButton setTitle:[MCLocalization stringForKey:@"update_password_btn_title"] forState:UIControlStateNormal];

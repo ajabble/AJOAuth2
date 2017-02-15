@@ -8,7 +8,6 @@
 
 #import "Helper.h"
 #import "AFNetworkReachabilityManager.h"
-#import "Constants.h"
 #import "AFOAuthCredential.h"
 #import "AJOauth2ApiClient.h"
 #import "SVProgressHUD.h"

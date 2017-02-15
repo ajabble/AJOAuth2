@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "HomeViewController.h"
 #import <MCLocalization/MCLocalization.h>
-#import "Constants.h"
 #import "CenterViewController.h"
 #import "LeftViewController.h"
 #import "SVProgressHUD.h"

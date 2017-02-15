@@ -7,7 +7,6 @@
 //
 
 #import "AJOauth2ApiClient.h"
-#import "Constants.h"
 #import <MCLocalization/MCLocalization.h>
 
 NSString *const BASE_URL = @"http://YOUR_WEB_SERVER_URL/";

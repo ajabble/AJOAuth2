@@ -7,16 +7,15 @@
 //
 
 #import "EditProfileViewController.h"
-#import "Constants.h"
 #import "MCLocalization.h"
 #import "User.h"
 #import "Helper.h"
 #import "SVProgressHUD.h"
 #import "AJOauth2ApiClient.h"
 
-#define kFirstNamefieldTag 1234
-#define kLastNameTextfieldTag 1235
-#define kDobTextfieldTag 1237
+NSInteger const kFirstNameTag = 1234;
+NSInteger const kLastNameTag = 1235;
+NSInteger const kDobTag = 1237;
 
 @interface EditProfileViewController () {
     UIDatePicker *datePicker;
@@ -42,17 +41,17 @@
     
     // First Name Textfield
     _firstNameTextfield.placeholder = [MCLocalization stringForKey:@"first_name_placeholder"];
-    _firstNameTextfield.tag = kFirstNamefieldTag;
+    _firstNameTextfield.tag = kFirstNameTag;
     _firstNameTextfield.text = user.firstName;
     
     // Last Name Textfield
     _lastNameTextfield.placeholder = [MCLocalization stringForKey:@"last_name_placeholder"];
-    _lastNameTextfield.tag = kLastNameTextfieldTag;
+    _lastNameTextfield.tag = kLastNameTag;
     _lastNameTextfield.text = user.lastName;
     
     // DOB Textfield
     _dobTextfield.placeholder = [MCLocalization stringForKey:@"dob_placeholder"];
-    _dobTextfield.tag = kDobTextfieldTag;
+    _dobTextfield.tag = kDobTag;
     
     // Convert string to date object
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -123,7 +122,7 @@
 }
 
 - (void)textFieldDidBeginEditing:(JJMaterialTextfield *)textField {
-    if(textField.tag == kDobTextfieldTag) {
+    if(textField.tag == kDobTag) {
         User *user = [Helper getUserPrefs];
         
         // Convert string to date object
