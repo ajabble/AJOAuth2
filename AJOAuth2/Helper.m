@@ -12,6 +12,9 @@
 #import "AJOauth2ApiClient.h"
 #import "SVProgressHUD.h"
 
+NSInteger const kErrorUnsupportedURL = -1002;
+NSInteger const kErrorCannotFindHost = -1003;
+
 @implementation Helper
 
 + (BOOL)isConnected {
@@ -49,7 +52,7 @@
     return YES;
 }
 + (BOOL)isWebUrlValid:(NSError *)error {
-    if (error.code == -1002 || error.code == -1003) {
+    if (error.code == kErrorUnsupportedURL || error.code == kErrorCannotFindHost) {
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         return NO;
     }
