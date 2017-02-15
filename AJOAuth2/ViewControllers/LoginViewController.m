@@ -118,7 +118,7 @@ NSInteger const kPasswordFieldTag = 1235;
         
         // User info stored in NSUserDefaults i.e to access basic info on left drawer
         NSDictionary *userInfoDict = @{@"username": _emailTextfield.text};
-        [Helper userInfoSaveInDefaults:userInfoDict];
+        [Helper saveUserInfoInDefaults:userInfoDict];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];

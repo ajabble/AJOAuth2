@@ -74,7 +74,7 @@
 
 - (void)userDisplayInfo {
     // Get user info
-    User *user = [Helper getUserPrefs];
+    User *user = [Helper userInfoObject];
     
     // Username
     _userNameLabel.text = [NSString stringWithFormat:@"@%@", user.userName];
@@ -102,7 +102,7 @@
         NSInteger statusCode = [jsonDict[@"code"] integerValue];
         if (statusCode == SUCCESS_CODE) {
             // User information stored in NSUserDefaults
-            [Helper userInfoSaveInDefaults:jsonDict];
+            [Helper saveUserInfoInDefaults:jsonDict];
             
             // Display info
             [self userDisplayInfo];

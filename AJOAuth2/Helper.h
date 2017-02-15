@@ -15,8 +15,8 @@
 + (BOOL)validateEmail:(NSString *)candidate;
 + (BOOL)checkResponseObject:(id)responseObject;
 + (BOOL)isWebUrlValid:(NSError *)error;
-+ (User *)getUserPrefs;
-+ (void)userInfoSaveInDefaults:(NSDictionary *)userInfoDict;
++ (User *)userInfoObject;
++ (void)saveUserInfoInDefaults:(NSDictionary *)userInfo;
 + (void)removeUserPrefs;
 
 @end

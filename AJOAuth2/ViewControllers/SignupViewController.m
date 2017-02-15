@@ -216,7 +216,7 @@ NSInteger const kDobTextfieldTag = 1239;
             
             // User info stored in NSUserDefaults i.e to access basic info on left drawer
             NSDictionary *userInfoDict = @{@"username": _displayNameTextfield.text, @"email": _emailTextfield.text};
-            [Helper userInfoSaveInDefaults:userInfoDict];
+            [Helper saveUserInfoInDefaults:userInfoDict];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];

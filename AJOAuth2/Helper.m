@@ -32,8 +32,8 @@ NSInteger const kErrorCannotFindHost = -1003;
     return [emailTest evaluateWithObject:candidate];
 }
 
-+ (void)userInfoSaveInDefaults:(NSDictionary *)userInfoDict {
-    User *user = [[User alloc] initWithAttributes:[userInfoDict mutableCopy]];
++ (void)saveUserInfoInDefaults:(NSDictionary *)userInfo {
+    User *user = [[User alloc] initWithAttributes:[userInfo mutableCopy]];
     NSLog(@"%@", user.description);
     NSData *myUserEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:user];
     [PREFS setObject:myUserEncodedObject forKey:USER_INFO];
@@ -59,7 +59,7 @@ NSInteger const kErrorCannotFindHost = -1003;
     
     return YES;
 }
-+ (User *)getUserPrefs {
++ (User *)userInfoObject {
     NSData *myObject = [PREFS objectForKey:USER_INFO];
     User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
     
