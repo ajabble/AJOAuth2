@@ -59,9 +59,9 @@ NSInteger const kErrorCannotFindHost = -1003;
     
     return YES;
 }
-+ (User *)userInfoObject {
-    NSData *myObject = [PREFS objectForKey:USER_INFO];
-    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData: myObject];
++ (User *)getUserPrefs {
+    NSData *userInfoObject = [PREFS objectForKey:USER_INFO];
+    User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData:userInfoObject];
     
     return user;
 }

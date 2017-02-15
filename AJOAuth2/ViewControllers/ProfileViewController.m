@@ -74,7 +74,7 @@
 
 - (void)userDisplayInfo {
     // Get user info
-    User *user = [Helper userInfoObject];
+    User *user = [Helper getUserPrefs];
     
     // Username
     _userNameLabel.text = [NSString stringWithFormat:@"@%@", user.userName];

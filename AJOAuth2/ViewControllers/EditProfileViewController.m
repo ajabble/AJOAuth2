@@ -37,7 +37,7 @@ NSInteger const kDobTag = 1237;
     self.view.backgroundColor = VIEW_BG_COLOR;
     
     // Get user info
-    User *user = [Helper userInfoObject];
+    User *user = [Helper getUserPrefs];
     
     // First Name Textfield
     _firstNameTextfield.placeholder = [MCLocalization stringForKey:@"first_name_placeholder"];
@@ -123,7 +123,7 @@ NSInteger const kDobTag = 1237;
 
 - (void)textFieldDidBeginEditing:(JJMaterialTextfield *)textField {
     if(textField.tag == kDobTag) {
-        User *user = [Helper userInfoObject];
+        User *user = [Helper getUserPrefs];
         
         // Convert string to date object
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -180,7 +180,7 @@ NSInteger const kDobTag = 1237;
         NSInteger statusCode = [jsonDict[@"code"] integerValue];
         if (statusCode == SUCCESS_CODE) {
             // Username and email fields used as old one as they are non-editable fields; this is only to show local info items
-            User *user = [Helper userInfoObject];
+            User *user = [Helper getUserPrefs];
             // User info  stored in prefs
             NSDictionary *userDict = @{@"firstname": _firstNameTextfield.text, @"lastname": _lastNameTextfield.text, @"dob": _dobTextfield.text, @"username": user.userName, @"email":user.emailAddress};
             [Helper saveUserInfoInDefaults:userDict];

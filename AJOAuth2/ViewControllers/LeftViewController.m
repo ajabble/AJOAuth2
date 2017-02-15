@@ -54,7 +54,7 @@
         self.tableView.dataSource = nil;
         self.tableView.delegate = nil;
     } else {
-        User *user = [Helper userInfoObject];
+        User *user = [Helper getUserPrefs];
         
         // Username
         _usernameLabel.text = user.userName;
