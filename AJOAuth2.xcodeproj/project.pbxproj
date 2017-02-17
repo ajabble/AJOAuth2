@@ -34,6 +34,7 @@
 		38DC4FC81E35ECED00C7FA3F /* LeftViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DC4FBD1E35ECED00C7FA3F /* LeftViewCell.m */; };
 		38DC4FC91E35ECED00C7FA3F /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DC4FBF1E35ECED00C7FA3F /* LeftViewController.m */; };
 		38DC4FD01E35ED1100C7FA3F /* CenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DC4FCF1E35ED1100C7FA3F /* CenterViewController.m */; };
+		38DF2B911E55A6FD0096C5E2 /* AJTextFieldValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DF2B901E55A6FD0096C5E2 /* AJTextFieldValidator.m */; };
 		38F7E87C1E3624F6006041DC /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F7E87B1E3624F6006041DC /* Helper.m */; };
 		38F7E8801E364452006041DC /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F7E87F1E364452006041DC /* User.m */; };
 		38F7E8841E36983E006041DC /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F7E8821E36983E006041DC /* ProfileViewController.m */; };
@@ -106,6 +107,8 @@
 		38DC4FBF1E35ECED00C7FA3F /* LeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = LeftViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38DC4FCE1E35ED1100C7FA3F /* CenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CenterViewController.h; sourceTree = "<group>"; };
 		38DC4FCF1E35ED1100C7FA3F /* CenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CenterViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		38DF2B8F1E55A6FD0096C5E2 /* AJTextFieldValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJTextFieldValidator.h; sourceTree = "<group>"; };
+		38DF2B901E55A6FD0096C5E2 /* AJTextFieldValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJTextFieldValidator.m; sourceTree = "<group>"; };
 		38F7E87A1E3624F6006041DC /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
 		38F7E87B1E3624F6006041DC /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
 		38F7E87E1E364452006041DC /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -260,6 +263,8 @@
 			children = (
 				38F7E87A1E3624F6006041DC /* Helper.h */,
 				38F7E87B1E3624F6006041DC /* Helper.m */,
+				38DF2B8F1E55A6FD0096C5E2 /* AJTextFieldValidator.h */,
+				38DF2B901E55A6FD0096C5E2 /* AJTextFieldValidator.m */,
 				381A7E061E4B610300DD48C4 /* AJOauth2ApiClient.h */,
 				381A7E071E4B610300DD48C4 /* AJOauth2ApiClient.m */,
 			);
@@ -599,6 +604,7 @@
 				38CE70BC1E309514009195D9 /* main.m in Sources */,
 				38F7E8801E364452006041DC /* User.m in Sources */,
 				38F7E87C1E3624F6006041DC /* Helper.m in Sources */,
+				38DF2B911E55A6FD0096C5E2 /* AJTextFieldValidator.m in Sources */,
 				381952841E3219E300ACB611 /* ForgotPasswordViewController.m in Sources */,
 				38F7E8841E36983E006041DC /* ProfileViewController.m in Sources */,
 				381A7E041E4863CD00DD48C4 /* ChangePasswordViewController.m in Sources */,

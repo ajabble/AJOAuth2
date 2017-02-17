@@ -20,6 +20,9 @@ NSInteger const kPasswordTextfieldTag = 1237;
 NSInteger const kDisplayNameTextfieldTag = 1238;
 NSInteger const kDobTextfieldTag = 1239;
 
+NSString *const REGEX_EMAIL = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+NSString *const REGEX_PASSWORD = @"^[A-Za-z0-9_!@#]{8,15}$";
+NSString *const REGEX_USER_NAME = @"^[a-z0-9_-]{3,16}$";
 @interface SignupViewController ()
 
 @end
@@ -47,20 +50,24 @@ NSInteger const kDobTextfieldTag = 1239;
     // Last Name Textfield
     _lastNameTextfield.placeholder = [MCLocalization stringForKey:@"last_name_placeholder"];
     _lastNameTextfield.tag = kLastNameTextfieldTag;
+    _lastNameTextfield.isRequired = NO;
     
     // Email Textfield
     _emailTextfield.placeholder = [MCLocalization stringForKey:@"email_placeholder"];
     _emailTextfield.tag = kEmailTextfieldTag;
     _emailTextfield.keyboardType = UIKeyboardTypeEmailAddress;
+    [_emailTextfield addRegex:REGEX_EMAIL withMessage:[MCLocalization stringForKey:@"show_error_email_policy"]];
     
     // Password Textfield
     _passwordTextfield.placeholder = [MCLocalization stringForKey:@"password_placeholder"];
     _passwordTextfield.secureTextEntry = YES;
     _passwordTextfield.tag = kPasswordTextfieldTag;
+    [_passwordTextfield addRegex:REGEX_PASSWORD withMessage:[MCLocalization stringForKey:@"show_error_password_policy"]];
     
     // Display name Textfield
     _displayNameTextfield.placeholder = [MCLocalization stringForKey:@"user_name_placeholder"];
     _displayNameTextfield.tag = kDobTextfieldTag;
+    [_displayNameTextfield addRegex:REGEX_USER_NAME withMessage:[MCLocalization stringForKey:@"show_error_username_policy"]];
     
     // DOB Textfield
     _dobTextfield.placeholder = [MCLocalization stringForKey:@"dob_placeholder"];
@@ -82,7 +89,7 @@ NSInteger const kDobTextfieldTag = 1239;
     _displayNameTextfield.returnKeyType = UIReturnKeyDone;
     _firstNameTextfield.clearButtonMode = _lastNameTextfield.clearButtonMode = _emailTextfield.clearButtonMode = _passwordTextfield.clearButtonMode = _displayNameTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
     _firstNameTextfield.textColor = _lastNameTextfield.textColor = _passwordTextfield.textColor = _emailTextfield.textColor = _displayNameTextfield.textColor = _dobTextfield.textColor = TEXT_LABEL_COLOR;
-    
+    _firstNameTextfield.presentInView = _emailTextfield.presentInView = _passwordTextfield.presentInView = _displayNameTextfield.presentInView = _dobTextfield.presentInView = self.view;
     
     // Sign up button title
     [_signupButton setTitle:[MCLocalization stringForKey:@"signup_btn_title"] forState:UIControlStateNormal];
@@ -109,70 +116,53 @@ NSInteger const kDobTextfieldTag = 1239;
 #pragma mark IBAction
 
 - (IBAction)signup:(id)sender {
-    if (_firstNameTextfield.text.length == 0) {
-        [_firstNameTextfield showError];
-        return;
-    }
-    if (_lastNameTextfield.text.length == 0) {
-        [_lastNameTextfield showError];
-        return;
-    }
-    if (_emailTextfield.text.length == 0) {
-        [_emailTextfield showError];
-        return;
-    }
-    if (_passwordTextfield.text.length == 0) {
-        [_passwordTextfield showError];
-        return;
-    }
-    if (_displayNameTextfield.text.length == 0) {
-        [_displayNameTextfield showError];
-        return;
-    }
-    if (_dobTextfield.text.length == 0){
-        [_dobTextfield showError];
-        return;
-    }
-    if ([Helper validateEmail:_emailTextfield.text]) {
-        NSLog(@"Proceed to next!!");
+    if ([_firstNameTextfield isValid] & [_lastNameTextfield isValid] & [_passwordTextfield isValid] & [_displayNameTextfield isValid] & [_emailTextfield isValid] & [_dobTextfield isValid]) {
         if ([Helper isConnected])
             [self registerMe];
         else
             [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"no_internet_connectivity"]];
-    }else {
-        [_emailTextfield showError];
     }
 }
 
 #pragma mark UITextfield
 
-- (void)textFieldDidEndEditing:(JJMaterialTextfield *)textField {
-    if (textField.text.length == 0) {
+- (void)textFieldDidEndEditing:(AJTextFieldValidator *)textField {
+    if (![textField isValid]) {
         [textField showError];
     }
     else {
         [textField hideError];
-        if (_firstNameTextfield.text.length > 0 && _lastNameTextfield.text.length > 0){
-            if (_displayNameTextfield.text.length == 0)
-                _displayNameTextfield.text = [NSString stringWithFormat:@"%@.%@", _firstNameTextfield.text, _lastNameTextfield.text];
-        }
     }
 }
 
-- (BOOL)textFieldShouldReturn:(JJMaterialTextfield *)textField {
+- (BOOL)textFieldShouldReturn:(AJTextFieldValidator *)textField {
     UIView *view = [self.view viewWithTag:textField.tag + 1];
     (!view) ? [textField resignFirstResponder] : [view becomeFirstResponder];
     
     return YES;
 }
 
-- (void)textFieldDidBeginEditing:(JJMaterialTextfield *)textField {
+- (void)textFieldDidBeginEditing:(AJTextFieldValidator *)textField {
     if(textField.tag == kDobTextfieldTag) {
         datePicker = [[UIDatePicker alloc] init];
         datePicker.datePickerMode = UIDatePickerModeDate;
         [datePicker addTarget:self action:@selector(updateTextField:)
              forControlEvents:UIControlEventValueChanged];
         [_dobTextfield setInputView:datePicker];
+    }
+}
+
+- (BOOL)textField:(AJTextFieldValidator *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    
+    return YES;
+}
+
+- (void)textFieldDidChange:(AJTextFieldValidator *)textField {
+    if ([textField isValid]) {
+        [textField hideError];
+    }else {
+        [textField showError];
     }
 }
 
@@ -191,13 +181,6 @@ NSInteger const kDobTextfieldTag = 1239;
 #pragma mark Registration API
 
 - (void)registerMe {
-    [_firstNameTextfield hideError];
-    [_lastNameTextfield hideError];
-    [_emailTextfield hideError];
-    [_passwordTextfield hideError];
-    [_displayNameTextfield hideError];
-    [_dobTextfield hideError];
-    
     [SVProgressHUD show];
     AJOauth2ApiClient *client = [AJOauth2ApiClient sharedClient];
     [client registerMe:_displayNameTextfield.text password:_passwordTextfield.text email:_emailTextfield.text firstName:_firstNameTextfield.text lastName:_lastNameTextfield.text dob:_dobTextfield.text success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -222,14 +205,17 @@ NSInteger const kDobTextfieldTag = 1239;
                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
                 [SVProgressHUD showSuccessWithStatus:jsonDict[@"show_message"]];
             });
-        } else {
+        }else if (statusCode == BAD_REQUEST_CODE) {
+            [SVProgressHUD showErrorWithStatus:jsonDict[@"show_message"]];
+        }
+        else {
             [SVProgressHUD dismiss];
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [SVProgressHUD dismiss];
         if (![Helper isWebUrlValid:error])
             return;
-
+        
         id errorObject = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
         
         if(![Helper checkResponseObject:errorObject])

@@ -7,18 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-@import JJMaterialTextField;
+#import "AJTextFieldValidator.h"
 
 @interface SignupViewController : UIViewController <UITextFieldDelegate> {
     UIDatePicker *datePicker;
 }
 
-@property (weak, nonatomic) IBOutlet JJMaterialTextfield *firstNameTextfield;
-@property (weak, nonatomic) IBOutlet JJMaterialTextfield *lastNameTextfield;
-@property (weak, nonatomic) IBOutlet JJMaterialTextfield *emailTextfield;
-@property (weak, nonatomic) IBOutlet JJMaterialTextfield *passwordTextfield;
-@property (weak, nonatomic) IBOutlet JJMaterialTextfield *displayNameTextfield;
-@property (weak, nonatomic) IBOutlet JJMaterialTextfield *dobTextfield;
+@property (weak, nonatomic) IBOutlet AJTextFieldValidator *firstNameTextfield;
+@property (weak, nonatomic) IBOutlet AJTextFieldValidator *lastNameTextfield;
+@property (weak, nonatomic) IBOutlet AJTextFieldValidator *emailTextfield;
+@property (weak, nonatomic) IBOutlet AJTextFieldValidator *passwordTextfield;
+@property (weak, nonatomic) IBOutlet AJTextFieldValidator *displayNameTextfield;
+@property (weak, nonatomic) IBOutlet AJTextFieldValidator *dobTextfield;
 @property (weak, nonatomic) IBOutlet UIButton *signupButton;
 
 - (IBAction)signup:(id)sender;
