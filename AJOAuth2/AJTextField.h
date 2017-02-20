@@ -1,5 +1,5 @@
 //
-//  AJTextFieldValidator.h
+//  AJTextField.h
 //  AJOAuth2
 //
 //  Created by Ashish Jabble on 16/02/17.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @import JJMaterialTextField;
 
-@interface AJTextFieldValidator : JJMaterialTextfield
+@interface AJTextField : JJMaterialTextfield
 
 @property (nonatomic,assign) BOOL isRequired; // < Default is YES, required field
 @property (strong, nonatomic) UIView *presentInView; // Assign view on which you want to show popup

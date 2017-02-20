@@ -126,23 +126,18 @@ NSString *const REGEX_USER_NAME = @"^[a-z0-9_-]{3,16}$";
 
 #pragma mark UITextfield
 
-- (void)textFieldDidEndEditing:(AJTextFieldValidator *)textField {
-    if (![textField isValid]) {
-        [textField showError];
-    }
-    else {
-        [textField hideError];
-    }
+- (void)textFieldDidEndEditing:(AJTextField *)textField {
+    ([textField isValid]) ? [textField hideError] : [textField showError];
 }
 
-- (BOOL)textFieldShouldReturn:(AJTextFieldValidator *)textField {
+- (BOOL)textFieldShouldReturn:(AJTextField *)textField {
     UIView *view = [self.view viewWithTag:textField.tag + 1];
     (!view) ? [textField resignFirstResponder] : [view becomeFirstResponder];
     
     return YES;
 }
 
-- (void)textFieldDidBeginEditing:(AJTextFieldValidator *)textField {
+- (void)textFieldDidBeginEditing:(AJTextField *)textField {
     if(textField.tag == kDobTextfieldTag) {
         datePicker = [[UIDatePicker alloc] init];
         datePicker.datePickerMode = UIDatePickerModeDate;
@@ -152,18 +147,14 @@ NSString *const REGEX_USER_NAME = @"^[a-z0-9_-]{3,16}$";
     }
 }
 
-- (BOOL)textField:(AJTextFieldValidator *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+- (BOOL)textField:(AJTextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     return YES;
 }
 
-- (void)textFieldDidChange:(AJTextFieldValidator *)textField {
-    if ([textField isValid]) {
-        [textField hideError];
-    }else {
-        [textField showError];
-    }
+- (void)textFieldDidChange:(AJTextField *)textField {
+    ([textField isValid]) ? [textField hideError] : [textField showError];
 }
 
 #pragma mark DateTimePicker

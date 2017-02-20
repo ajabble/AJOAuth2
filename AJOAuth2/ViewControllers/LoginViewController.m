@@ -56,6 +56,7 @@ NSInteger const kPasswordFieldTag = 1235;
     _emailTextfield.delegate = _passwordTextfield.delegate = self;
     _emailTextfield.clearButtonMode = _passwordTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
     _emailTextfield.textColor = _passwordTextfield.textColor = TEXT_LABEL_COLOR;
+    _emailTextfield.presentInView = _passwordTextfield.presentInView = self.view;
     
     // Sign In button
     [_signinButton setTitle:[MCLocalization stringForKey:@"signin_btn_title"] forState:UIControlStateNormal];
@@ -85,19 +86,12 @@ NSInteger const kPasswordFieldTag = 1235;
 #pragma mark IBActions
 
 - (IBAction)signin:(id)sender {
-    if (_emailTextfield.text.length == 0) {
-        [_emailTextfield showError];
-        return;
+    if ([_emailTextfield isValid] & [_passwordTextfield isValid]) {
+        if ([Helper isConnected])
+            [self getAccessToken];
+        else
+            [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"no_internet_connectivity"]];
     }
-    if (_passwordTextfield.text.length == 0) {
-        [_passwordTextfield showError];
-        return;
-    }
-    
-    if ([Helper isConnected])
-        [self getAccessToken];
-    else
-        [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"no_internet_connectivity"]];
 }
 
 - (IBAction)forgotPassword:(id)sender {
@@ -108,9 +102,6 @@ NSInteger const kPasswordFieldTag = 1235;
 #pragma mark - Access Token with API
 
 - (void)getAccessToken {
-    [_emailTextfield hideError];
-    [_passwordTextfield hideError];
-    
     [SVProgressHUD show];
     
     AJOauth2ApiClient *client = [AJOauth2ApiClient sharedClient];
@@ -128,7 +119,7 @@ NSInteger const kPasswordFieldTag = 1235;
         [SVProgressHUD dismiss];
         if (![Helper isWebUrlValid:error])
             return;
-
+        
         id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
         
         if (![Helper checkResponseObject:errorJson])
@@ -160,15 +151,24 @@ NSInteger const kPasswordFieldTag = 1235;
 
 #pragma mark UITextfield
 
-- (void)textFieldDidEndEditing:(JJMaterialTextfield *)textField {
+- (void)textFieldDidEndEditing:(AJTextField *)textField {
     (textField.text.length == 0) ? [textField showError] : [textField hideError];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     UIView *view = [self.view viewWithTag:textField.tag + 1];
     (!view) ? [textField resignFirstResponder] : [view becomeFirstResponder];
-   
+    
     return YES;
+}
+- (BOOL)textField:(AJTextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    
+    return YES;
+}
+
+- (void)textFieldDidChange:(AJTextField *)textField {
+    ([textField isValid]) ? [textField hideError] : [textField showError];
 }
 
 @end

@@ -42,7 +42,7 @@
                         <action selector="forgotPassword:" destination="-1" eventType="touchUpInside" id="oBD-mX-MfI"/>
                     </connections>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yba-Fd-zNp" customClass="JJMaterialTextfield">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yba-Fd-zNp" customClass="AJTextField">
                     <rect key="frame" x="20" y="110" width="280" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="Qkh-bN-Wmt"/>
@@ -54,7 +54,7 @@
                         <outlet property="delegate" destination="-1" id="6Ep-Xn-bpC"/>
                     </connections>
                 </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rxD-Wv-gEc" customClass="JJMaterialTextfield">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rxD-Wv-gEc" customClass="AJTextField">
                     <rect key="frame" x="20" y="170" width="280" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="eeK-gp-Mkc"/>

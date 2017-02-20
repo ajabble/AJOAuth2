@@ -1,12 +1,12 @@
 //
-//  AJTextFieldValidator.m
+//  AJTextField.m
 //  AJOAuth2
 //
 //  Created by Ashish Jabble on 16/02/17.
 //  Copyright © 2017 Ashish Jabble. All rights reserved.
 //
 
-#import "AJTextFieldValidator.h"
+#import "AJTextField.h"
 #import "MCLocalization.h"
 
 NSString *const REGEX = @"regex"; // Key for regex
@@ -142,15 +142,15 @@ NSString *const fontName = @"Helvetica"; // Font style name of the message
     [_popUp removeFromSuperview];
     
     if(_isValidOnResign)
-        [(AJTextFieldValidator *)textField isValid];
+        [(AJTextField *)textField isValid];
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    [(AJTextFieldValidator *)textField dismissPopup];
+    [(AJTextField *)textField dismissPopup];
     if(_isValidOnCharacterChanged)
-        [(AJTextFieldValidator *)textField performSelector:@selector(isValid) withObject:nil afterDelay:0.1];
+        [(AJTextField *)textField performSelector:@selector(isValid) withObject:nil afterDelay:0.1];
     else
-        [(AJTextFieldValidator *)textField setRightView:nil];
+        [(AJTextField *)textField setRightView:nil];
     if([_delegate respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)])
         return [_delegate textField:textField shouldChangeCharactersInRange:range replacementString:string];
     
@@ -178,10 +178,10 @@ NSString *const fontName = @"Helvetica"; // Font style name of the message
 @end
 
 /**
- * AJTextFieldValidator interface for handling error message with regular expressions.
+ * AJTextField interface for handling error message with regular expressions.
  *
  */
-@interface AJTextFieldValidator()
+@interface AJTextField()
 
 @property (strong, nonatomic) NSMutableArray *regexArray;
 @property (strong, nonatomic) NSString *stringLengthValidationMessage;
@@ -191,7 +191,7 @@ NSString *const fontName = @"Helvetica"; // Font style name of the message
 
 @end
 
-@implementation AJTextFieldValidator
+@implementation AJTextField
 
 #pragma mark setup methods
 
@@ -226,7 +226,7 @@ NSString *const fontName = @"Helvetica"; // Font style name of the message
     _fieldValidatorDelegate.isValidOnResign = _isValidOnResign;
 }
 
-#pragma mark AJTextFieldValidator methods
+#pragma mark AJTextField methods
 
 - (void)addRegex:(NSString *)stringRegex withMessage:(NSString *)message {
     NSDictionary *regexDict = @{REGEX:stringRegex, MESSAGE: message};
