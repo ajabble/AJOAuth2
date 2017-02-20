@@ -41,7 +41,7 @@
 
 
 /**
- * Use to perform validation
+ * Use to perform validation with Regular Expression
  
  @return Bool It will return YES if all provided regex validation will pass else return NO
  
