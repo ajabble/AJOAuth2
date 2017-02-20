@@ -23,7 +23,7 @@
     "dob_placeholder": "जन्म तिथि",
     "profile_navigation_title": "मेरा खाता",
     "no_internet_connectivity": "कोई इंटरनेट कनेक्टिविटी",
-    "login_success_message": "सफलतापूर्वक प्रवेश!",
+    "login_success_message": "सफलतापूर्वक लॉग इन हो चुका है!",
     "error_message": "त्रुटि के साथ विफल",
     "back_bar_button_item_title": "वापस",
     "sign_out_message": "कुछ कारणों से हम उपयोगकर्ता बाहर हस्ताक्षर किए गए हैं। लॉगिन के साथ फिर से कोशिश करें",
@@ -35,5 +35,9 @@
     "sign_out_prompt_title": "आप आवेदन से साइन आउट करना चाहते हैं आप सुनिश्चित हैं?",
     "update_btn_title": "अद्यतन",
     "or_keyword": "या",
-    "settings_title": "सेटिंग्स"
+    "settings_title": "सेटिंग्स",
+    "field_cannot_be_blank": "यह क्षेत्र रिक्त नहीं रह सकता",
+    "show_error_email_policy": "कृपया मान्य ईमेल को दर्ज करें",
+    "show_error_username_policy": "यूजर का नाम किसी भी छोटा अक्षर (a-z), संख्या (0-9), एक अंडरस्कोर, या एक हाइफन के साथ 3-16 अक्षर का होना चाहिए",
+    "show_error_password_policy": "पासवर्ड 8-15 अक्षर का होना चाहिए और अल्फान्यूमेरिक और शामिल होना चाहिए _-!@# अक्षर"
 }

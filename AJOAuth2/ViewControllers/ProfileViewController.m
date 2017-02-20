@@ -106,15 +106,12 @@
             
             // Display info
             [self userDisplayInfo];
-            
-            [SVProgressHUD showSuccessWithStatus:jsonDict[@"show_message"]];
-        } else {
-            [SVProgressHUD dismiss];
         }
+        [SVProgressHUD dismiss];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         if (![Helper isWebUrlValid:error])
             return;
-
+        
         id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
         if (![Helper checkResponseObject:errorJson])
             return ;
@@ -129,7 +126,7 @@
                 [SVProgressHUD dismiss];
                 if (![Helper isWebUrlValid:error])
                     return;
-
+                
                 id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
                 
                 if (![Helper checkResponseObject:errorJson])

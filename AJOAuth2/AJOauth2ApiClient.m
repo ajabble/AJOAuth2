@@ -13,7 +13,6 @@ NSString *const BASE_URL = @"http://YOUR_WEB_SERVER_URL/";
 NSString *const CLIENT_ID = @"YOUR_CLIENT_ID";
 NSString *const SECRET_KEY = @"YOUR_SECRET_KEY";
 NSString *const API_VERSION = @"YOUR_API_VERSION";
-NSString *const SCOPE = @"API";
 NSString *const EMAIL_CONFIRMATION = @"0";
 NSString *const ACCEPT_VERSION_HEADER_FIELD_KEY = @"X-Accept-Version";
 
@@ -57,7 +56,7 @@ NSString *const UPDATE_PROFILE_URI = @"user/profile/edit";
     [AJOauth2ApiClient sharedClient].useHTTPBasicAuthentication = NO;
     NSLog(@"[%@ %@]", [self class], FETCH_ACCESS_TOKEN_URI);
     
-    [self authenticateUsingOAuthWithURLString:FETCH_ACCESS_TOKEN_URI parameters:@{@"username": username, @"password": password, @"scope":SCOPE, @"_locale": locale}success:^(AFOAuthCredential *credential) {
+    [self authenticateUsingOAuthWithURLString:FETCH_ACCESS_TOKEN_URI parameters:@{@"username": username, @"password": password, @"_locale": locale}success:^(AFOAuthCredential *credential) {
         NSLog(@"Token: %@", credential.description);
         
         // Store credential
@@ -85,7 +84,7 @@ NSString *const UPDATE_PROFILE_URI = @"user/profile/edit";
     NSLog(@"[%@ %@]", [self class], USER_REGISTER_URI);
     
     [self POST:USER_REGISTER_URI
-    parameters:@{@"client_id": CLIENT_ID, @"client_secret": SECRET_KEY, @"scope": SCOPE, @"email_confirmation": EMAIL_CONFIRMATION, @"_locale": locale, @"username": username, @"password": password, @"email": email, @"firstname": firstName, @"lastname": lastName, @"dob": dob}
+    parameters:@{@"client_id": CLIENT_ID, @"client_secret": SECRET_KEY, @"email_confirmation": EMAIL_CONFIRMATION, @"_locale": locale, @"username": username, @"password": password, @"email": email, @"firstname": firstName, @"lastname": lastName, @"dob": dob}
       progress:nil
        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
            NSLog(@"Success: %@", responseObject);

@@ -34,16 +34,17 @@
     self.view.backgroundColor = VIEW_BG_COLOR;
     
     // Email Textfield
-    _emailTextfield.placeholder = [NSString stringWithFormat:@"%@ %@ %@", [MCLocalization stringForKey:@"email_placeholder"], [MCLocalization stringForKey:@"or_keyword"], [MCLocalization stringForKey:@"user_name_placeholder"]];
-    _emailTextfield.returnKeyType = UIReturnKeySend;
-    _emailTextfield.autocorrectionType = UITextAutocorrectionTypeNo;
-    _emailTextfield.errorColor = ERROR_LINE_COLOR;
-    //_emailTextfield.lineColor = TEXT_LABEL_COLOR;
-    _emailTextfield.enableMaterialPlaceHolder = YES;
-    _emailTextfield.delegate = self;
-    _emailTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
-    _emailTextfield.keyboardType = UIKeyboardTypeEmailAddress;
-    _emailTextfield.textColor = TEXT_LABEL_COLOR;
+    _emailOrUsernameTextfield.placeholder = [NSString stringWithFormat:@"%@ %@ %@", [MCLocalization stringForKey:@"email_placeholder"], [MCLocalization stringForKey:@"or_keyword"], [MCLocalization stringForKey:@"user_name_placeholder"]];
+    _emailOrUsernameTextfield.returnKeyType = UIReturnKeySend;
+    _emailOrUsernameTextfield.autocorrectionType = UITextAutocorrectionTypeNo;
+    _emailOrUsernameTextfield.errorColor = ERROR_LINE_COLOR;
+    //_emailOrUsernameTextfield.lineColor = TEXT_LABEL_COLOR;
+    _emailOrUsernameTextfield.enableMaterialPlaceHolder = YES;
+    _emailOrUsernameTextfield.delegate = self;
+    _emailOrUsernameTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _emailOrUsernameTextfield.keyboardType = UIKeyboardTypeEmailAddress;
+    _emailOrUsernameTextfield.textColor = TEXT_LABEL_COLOR;
+    _emailOrUsernameTextfield.presentInView = self.view;
     
     // Reset Password Button title
     [_resetPasswordButton setTitle:[MCLocalization stringForKey:@"reset_password_btn_title"] forState:UIControlStateNormal];
@@ -66,13 +67,13 @@
  // Pass the selected object to the new view controller.
  }
  */
-#pragma mark UITextfield
+#pragma mark AJTextfield
 
-- (void)textFieldDidEndEditing:(JJMaterialTextfield *)textField {
-    (textField.text.length == 0) ? [textField showError] : [textField hideError];
+- (void)textFieldDidEndEditing:(AJTextField *)textField {
+    ([textField isValid]) ? [textField hideError] : [textField showError];
 }
 
-- (BOOL)textFieldShouldReturn:(JJMaterialTextfield *)textField {
+- (BOOL)textFieldShouldReturn:(AJTextField *)textField {
     (textField.text.length == 0) ? [textField becomeFirstResponder] : [textField resignFirstResponder];
     
     if (textField.text.length > 0) {
@@ -84,28 +85,33 @@
     return YES;
 }
 
+- (BOOL)textField:(AJTextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    
+    return YES;
+}
+
+- (void)textFieldDidChange:(AJTextField *)textField {
+    ([textField isValid]) ? [textField hideError] : [textField showError];
+}
+
 #pragma mark IBActions
 
 - (IBAction)reset:(id)sender {
-    if (_emailTextfield.text.length == 0) {
-        [_emailTextfield showError];
-        return;
+    if ([_emailOrUsernameTextfield isValid]) {
+        if ([Helper isConnected])
+            [self requestPassword];
+        else
+            [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"no_internet_connectivity"]];
     }
-    
-    if ([Helper isConnected])
-        [self requestPassword];
-    else
-        [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"no_internet_connectivity"]];
 }
 
 #pragma mark Request Password API method
 
 - (void)requestPassword {
-    [_emailTextfield hideError];
-    
     [SVProgressHUD show];
     AJOauth2ApiClient *client = [AJOauth2ApiClient sharedClient];
-    [client requestPassword:_emailTextfield.text success:^(NSURLSessionDataTask *task, id responseObject) {
+    [client requestPassword:_emailOrUsernameTextfield.text success:^(NSURLSessionDataTask *task, id responseObject) {
         if (![Helper checkResponseObject:responseObject])
             return ;
         

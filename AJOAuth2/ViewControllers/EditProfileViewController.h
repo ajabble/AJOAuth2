@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-@import JJMaterialTextField;
+#import "AJTextField.h"
 
 @interface EditProfileViewController : UIViewController <UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet JJMaterialTextfield *firstNameTextfield;
-@property (weak, nonatomic) IBOutlet JJMaterialTextfield *lastNameTextfield;
-@property (weak, nonatomic) IBOutlet JJMaterialTextfield *dobTextfield;
+@property (weak, nonatomic) IBOutlet AJTextField *firstNameTextfield;
+@property (weak, nonatomic) IBOutlet AJTextField *lastNameTextfield;
+@property (weak, nonatomic) IBOutlet AJTextField *dobTextfield;
 @property (weak, nonatomic) IBOutlet UIButton *updateButton;
 
 - (IBAction)update:(id)sender;

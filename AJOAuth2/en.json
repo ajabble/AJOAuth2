@@ -23,7 +23,7 @@
     "dob_placeholder": "DOB",
     "profile_navigation_title": "My Account",
     "no_internet_connectivity": "No internet connectivity",
-    "login_success_message": "Login successfully!",
+    "login_success_message": "Logged in successfully!",
     "error_message": "Failed with Error",
     "back_bar_button_item_title": "Back",
     "sign_out_message": "For some reasons we have been signed out the user. Please try with login again.",
@@ -35,5 +35,10 @@
     "sign_out_prompt_title": "Are you sure you want to sign out from the application?",
     "update_btn_title": "Update",
     "or_keyword": "or",
-    "settings_title": "Settings"
+    "settings_title": "Settings",
+    "field_cannot_be_blank": "This field cannot be blank",
+    "show_error_email_policy": "Please enter valid email",
+    "show_error_username_policy": "Username should be 3-16 characters long with any lowercase letter (a-z), number (0-9), an underscore, or a hyphen",
+    "show_error_password_policy": "Password should be 8-15 characters long and must contain alphanumeric and _-!@# characters allowed"
+    
 }

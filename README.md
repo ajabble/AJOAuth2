@@ -71,6 +71,60 @@ Below are the third-party libraries used in this application demo, It offers us 
 * `pod 'JJMaterialTextField'` => Materialized Textfield
 * `pod 'LGSideMenuController'` => Slider Animation
 
+#### How to use AJTextField?
+
+1. Import
+```ruby
+#import "AJTextField.h"
+```
+
+2. Create an AJTextField
+
+```ruby
+@property (weak, nonatomic) IBOutlet AJTextField *myTextfield;
+```
+
+- Textfield validation with required field
+```ruby
+By default isRequired value YES, you may override this value like myTextfield.isRequired = NO;
+```
+
+- To show error button on textfield when invalid
+```ruby
+myTextfield.presentInView = self.view;
+```
+
+3. Adding Validation Rules
+
+- Regex validation
+```
+- (void)addRegex:(NSString *)stringRegex withMessage:(NSString *)message;
+```
+
+- Confirm equality check validation
+```
+- (void)addConfirmValidationTo:(AJTextField *)confirmTextfield withMessage:(NSString *)message;
+```
+
+- Use to perform validation on textfield
+```
+
+- (BOOL)isValid;
+```
+
+- Use to perform validation with regex on textfield
+```
+- (BOOL)isValidRegex;
+```
+
+4. Use the `isValid` method to validate an instance:
+```ruby
+if ([myTextfield isValid])
+   NSLog(@"Go ahead!");
+else
+   NSLog(@"Something went wrong!");
+```
+
 #### Localization
 Keep all strings in localization files right from the beginning. It is good not only for translations but also for finding user-facing text quickly stuff.
 If you want to support any other language instead of English, Let say add Hindi language, `hi.json` file into the project. Also, always better to add json file under `Supporting files` folder structure.

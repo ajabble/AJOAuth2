@@ -41,11 +41,15 @@ NSInteger const kConfirmPasswordTextfieldTag = 347;
     // New Password Textfield
     _newPasswordTextfield.placeholder = [MCLocalization stringForKey:@"new_password_placeholder"];
     _newPasswordTextfield.tag = kNewPasswordTextfieldTag;
+    [_newPasswordTextfield addRegex:REGEX_PASSWORD withMessage:[MCLocalization stringForKey:@"show_error_password_policy"]];
     
     // Confirm Password Textfield
     _confirmPasswordTextfield.placeholder = [MCLocalization stringForKey:@"confirm_password_placeholder"];
     _confirmPasswordTextfield.tag = kConfirmPasswordTextfieldTag;
     
+    [_confirmPasswordTextfield addConfirmValidationTo:_newPasswordTextfield withMessage:[MCLocalization stringForKey:@"passwords_donot_match_error"]];
+    
+    _oldPasswordTextfield.presentInView = _newPasswordTextfield.presentInView = _confirmPasswordTextfield.presentInView = self.view;
     _oldPasswordTextfield.textColor = _newPasswordTextfield.textColor = _confirmPasswordTextfield.textColor = TEXT_LABEL_COLOR;
     _oldPasswordTextfield.errorColor = _newPasswordTextfield.errorColor = _confirmPasswordTextfield.errorColor = ERROR_LINE_COLOR;
     _oldPasswordTextfield.delegate = _newPasswordTextfield.delegate = _confirmPasswordTextfield.delegate = self;
@@ -77,10 +81,10 @@ NSInteger const kConfirmPasswordTextfieldTag = 347;
  */
 
 
-#pragma mark UITextfield
+#pragma mark AJTextfield
 
-- (void)textFieldDidEndEditing:(JJMaterialTextfield *)textField {
-    (textField.text.length == 0) ? [textField showError] : [textField hideError];
+- (void)textFieldDidEndEditing:(AJTextField *)textField {
+    ([textField isValid]) ? [textField hideError] : [textField showError];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -90,38 +94,30 @@ NSInteger const kConfirmPasswordTextfieldTag = 347;
     return YES;
 }
 
+- (BOOL)textField:(AJTextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    
+    return YES;
+}
+
+- (void)textFieldDidChange:(AJTextField *)textField {
+    ([textField isValid]) ? [textField hideError] : [textField showError];
+}
+
 #pragma mark IBActions
 
 - (IBAction)updatePassword:(id)sender {
-    if (_oldPasswordTextfield.text.length == 0) {
-        [_oldPasswordTextfield showError];
-        return;
-    }
-    if (_newPasswordTextfield.text.length == 0) {
-        [_newPasswordTextfield showError];
-        return;
-    }
-    if (_confirmPasswordTextfield.text.length == 0) {
-        [_confirmPasswordTextfield showError];
-        return;
-    }
-    if ([_newPasswordTextfield.text isEqualToString:_confirmPasswordTextfield.text]) {
+    if ([_oldPasswordTextfield isValid] & [_newPasswordTextfield isValid] & [_confirmPasswordTextfield isValid]) {
         if ([Helper isConnected])
             [self changePassword];
         else
             [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"no_internet_connectivity"]];
-    }else {
-        [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"passwords_donot_match_error"]];
     }
 }
 
 #pragma mark API
 
 - (void)changePassword {
-    [_oldPasswordTextfield hideError];
-    [_newPasswordTextfield hideError];
-    [_confirmPasswordTextfield hideError];
-    
     [SVProgressHUD show];
     AJOauth2ApiClient *client = [AJOauth2ApiClient sharedClient];
     [client changePassword:_newPasswordTextfield.text oldPassword:_oldPasswordTextfield.text success:^(NSURLSessionDataTask *task, id responseObject) {
