@@ -77,6 +77,7 @@ NSInteger const kDobTag = 1237;
     _firstNameTextfield.clearButtonMode = _lastNameTextfield.clearButtonMode = UITextFieldViewModeWhileEditing;
     _firstNameTextfield.delegate = _lastNameTextfield.delegate = _dobTextfield.delegate = self;
     _firstNameTextfield.textColor = _lastNameTextfield.textColor = _dobTextfield.textColor = TEXT_LABEL_COLOR;
+    _firstNameTextfield.presentInView = _lastNameTextfield.presentInView = _dobTextfield.presentInView = self.view;
     
     // Update button title
     [_updateButton setTitle:[MCLocalization stringForKey:@"update_btn_title"] forState:UIControlStateNormal];
@@ -114,14 +115,14 @@ NSInteger const kDobTag = 1237;
 
 #pragma mark UITextfield
 
-- (BOOL)textFieldShouldReturn:(JJMaterialTextfield *)textField {
+- (BOOL)textFieldShouldReturn:(AJTextField *)textField {
     UIView *view = [self.view viewWithTag:textField.tag + 1];
     (!view) ? [textField resignFirstResponder] : [view becomeFirstResponder];
     
     return YES;
 }
 
-- (void)textFieldDidBeginEditing:(JJMaterialTextfield *)textField {
+- (void)textFieldDidBeginEditing:(AJTextField *)textField {
     if(textField.tag == kDobTag) {
         User *user = [Helper getUserPrefs];
         
@@ -136,40 +137,35 @@ NSInteger const kDobTag = 1237;
     }
 }
 
-- (void)textFieldDidEndEditing:(JJMaterialTextfield *)textField {
+- (void)textFieldDidEndEditing:(AJTextField *)textField {
     (textField.text.length == 0) ? [textField showError] : [textField hideError];
+}
+
+- (BOOL)textField:(AJTextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    [textField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    
+    return YES;
+}
+
+- (void)textFieldDidChange:(AJTextField *)textField {
+    ([textField isValid]) ? [textField hideError] : [textField showError];
 }
 
 #pragma mark IBActions
 
 - (IBAction)update:(id)sender {
-    if (_firstNameTextfield.text.length == 0) {
-        [_firstNameTextfield showError];
-        return;
+    if ([_firstNameTextfield isValid] & [_lastNameTextfield isValid] & [_dobTextfield isValid]) {
+        if ([Helper isConnected])
+            [self updateProfile];
+        else
+            [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"no_internet_connectivity"]];
     }
-    if (_lastNameTextfield.text.length == 0) {
-        [_lastNameTextfield showError];
-        return;
-    }
-    if (_dobTextfield.text.length == 0){
-        [_dobTextfield showError];
-        return;
-    }
-    
-    if ([Helper isConnected])
-        [self updateProfile];
-    else
-        [SVProgressHUD showErrorWithStatus:[MCLocalization stringForKey:@"no_internet_connectivity"]];
 }
 
 #pragma mark API
 
 - (void)updateProfile {
     [datePicker removeFromSuperview];
-    [_firstNameTextfield hideError];
-    [_lastNameTextfield hideError];
-    [_dobTextfield hideError];
-    
     [SVProgressHUD show];
     AJOauth2ApiClient *client = [AJOauth2ApiClient sharedClient];
     [client updateProfile:_firstNameTextfield.text lastName:_lastNameTextfield.text dob:_dobTextfield.text success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -210,8 +206,8 @@ NSInteger const kDobTag = 1237;
                 [SVProgressHUD dismiss];
                 if (![Helper isWebUrlValid:error])
                     return;
-
-                 id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+                
+                id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
                 
                 if (![Helper checkResponseObject:errorJson])
                     return ;
