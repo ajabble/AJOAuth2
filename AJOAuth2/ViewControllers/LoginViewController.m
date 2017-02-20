@@ -149,10 +149,10 @@ NSInteger const kPasswordFieldTag = 1235;
     }
 }
 
-#pragma mark UITextfield
+#pragma mark AJTextfield
 
 - (void)textFieldDidEndEditing:(AJTextField *)textField {
-    (textField.text.length == 0) ? [textField showError] : [textField hideError];
+    ([textField isValid]) ? [textField hideError] : [textField showError];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

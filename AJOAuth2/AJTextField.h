@@ -26,6 +26,13 @@
 - (void)addRegex:(NSString *)stringRegex withMessage:(NSString *)message;
 
 /**
+ * Use to add validation for validating equality of text
+ 
+ @param confirmTextfield Hold reference of textfield from which they will check text equality.
+ */
+- (void)addConfirmValidationTo:(AJTextField *)confirmTextfield withMessage:(NSString *)message;
+
+/**
  * By default the message will be shown which is given in the macro "messageValidateLength", but you can change message for each textfield as well.
  
  @param message Message string to be displayed when length validation will fail.

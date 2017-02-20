@@ -67,10 +67,10 @@
  // Pass the selected object to the new view controller.
  }
  */
-#pragma mark UITextfield
+#pragma mark AJTextfield
 
 - (void)textFieldDidEndEditing:(AJTextField *)textField {
-    (textField.text.length == 0) ? [textField showError] : [textField hideError];
+    ([textField isValid]) ? [textField hideError] : [textField showError];
 }
 
 - (BOOL)textFieldShouldReturn:(AJTextField *)textField {

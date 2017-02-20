@@ -11,6 +11,7 @@
 
 NSString *const REGEX = @"regex"; // Key for regex
 NSString *const MESSAGE = @"message"; // key for regex message, when invalid
+NSString *const CONFIRM = @"confirm"; // key for equality check
 NSString *const imageName = @"error.png"; // Image name for showing error on textfield
 NSInteger const fontSize = 15; // Font size of the message
 NSInteger const paddingInErrorPopUp = 8; // Padding in pixels for the popup
@@ -233,6 +234,11 @@ NSString *const fontName = @"Helvetica"; // Font style name of the message
     [_regexArray addObject:regexDict];
 }
 
+- (void)addConfirmValidationTo:(AJTextField *)confirmTextfield withMessage:(NSString *)message {
+    NSDictionary *regexDict = @{CONFIRM:confirmTextfield, MESSAGE: message};
+    [_regexArray addObject:regexDict];
+}
+
 - (void)updateLengthValidationMessage:(NSString *)message {
     _stringLengthValidationMessage = [message copy];
 }
@@ -240,10 +246,16 @@ NSString *const fontName = @"Helvetica"; // Font style name of the message
 - (BOOL)isValidRegex {
     for (NSDictionary* regexDictionary in _regexArray) {
         NSLog(@"%@",regexDictionary.description);
-        NSString* regexPattern = [regexDictionary objectForKey:REGEX];
+        NSString *regexPattern = [regexDictionary objectForKey:REGEX];
         if(self.text.length !=0 && regexPattern.length != 0 && ![self validateString:self.text withRegex:regexPattern]) {
             [self showErrorIconForMessage:[regexDictionary objectForKey:MESSAGE]];
             return NO;
+        } else if ([regexDictionary objectForKey:CONFIRM]) {
+            AJTextField *confirmTextfield = [regexDictionary objectForKey:CONFIRM];
+            if(![confirmTextfield.text isEqualToString:self.text]){
+                [self showErrorIconForMessage:[regexDictionary objectForKey:MESSAGE]];
+                return NO;
+            }
         }
     }
     self.rightView=nil;

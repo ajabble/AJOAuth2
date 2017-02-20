@@ -113,7 +113,7 @@ NSInteger const kDobTag = 1237;
     [datePicker removeFromSuperview];
 }
 
-#pragma mark UITextfield
+#pragma mark AJTextfield
 
 - (BOOL)textFieldShouldReturn:(AJTextField *)textField {
     UIView *view = [self.view viewWithTag:textField.tag + 1];
@@ -138,7 +138,7 @@ NSInteger const kDobTag = 1237;
 }
 
 - (void)textFieldDidEndEditing:(AJTextField *)textField {
-    (textField.text.length == 0) ? [textField showError] : [textField hideError];
+    ([textField isValid]) ? [textField hideError] : [textField showError];
 }
 
 - (BOOL)textField:(AJTextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {

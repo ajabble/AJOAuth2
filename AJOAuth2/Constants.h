@@ -28,4 +28,6 @@
 #define SUCCESS_CODE 201
 #define INTERNAL_SERVER_ERROR_CODE 500
 
+#define REGEX_PASSWORD @"^[A-Za-z0-9_!@#]{8,15}$"
+
 #endif /* Constants_h */

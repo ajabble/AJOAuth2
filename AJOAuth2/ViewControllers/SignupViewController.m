@@ -21,7 +21,6 @@ NSInteger const kDisplayNameTextfieldTag = 1238;
 NSInteger const kDobTextfieldTag = 1239;
 
 NSString *const REGEX_EMAIL = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
-NSString *const REGEX_PASSWORD = @"^[A-Za-z0-9_!@#]{8,15}$";
 NSString *const REGEX_USER_NAME = @"^[a-z0-9_-]{3,16}$";
 @interface SignupViewController ()
 
@@ -124,7 +123,7 @@ NSString *const REGEX_USER_NAME = @"^[a-z0-9_-]{3,16}$";
     }
 }
 
-#pragma mark UITextfield
+#pragma mark AJTextfield
 
 - (void)textFieldDidEndEditing:(AJTextField *)textField {
     ([textField isValid]) ? [textField hideError] : [textField showError];
