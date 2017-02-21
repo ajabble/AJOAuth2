@@ -11,6 +11,7 @@
 #import "Helper.h"
 #import "User.h"
 #import <LGSideMenuController/UIViewController+LGSideMenuController.h>
+#import "ChangeLanguageViewController.h"
 
 @interface LeftViewController ()
 
@@ -27,9 +28,6 @@
 - (id)init {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
-        // TODO: Forcefully stop to call table data source and delegates
-        self.tableView.dataSource = nil;
-        self.tableView.delegate = nil;
         [self.tableView registerClass:[LeftViewCell class] forCellReuseIdentifier:@"cell"];
         self.tableView.contentInset = UIEdgeInsetsMake(44.0, 0.0, 44.0, 0.0);
         self.view.backgroundColor = self.tableView.backgroundColor = [UIColor clearColor];
@@ -50,9 +48,8 @@
         _usernameLabel.text = [MCLocalization stringForKey:@"personalized_title_placeholder"];
         _emailLabel.text = [MCLocalization stringForKey:@"personalized_subtitle_placeholder"];
         
-        self.titlesArray = nil;
-        self.tableView.dataSource = nil;
-        self.tableView.delegate = nil;
+        self.titlesArray = @[@"", [MCLocalization stringForKey:@"change_language_section_header_name"]];
+        [self.tableView reloadData];
     } else {
         User *user = [Helper getUserPrefs];
         
@@ -168,7 +165,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == self.titlesArray.count - 1) {
-        ProfileViewController *rightSideVC = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
+        UIViewController *rightSideVC = nil;
+        if (![PREFS objectForKey:USER_INFO]) {
+            rightSideVC = [[ChangeLanguageViewController alloc] initWithNibName:@"ChangeLanguageViewController" bundle:[NSBundle mainBundle]];
+        }else {
+            rightSideVC = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
+        }
         UINavigationController *navigationController = (UINavigationController *)self.sideMenuController.rootViewController;
         [navigationController pushViewController:rightSideVC animated:YES];
         [self.sideMenuController hideLeftViewAnimated:YES completionHandler:nil];
