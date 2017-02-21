@@ -29,6 +29,7 @@
     "sign_out_message": "For some reasons we have been signed out the user. Please try with login again.",
     "change_password_section_header_name": "Change Password",
     "profile_edit_section_header_name": "Edit Profile",
+    "change_language_section_header_name" : "Change Language",
     "passwords_donot_match_error": "New and Confirm passwords donot match.",
     "sign_out":"Sign out",
     "cancel_button_title": "Cancel",
@@ -40,5 +41,4 @@
     "show_error_email_policy": "Please enter valid email",
     "show_error_username_policy": "Username should be 3-16 characters long with any lowercase letter (a-z), number (0-9), an underscore, or a hyphen",
     "show_error_password_policy": "Password should be 8-15 characters long and must contain alphanumeric and _-!@# characters allowed"
-    
 }

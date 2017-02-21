@@ -11,12 +11,55 @@
 
 @interface Helper : NSObject
 
+/**
+ * Used to check internet connectivity
+ */
 + (BOOL)isConnected;
-+ (BOOL)validateEmail:(NSString *)candidate;
+
+/**
+ * Used to check response object type
+ 
+ @param responseObject id type of reponse object
+ */
 + (BOOL)checkResponseObject:(id)responseObject;
+
+/**
+ * Used to validate web url address
+ 
+ @param error NSError
+ */
 + (BOOL)isWebUrlValid:(NSError *)error;
+
+/**
+ * Used to get User preferences from NSUserDefault class
+ */
 + (User *)getUserPrefs;
-+ (void)saveUserInfoInDefaults:(NSDictionary *)userInfo;
+
+/**
+ * Used to remove User preferences from NSUserDefault class
+ */
 + (void)removeUserPrefs;
+
+/**
+ * Used to save User Object in NSUserDefault class
+ 
+ @param userInfo user information expect dictionary type
+ */
++ (void)saveUserInfoInDefaults:(NSDictionary *)userInfo;
+
+/**
+ * Used to get support languages with their internal and display names
+ */
++ (NSDictionary *)getLanguages;
+
+/**
+ * Used to Load support languages with their JSON files
+ */
++ (NSDictionary *)loadLanguagesFromUrl;
+
+/**
+ * Used to display languages with their internal and display names on the view itself
+ */
++ (NSDictionary *)displayLanguages;
 
 @end

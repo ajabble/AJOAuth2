@@ -16,14 +16,18 @@
 #import <LGSideMenuController/UIViewController+LGSideMenuController.h>
 #import "AFOAuthCredential.h"
 #import "AJOauth2ApiClient.h"
+#import "Helper.h"
 
 @interface AppDelegate ()
 @end
 
 @implementation AppDelegate
+@synthesize isLanguageChanged = _isLanguageChanged;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    self.isLanguageChanged = NO;
     
     // When application forcefully is deleted/uninstall, credentials are persists in memory; http://stackoverflow.com/questions/3671499/iphone-keychain-items-persist-after-application-uninstall
     // Delete OauthCredentials from keychain items, when invalid user
@@ -33,13 +37,8 @@
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
     // Load JSON file
-    NSDictionary * languageURLPairs = @{
-                                        @"en":[[NSBundle mainBundle] URLForResource:@"en.json" withExtension:nil],
-                                        @"hi":[[NSBundle mainBundle] URLForResource:@"hi.json" withExtension:nil],
-                                        };
-    [MCLocalization loadFromLanguageURLPairs:languageURLPairs defaultLanguage:@"en"];
+    [MCLocalization loadFromLanguageURLPairs:[Helper loadLanguagesFromUrl] defaultLanguage:@"en"];
     [MCLocalization sharedInstance].noKeyPlaceholder = @"[No '{key}' in '{language}']";
-    [MCLocalization sharedInstance].language = @"en";
     
     // SVProgressHUD
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleLight];

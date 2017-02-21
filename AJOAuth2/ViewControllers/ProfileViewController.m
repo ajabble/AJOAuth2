@@ -13,9 +13,13 @@
 #import "User.h"
 #import "ChangePasswordViewController.h"
 #import "EditProfileViewController.h"
+#import "ChangeLanguageViewController.h"
 #import "AJOauth2ApiClient.h"
+#import "AppDelegate.h"
 
 @interface ProfileViewController ()
+
+@property (strong, nonatomic)NSArray *listItemsArray;
 
 @end
 
@@ -27,21 +31,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    // Navigation title
-    self.title = [MCLocalization stringForKey:@"profile_navigation_title"];
-    
-    // Back bar button item title
-    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"back_bar_button_item_title"] style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationItem.backBarButtonItem = backBarButtonItem;
-    
-    // Right Bar Button Item image
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sign-out"] style:UIBarButtonItemStylePlain target:self action:@selector(showAlertBeforeLogOut)];
-    
-    // image
-    _imageView.image = [UIImage imageNamed:@"circle-user"];
-    
-    // Basic Infoview
-    self.basicInfoView.backgroundColor = THEME_BG_COLOR;
+    [self displayUIElements];
     
     if ([Helper isConnected])
         [self showProfile];
@@ -54,6 +44,12 @@
     
     // User display info
     [self userDisplayInfo];
+    if (appDelegate.isLanguageChanged) {
+        [self displayUIElements];
+        [self.tableView reloadData];
+        appDelegate.isLanguageChanged = NO;
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -71,6 +67,25 @@
  // Pass the selected object to the new view controller.
  }
  */
+- (void)displayUIElements {
+    _listItemsArray = @[[MCLocalization stringForKey:@"profile_edit_section_header_name"], [MCLocalization stringForKey:@"change_password_section_header_name"], [MCLocalization stringForKey:@"change_language_section_header_name"], [MCLocalization stringForKey:@"sign_out"]];
+    
+    // Navigation title
+    self.title = [MCLocalization stringForKey:@"profile_navigation_title"];
+    
+    // Back bar button item title
+    UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[MCLocalization stringForKey:@"back_bar_button_item_title"] style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backBarButtonItem;
+    
+    // Right Bar Button Item image
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sign-out"] style:UIBarButtonItemStylePlain target:self action:@selector(showAlertBeforeLogOut)];
+    
+    // image
+    _imageView.image = [UIImage imageNamed:@"circle-user"];
+    
+    // Basic Infoview
+    self.basicInfoView.backgroundColor = THEME_BG_COLOR;
+}
 
 - (void)userDisplayInfo {
     // Get user info
@@ -195,7 +210,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return _listItemsArray.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -216,13 +231,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil)
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-    
-    if (indexPath.section == 0)
-        cell.textLabel.text = [MCLocalization stringForKey:@"profile_edit_section_header_name"];
-    else if (indexPath.section == 1)
-        cell.textLabel.text = [MCLocalization stringForKey:@"change_password_section_header_name"];
-    else
-        cell.textLabel.text = [MCLocalization stringForKey:@"sign_out"];
+
+     cell.textLabel.text =  [_listItemsArray objectAtIndex:indexPath.section];
     
     return cell;
 }
@@ -232,7 +242,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section == 2) {
+    if (indexPath.section == 3) {
         [self showAlertBeforeLogOut];
         return;
     }
@@ -242,6 +252,8 @@
         vc = [[EditProfileViewController alloc] initWithNibName:@"EditProfileViewController" bundle:[NSBundle mainBundle]];
     else if (indexPath.section == 1)
         vc = [[ChangePasswordViewController alloc] initWithNibName:@"ChangePasswordViewController" bundle:[NSBundle mainBundle]];
+    else if (indexPath.section == 2)
+        vc = [[ChangeLanguageViewController alloc] initWithNibName:@"ChangeLanguageViewController" bundle:[NSBundle mainBundle]];
     
     [self.navigationController pushViewController:vc animated:YES];
 }

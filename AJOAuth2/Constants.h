@@ -10,6 +10,7 @@
 #define Constants_h
 
 #define USER_INFO @"UserInformation"
+#define appDelegate ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 
 #define LEFT_DRAWER_WIDTH 280
 #define ERROR_LINE_COLOR [UIColor colorWithRed:0.910 green:0.329 blue:0.271 alpha:1.000]
