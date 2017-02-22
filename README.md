@@ -26,12 +26,15 @@ This example is based on [OAuth 2.0 Protocol](https://tools.ietf.org/html/draft-
 Once you are set up with web part and had added valid OAuth2.0 client and secret. Please do required changes in **AJOauth2ApiClient** file
 
 ```ruby
-BASE_URL @"(http|https)/YOUR_WEB_SERVER_URL/"
+BASE_URL @"(http|https)/YOUR_WEB_SERVER_URL//"
 CLIENT_ID @"YOUR_CLIENT_ID"
 SECRET_KEY @"YOUR_SECRET_KEY"
 API_VERSION @"YOUR_API_VERSION"
 ```
-
+#### Host URL to load avatar image
+```ruby
+HOST_URL @"@"(http|https)/YOUR_WEB_SERVER_URL/""
+```
 #### Requesting Access to a Service
 Once you have configured your client you are ready to request access to one of those services. The AJOauth2ApiClient provides different methods for this:
 

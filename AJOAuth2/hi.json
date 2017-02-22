@@ -40,5 +40,9 @@
     "field_cannot_be_blank": "यह क्षेत्र रिक्त नहीं रह सकता",
     "show_error_email_policy": "कृपया मान्य ईमेल को दर्ज करें",
     "show_error_username_policy": "यूजर का नाम किसी भी छोटा अक्षर (a-z), संख्या (0-9), एक अंडरस्कोर, या एक हाइफन के साथ 3-16 अक्षर का होना चाहिए",
-    "show_error_password_policy": "पासवर्ड 8-15 अक्षर का होना चाहिए और अल्फान्यूमेरिक और शामिल होना चाहिए _-!@# अक्षर"
+    "show_error_password_policy": "पासवर्ड 8-15 अक्षर का होना चाहिए और अल्फान्यूमेरिक और शामिल होना चाहिए _-!@# अक्षर",
+    "no_camera_available": "आपकी डिवाइस एक कैमरा नहीं है।",
+    "take_profile_photo_option_title": "प्रोफ़ाइल तस्वीर ले लो",
+    "choose_from_library_option_title": "पुस्तकालय से चुनें",
+    "warning_title": "चेतावनी!"
 }

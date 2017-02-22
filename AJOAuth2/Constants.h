@@ -30,5 +30,8 @@
 #define INTERNAL_SERVER_ERROR_CODE 500
 
 #define REGEX_PASSWORD @"^[A-Za-z0-9_!@#]{8,15}$"
+#define HOST_URL @"(http|https)/YOUR_WEB_SERVER_URL/"
+#define SCALED_WIDTH_SIZE 200
+#define SCALED_HEIGHT_SIZE 200
 
 #endif /* Constants_h */
