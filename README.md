@@ -73,28 +73,27 @@ Below are the third-party libraries used in this application demo, It offers us 
 
 #### How to use AJTextField?
 
-1. Import
+> Import
 ```ruby
 #import "AJTextField.h"
 ```
-
-2. Create an AJTextField
+> Create an AJTextField
 
 ```ruby
 @property (weak, nonatomic) IBOutlet AJTextField *myTextfield;
 ```
 
-- Textfield validation with required field
+> Textfield validation with required field
 ```ruby
 By default isRequired value YES, you may override this value like myTextfield.isRequired = NO;
 ```
 
-- To show error button on textfield when invalid
+> To show error button on textfield when invalid
 ```ruby
 myTextfield.presentInView = self.view;
 ```
 
-3. Adding Validation Rules
+#### Adding Validation Rules
 
 - Regex validation
 ```
@@ -117,7 +116,7 @@ myTextfield.presentInView = self.view;
 - (BOOL)isValidRegex;
 ```
 
-4. Use the `isValid` method to validate an instance:
+- Use the `isValid` method to validate an instance:
 ```ruby
 if ([myTextfield isValid])
    NSLog(@"Go ahead!");
@@ -127,16 +126,18 @@ else
 
 #### Localization
 Keep all strings in localization files right from the beginning. It is good not only for translations but also for finding user-facing text quickly stuff.
-If you want to support any other language instead of English, Let say add Hindi language, `hi.json` file into the project. Also, always better to add json file under `Supporting files` folder structure.
-
-Copy *key pairs*  which is case-sensitive from `en.json` and add values to their text languages.
-
-Load `hi.json` file in *AppDelegate.h* with default language
+If you want to support any other language, Let say German language, you need only two things to do make it work.
+* Add `de.json` file into the project and always better to add json file under `Supporting files` folder structure. Also, copy *key-value pairs* from `en.json` and add values to their text languages in `de.json`.
+* Modify `getLanguages()` method which is defined in *Helper.m* and add `de` is internal_name and `German` is display_name of the language.
 
 ```ruby
-NSDictionary * languageURLPairs = @{@"en":[[NSBundle mainBundle] URLForResource:@"en.json" withExtension:nil],@"hi":[[NSBundle mainBundle] URLForResource:@"hi.json" withExtension:nil]};
-[MCLocalization loadFromLanguageURLPairs:languageURLPairs defaultLanguage:@"hi"];
-[MCLocalization sharedInstance].language = @"hi";
+return @{
+         @"languages": @[
+                        @{ @"internal_name":@"en" , @"display_name":@"English" },
+                        @{ @"internal_name":@"hi" , @"display_name":@"Hindi"},
+                        @{ @"internal_name":@"de" , @"display_name":@"German"}
+                       ]
+      };
 ```
 
 ## Contributing & Pull Requests

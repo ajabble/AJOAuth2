@@ -21,6 +21,8 @@
 		381A7E041E4863CD00DD48C4 /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381A7E021E4863CD00DD48C4 /* ChangePasswordViewController.m */; };
 		381A7E051E4863CD00DD48C4 /* ChangePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 381A7E031E4863CD00DD48C4 /* ChangePasswordViewController.xib */; };
 		381A7E081E4B610300DD48C4 /* AJOauth2ApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 381A7E071E4B610300DD48C4 /* AJOauth2ApiClient.m */; };
+		384745DC1E5AFE370011AD75 /* ChangeLanguageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 384745DA1E5AFE370011AD75 /* ChangeLanguageViewController.m */; };
+		384745DD1E5AFE370011AD75 /* ChangeLanguageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 384745DB1E5AFE370011AD75 /* ChangeLanguageViewController.xib */; };
 		38CE70BC1E309514009195D9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70BB1E309514009195D9 /* main.m */; };
 		38CE70BF1E309514009195D9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CE70BE1E309514009195D9 /* AppDelegate.m */; };
 		38CE70C51E309514009195D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38CE70C31E309514009195D9 /* Main.storyboard */; };
@@ -81,6 +83,9 @@
 		381A7E031E4863CD00DD48C4 /* ChangePasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangePasswordViewController.xib; sourceTree = "<group>"; };
 		381A7E061E4B610300DD48C4 /* AJOauth2ApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJOauth2ApiClient.h; sourceTree = "<group>"; };
 		381A7E071E4B610300DD48C4 /* AJOauth2ApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AJOauth2ApiClient.m; sourceTree = "<group>"; };
+		384745D91E5AFE370011AD75 /* ChangeLanguageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeLanguageViewController.h; sourceTree = "<group>"; };
+		384745DA1E5AFE370011AD75 /* ChangeLanguageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeLanguageViewController.m; sourceTree = "<group>"; };
+		384745DB1E5AFE370011AD75 /* ChangeLanguageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangeLanguageViewController.xib; sourceTree = "<group>"; };
 		38CE70B71E309514009195D9 /* AJOAuth2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AJOAuth2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38CE70BB1E309514009195D9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		38CE70BD1E309514009195D9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -254,6 +259,9 @@
 				381A7E011E4863CD00DD48C4 /* ChangePasswordViewController.h */,
 				381A7E021E4863CD00DD48C4 /* ChangePasswordViewController.m */,
 				381A7E031E4863CD00DD48C4 /* ChangePasswordViewController.xib */,
+				384745D91E5AFE370011AD75 /* ChangeLanguageViewController.h */,
+				384745DA1E5AFE370011AD75 /* ChangeLanguageViewController.m */,
+				384745DB1E5AFE370011AD75 /* ChangeLanguageViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -418,6 +426,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				384745DD1E5AFE370011AD75 /* ChangeLanguageViewController.xib in Resources */,
 				381A7E051E4863CD00DD48C4 /* ChangePasswordViewController.xib in Resources */,
 				38CE70CA1E309514009195D9 /* LaunchScreen.storyboard in Resources */,
 				38CE70C71E309514009195D9 /* Assets.xcassets in Resources */,
@@ -593,6 +602,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				384745DC1E5AFE370011AD75 /* ChangeLanguageViewController.m in Sources */,
 				381952771E32122B00ACB611 /* LoginViewController.m in Sources */,
 				381A7E081E4B610300DD48C4 /* AJOauth2ApiClient.m in Sources */,
 				38CE70BF1E309514009195D9 /* AppDelegate.m in Sources */,

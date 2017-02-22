@@ -11,6 +11,7 @@
 #import "Helper.h"
 #import "User.h"
 #import <LGSideMenuController/UIViewController+LGSideMenuController.h>
+#import "ChangeLanguageViewController.h"
 
 @interface LeftViewController ()
 
@@ -27,9 +28,6 @@
 - (id)init {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self) {
-        // TODO: Forcefully stop to call table data source and delegates
-        self.tableView.dataSource = nil;
-        self.tableView.delegate = nil;
         [self.tableView registerClass:[LeftViewCell class] forCellReuseIdentifier:@"cell"];
         self.tableView.contentInset = UIEdgeInsetsMake(44.0, 0.0, 44.0, 0.0);
         self.view.backgroundColor = self.tableView.backgroundColor = [UIColor clearColor];
@@ -45,14 +43,15 @@
     
     // Table header view
     self.tableView.tableHeaderView = [self getTableHeaderView];
+    // Tap gesture added to TableHeaderView
+    [self.tableView.tableHeaderView addGestureRecognizer:[self tableHeaderViewRecognizer]];
+    
+    // Left title array on cell
+    self.titlesArray = @[@"", [MCLocalization stringForKey:@"settings_title"]];
     
     if (![PREFS objectForKey:USER_INFO]) {
         _usernameLabel.text = [MCLocalization stringForKey:@"personalized_title_placeholder"];
         _emailLabel.text = [MCLocalization stringForKey:@"personalized_subtitle_placeholder"];
-        
-        self.titlesArray = nil;
-        self.tableView.dataSource = nil;
-        self.tableView.delegate = nil;
     } else {
         User *user = [Helper getUserPrefs];
         
@@ -61,15 +60,9 @@
         
         // Email Address
         _emailLabel.text = user.emailAddress;
-        
-        // Left title array on cell
-        self.titlesArray = @[@"", [MCLocalization stringForKey:@"settings_title"]];
-        self.tableView.dataSource = self;
-        self.tableView.delegate = self;
     }
     
-    // Tap gesture added to TableHeaderView
-    [self.tableView.tableHeaderView addGestureRecognizer:[self tableHeaderViewRecognizer]];
+    [self.tableView reloadData];
 }
 
 #pragma mark UITableview header
@@ -168,7 +161,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == self.titlesArray.count - 1) {
-        ProfileViewController *rightSideVC = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
+        UIViewController *rightSideVC = nil;
+        if (![PREFS objectForKey:USER_INFO]) {
+            rightSideVC = [[ChangeLanguageViewController alloc] initWithNibName:@"ChangeLanguageViewController" bundle:[NSBundle mainBundle]];
+        }else {
+            rightSideVC = [[ProfileViewController alloc] initWithNibName:@"ProfileViewController" bundle:[NSBundle mainBundle]];
+        }
         UINavigationController *navigationController = (UINavigationController *)self.sideMenuController.rootViewController;
         [navigationController pushViewController:rightSideVC animated:YES];
         [self.sideMenuController hideLeftViewAnimated:YES completionHandler:nil];

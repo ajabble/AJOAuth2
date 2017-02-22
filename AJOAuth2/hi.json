@@ -29,6 +29,7 @@
     "sign_out_message": "कुछ कारणों से हम उपयोगकर्ता बाहर हस्ताक्षर किए गए हैं। लॉगिन के साथ फिर से कोशिश करें",
     "change_password_section_header_name": "पासवर्ड बदलें",
     "profile_edit_section_header_name": "प्रोफाइल एडिट करें",
+    "change_language_section_header_name" : "भाषा बदलो",
     "passwords_donot_match_error": "नई और पुष्टि पासवर्ड मेल नहीं खाते।",
     "sign_out":"साइन आउट",
     "cancel_button_title": "रद्द करना",
