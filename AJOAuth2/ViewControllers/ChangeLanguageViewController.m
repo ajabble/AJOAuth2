@@ -24,6 +24,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    // Navigation title
+    self.navigationItem.title = [MCLocalization stringForKey:@"change_language_section_header_name"];
+    
     // Display languages and select default language depends upon MCLocalization shared preferences
     _languageDict = [Helper displayLanguages];
     NSArray *allKeys = [_languageDict allKeys];

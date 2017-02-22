@@ -43,13 +43,15 @@
     
     // Table header view
     self.tableView.tableHeaderView = [self getTableHeaderView];
+    // Tap gesture added to TableHeaderView
+    [self.tableView.tableHeaderView addGestureRecognizer:[self tableHeaderViewRecognizer]];
+    
+    // Left title array on cell
+    self.titlesArray = @[@"", [MCLocalization stringForKey:@"settings_title"]];
     
     if (![PREFS objectForKey:USER_INFO]) {
         _usernameLabel.text = [MCLocalization stringForKey:@"personalized_title_placeholder"];
         _emailLabel.text = [MCLocalization stringForKey:@"personalized_subtitle_placeholder"];
-        
-        self.titlesArray = @[@"", [MCLocalization stringForKey:@"change_language_section_header_name"]];
-        [self.tableView reloadData];
     } else {
         User *user = [Helper getUserPrefs];
         
@@ -58,15 +60,9 @@
         
         // Email Address
         _emailLabel.text = user.emailAddress;
-        
-        // Left title array on cell
-        self.titlesArray = @[@"", [MCLocalization stringForKey:@"settings_title"]];
-        self.tableView.dataSource = self;
-        self.tableView.delegate = self;
     }
     
-    // Tap gesture added to TableHeaderView
-    [self.tableView.tableHeaderView addGestureRecognizer:[self tableHeaderViewRecognizer]];
+    [self.tableView reloadData];
 }
 
 #pragma mark UITableview header

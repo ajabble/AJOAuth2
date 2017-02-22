@@ -47,7 +47,6 @@
     if (appDelegate.isLanguageChanged) {
         [self displayUIElements];
         [self.tableView reloadData];
-        appDelegate.isLanguageChanged = NO;
     }
     
 }
