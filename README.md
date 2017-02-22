@@ -33,7 +33,7 @@ API_VERSION @"YOUR_API_VERSION"
 ```
 #### Host URL to load avatar image
 ```ruby
-HOST_URL @"@"(http|https)/YOUR_WEB_SERVER_URL/""
+HOST_URL @"(http|https)/YOUR_WEB_SERVER_URL"
 ```
 #### Requesting Access to a Service
 Once you have configured your client you are ready to request access to one of those services. The AJOauth2ApiClient provides different methods for this:
