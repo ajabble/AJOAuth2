@@ -13,7 +13,6 @@ NSString *const BASE_URL = @"(http|https)/YOUR_WEB_SERVER_URL/api/";
 NSString *const CLIENT_ID = @"YOUR_CLIENT_ID";
 NSString *const SECRET_KEY = @"YOUR_SECRET_KEY";
 NSString *const API_VERSION = @"YOUR_API_VERSION";
-NSString *const EMAIL_CONFIRMATION = @"0";
 NSString *const ACCEPT_VERSION_HEADER_FIELD_KEY = @"X-Accept-Version";
 
 NSString *const FETCH_ACCESS_TOKEN_URI = @"user/access/token";
@@ -86,7 +85,7 @@ NSString *const AVATAR_IMAGE_URI = @"user/profile/get-pic";
     NSLog(@"[%@ %@]", [self class], USER_REGISTER_URI);
     
     [self POST:USER_REGISTER_URI
-    parameters:@{@"client_id": CLIENT_ID, @"client_secret": SECRET_KEY, @"email_confirmation": EMAIL_CONFIRMATION, @"_locale": locale, @"username": username, @"password": password, @"email": email, @"firstname": firstName, @"lastname": lastName, @"dob": dob}
+    parameters:@{@"client_id": CLIENT_ID, @"client_secret": SECRET_KEY, @"_locale": locale, @"username": username, @"password": password, @"email": email, @"firstname": firstName, @"lastname": lastName, @"dob": dob}
       progress:nil
        success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
            NSLog(@"Success: %@", responseObject);

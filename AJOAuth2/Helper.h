@@ -70,11 +70,4 @@
  */
 + (UIImage *)scaleImage:(UIImage *)image toSize:(CGSize)newSize;
 
-/**
- * Used to load image url
- 
- @param avatarImageURLString image url string
- */
-+ (NSData *)avatarImageUrl:(NSString *)avatarImageURLString;
-
 @end

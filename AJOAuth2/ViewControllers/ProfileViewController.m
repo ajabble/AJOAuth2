@@ -16,6 +16,7 @@
 #import "ChangeLanguageViewController.h"
 #import "AJOauth2ApiClient.h"
 #import "AppDelegate.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface ProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -99,11 +100,10 @@
     _dobLabel.text = user.dob;
     
     // Avatar ImageView
-    if (user.avatarImageURLString.length > 0)
-        _avatarImageView.image = [UIImage imageWithData:[Helper avatarImageUrl:user.avatarImageURLString]];
-    else
-        _avatarImageView.image = [UIImage imageNamed:@"circle-user"];
-    
+    [_avatarImageView setShowActivityIndicatorView:YES];
+    [_avatarImageView setIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    NSURL *avatarImageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", HOST_URL, user.avatarImageURLString]];
+    [_avatarImageView sd_setImageWithURL:avatarImageUrl placeholderImage:PLACEHOLDER_IMAGE options:SDWebImageRefreshCached];
     _avatarImageView.layer.cornerRadius = BTN_CORNER_RADIUS;
     _avatarImageView.layer.masksToBounds = YES;
     _avatarImageView.userInteractionEnabled = YES;
@@ -125,7 +125,6 @@
 }
 
 - (void)updateProfile:(UIImage *)image {
-    [SVProgressHUD show];
     AJOauth2ApiClient *client = [AJOauth2ApiClient sharedClient];
     [client updateProfileImage:image success:^(NSURLSessionDataTask *task, id responseObject) {
         if (![Helper checkResponseObject:responseObject])
@@ -134,12 +133,17 @@
         NSDictionary *jsonDict = (NSDictionary *)responseObject;
         NSInteger statusCode = [jsonDict[@"code"] integerValue];
         if (statusCode == SUCCESS_CODE) {
-            [SVProgressHUD showSuccessWithStatus:jsonDict[@"show_message"]];
+            //_avatarImageView.image = image;
+            [_avatarImageView setShowActivityIndicatorView:YES];
+            [_avatarImageView setIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            NSURL *avatarImageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", HOST_URL, jsonDict[@"image_url"]]];
+            [_avatarImageView sd_setImageWithURL:avatarImageUrl placeholderImage:PLACEHOLDER_IMAGE options:SDWebImageRefreshCached];
             
-            _avatarImageView.image = image;
             User *user = [Helper getUserPrefs];
             NSDictionary *userDict = @{@"firstname": user.firstName, @"lastname": user.lastName, @"dob": user.dob, @"username": user.userName, @"email":user.emailAddress, @"image_url":jsonDict[@"image_url"]};
             [Helper saveUserInfoInDefaults:userDict];
+            
+            [SVProgressHUD showSuccessWithStatus:jsonDict[@"show_message"]];
         }else if (statusCode == BAD_REQUEST_CODE) {
             NSLog(@"Error Code: %@; ErrorDescription: %@", jsonDict[@"code"], jsonDict[@"error_description"]);
             [SVProgressHUD showErrorWithStatus:jsonDict[@"show_message"]];
@@ -403,7 +407,6 @@
         // Call update profile API
         [self updateProfile:image];
     }];
-    
 }
 
 @end
