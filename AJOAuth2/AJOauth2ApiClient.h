@@ -53,6 +53,7 @@ typedef NSURLSessionDataTask *(^AJOauth2ApiClientCreateTask)(AJOauth2ApiClientRe
 
 - (void)updateProfileImage:(UIImage *)image success:(AJOauth2ApiClientSuccess)success
                    failure:(AJOauth2ApiClientFailure)failure;
+
 - (void)getAvatarImageUrl:(AJOauth2ApiClientSuccess)success
 failure:(AJOauth2ApiClientFailure)failure;
 

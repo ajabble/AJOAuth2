@@ -21,7 +21,7 @@ NSInteger const kDisplayNameTextfieldTag = 1238;
 NSInteger const kDobTextfieldTag = 1239;
 
 NSString *const REGEX_EMAIL = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
-NSString *const REGEX_USER_NAME = @"^[a-z0-9_-]{3,16}$";
+NSString *const REGEX_USER_NAME = @"^[a-zA-Z0-9-_!@#$%&*+=()^{};:.,\\|/?&gt;&lt;]{2,50}$";
 @interface SignupViewController ()
 
 @end

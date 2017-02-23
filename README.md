@@ -50,6 +50,10 @@ Once you have configured your client you are ready to request access to one of t
 
 > updateProfile - user profile update. [POST]
 
+> updateProfileImage - user avatar image update. [POST]
+
+> getAvatarImageUrl - to get user avatar image Url. [POST]
+
 > refreshTokenWithSuccess - to get access token when invalid. [POST]
 
 **For example:**
@@ -73,6 +77,7 @@ Below are the third-party libraries used in this application demo, It offers us 
 * `pod 'SVProgressHUD'` => Loading wait Indicators
 * `pod 'JJMaterialTextField'` => Materialized Textfield
 * `pod 'LGSideMenuController'` => Slider Animation
+* `pod 'SDWebImage', '~>3.8'` => Image Caching and load on UIImageView
 
 #### How to use AJTextField?
 
