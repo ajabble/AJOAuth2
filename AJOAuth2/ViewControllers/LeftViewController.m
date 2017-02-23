@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSArray *titlesArray;
 @property (strong, nonatomic) UILabel *emailLabel;
 @property (strong, nonatomic) UILabel *usernameLabel;
+@property (strong, nonatomic) UIImageView *avatarImageView;
 
 @end
 
@@ -52,6 +53,7 @@
     if (![PREFS objectForKey:USER_INFO]) {
         _usernameLabel.text = [MCLocalization stringForKey:@"personalized_title_placeholder"];
         _emailLabel.text = [MCLocalization stringForKey:@"personalized_subtitle_placeholder"];
+        _avatarImageView.image = [UIImage imageNamed:@"circle-user"];
     } else {
         User *user = [Helper getUserPrefs];
         
@@ -60,6 +62,12 @@
         
         // Email Address
         _emailLabel.text = user.emailAddress;
+        
+        // ImageView
+        if (user.avatarImageURLString.length > 0)
+            _avatarImageView.image = [UIImage imageWithData:[Helper avatarImageUrl:user.avatarImageURLString]];
+        else
+            _avatarImageView.image = [UIImage imageNamed:@"circle-user"];
     }
     
     [self.tableView reloadData];
@@ -70,20 +78,21 @@
 - (UIView *)getTableHeaderView {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     
-    // image
-    UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5, 50, 50)];
-    imgView.image = [UIImage imageNamed:@"circle-user"];
-    [headerView addSubview:imgView];
+    // avatar imageview
+    _avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 50, 50)];
+    _avatarImageView.layer.cornerRadius = _avatarImageView.frame.size.width/2;
+    _avatarImageView.layer.masksToBounds = YES;
+    [headerView addSubview:_avatarImageView];
     
     // title
-    _usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 0, 240 , 30)];
+    _usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, 240 , 30)];
     _usernameLabel.text = [MCLocalization stringForKey:@"personalized_title_placeholder"];
     _usernameLabel.textColor = [UIColor whiteColor];
     _usernameLabel.font = [UIFont boldSystemFontOfSize:14.0f];
     [headerView addSubview:_usernameLabel];
     
     // Sub-title
-    _emailLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 20, 240 , 30)];
+    _emailLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 20, 240 , 30)];
     _emailLabel.text = [MCLocalization stringForKey:@"personalized_subtitle_placeholder"];
     _emailLabel.textColor = [UIColor whiteColor];
     _emailLabel.font = [UIFont systemFontOfSize:11.0f];

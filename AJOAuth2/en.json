@@ -40,5 +40,9 @@
     "field_cannot_be_blank": "This field cannot be blank",
     "show_error_email_policy": "Please enter valid email",
     "show_error_username_policy": "Username should be 3-16 characters long with any lowercase letter (a-z), number (0-9), an underscore, or a hyphen",
-    "show_error_password_policy": "Password should be 8-15 characters long and must contain alphanumeric and _-!@# characters allowed"
+    "show_error_password_policy": "Password should be 8-15 characters long and must contain alphanumeric and _-!@# characters allowed",
+    "no_camera_available": "Your device doesn't have a camera.",
+    "take_profile_photo_option_title": "Take profile photo",
+    "choose_from_library_option_title": "Choose from library",
+    "warning_title": "Warning!"
 }

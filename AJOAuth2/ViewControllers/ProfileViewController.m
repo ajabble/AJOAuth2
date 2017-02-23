@@ -17,7 +17,7 @@
 #import "AJOauth2ApiClient.h"
 #import "AppDelegate.h"
 
-@interface ProfileViewController ()
+@interface ProfileViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic)NSArray *listItemsArray;
 
@@ -48,7 +48,6 @@
         [self displayUIElements];
         [self.tableView reloadData];
     }
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -79,9 +78,6 @@
     // Right Bar Button Item image
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sign-out"] style:UIBarButtonItemStylePlain target:self action:@selector(showAlertBeforeLogOut)];
     
-    // image
-    _imageView.image = [UIImage imageNamed:@"circle-user"];
-    
     // Basic Infoview
     self.basicInfoView.backgroundColor = THEME_BG_COLOR;
 }
@@ -101,9 +97,95 @@
     
     // DOB
     _dobLabel.text = user.dob;
+    
+    // Avatar ImageView
+    if (user.avatarImageURLString.length > 0)
+        _avatarImageView.image = [UIImage imageWithData:[Helper avatarImageUrl:user.avatarImageURLString]];
+    else
+        _avatarImageView.image = [UIImage imageNamed:@"circle-user"];
+    
+    _avatarImageView.layer.cornerRadius = BTN_CORNER_RADIUS;
+    _avatarImageView.layer.masksToBounds = YES;
+    _avatarImageView.userInteractionEnabled = YES;
+    [_avatarImageView addGestureRecognizer:[self imageViewRecognizer]];
 }
 
-#pragma mark /ME - API
+#pragma mark - UITapGestureRecognizer
+
+- (UITapGestureRecognizer *)imageViewRecognizer {
+    UITapGestureRecognizer *singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureHandler:)];
+    singleTapRecognizer.numberOfTouchesRequired = 1;
+    singleTapRecognizer.numberOfTapsRequired = 1;
+    
+    return singleTapRecognizer;
+}
+
+- (void)gestureHandler:(UIGestureRecognizer *)gestureRecognizer {
+    [self showImageAlertOptions];
+}
+
+- (void)updateProfile:(UIImage *)image {
+    [SVProgressHUD show];
+    AJOauth2ApiClient *client = [AJOauth2ApiClient sharedClient];
+    [client updateProfileImage:image success:^(NSURLSessionDataTask *task, id responseObject) {
+        if (![Helper checkResponseObject:responseObject])
+            return ;
+        
+        NSDictionary *jsonDict = (NSDictionary *)responseObject;
+        NSInteger statusCode = [jsonDict[@"code"] integerValue];
+        if (statusCode == SUCCESS_CODE) {
+            [SVProgressHUD showSuccessWithStatus:jsonDict[@"show_message"]];
+            
+            _avatarImageView.image = image;
+            User *user = [Helper getUserPrefs];
+            NSDictionary *userDict = @{@"firstname": user.firstName, @"lastname": user.lastName, @"dob": user.dob, @"username": user.userName, @"email":user.emailAddress, @"image_url":jsonDict[@"image_url"]};
+            [Helper saveUserInfoInDefaults:userDict];
+        }else if (statusCode == BAD_REQUEST_CODE) {
+            NSLog(@"Error Code: %@; ErrorDescription: %@", jsonDict[@"code"], jsonDict[@"error_description"]);
+            [SVProgressHUD showErrorWithStatus:jsonDict[@"show_message"]];
+        }else if (statusCode == INTERNAL_SERVER_ERROR_CODE) {
+            NSLog(@"Error Code: %@; ErrorDescription: %@", jsonDict[@"code"], jsonDict[@"error_description"]);
+            [SVProgressHUD dismiss];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        if (![Helper isWebUrlValid:error])
+            return;
+        
+        id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+        if (![Helper checkResponseObject:errorJson])
+            return ;
+        
+        NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)task.response;
+        NSLog(@"%zd", httpResponse.statusCode);
+        if (httpResponse.statusCode == UNAUTHORIZED_CODE) {
+            [client refreshTokenWithSuccess:^(AFOAuthCredential *newCredential) {
+                [self updateProfile:image];
+            } failure:^(NSError *error) {
+                [SVProgressHUD dismiss];
+                if (![Helper isWebUrlValid:error])
+                    return;
+                
+                id errorJson = [NSJSONSerialization JSONObjectWithData:error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] options:0 error:nil];
+                
+                if (![Helper checkResponseObject:errorJson])
+                    return ;
+                NSDictionary *errorJsonDict = (NSDictionary *)errorJson;
+                NSLog(@"Error Code: %@; ErrorDescription: %@", errorJsonDict[@"code"], errorJsonDict[@"error_description"]);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNotification:) name:SVProgressHUDWillDisappearNotification object:nil];
+                    [SVProgressHUD showSuccessWithStatus:[MCLocalization stringForKey:@"sign_out_message"]];
+                });
+            }];
+        }else if (httpResponse.statusCode == BAD_REQUEST_CODE) {
+            NSLog(@"Error Code: %@; ErrorDescription: %@", errorJsonDict[@"code"], errorJsonDict[@"error_description"]);
+        }else if (httpResponse.statusCode == INTERNAL_SERVER_ERROR_CODE) {
+            NSLog(@"Error Code: %@; ErrorDescription: %@", errorJsonDict[@"code"], errorJsonDict[@"error_description"]);
+        }
+    }];
+}
+
+#pragma mark ME - API
 
 - (void)showProfile {
     [SVProgressHUD show];
@@ -194,6 +276,56 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
+- (void)showImageAlertOptions {
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle:nil
+                                message:nil
+                                preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *chooseFromLibraryButton = [UIAlertAction
+                                              actionWithTitle:[MCLocalization stringForKey:@"choose_from_library_option_title"]
+                                              style:UIAlertActionStyleDefault
+                                              handler:^(UIAlertAction * action) {
+                                                  [self loadImagePickerWithSource:UIImagePickerControllerSourceTypePhotoLibrary];
+                                              }];
+    UIAlertAction *takeProfilePhotoButton = [UIAlertAction
+                                             actionWithTitle:[MCLocalization stringForKey:@"take_profile_photo_option_title"]
+                                             style:UIAlertActionStyleDefault
+                                             handler:^(UIAlertAction * action) {
+                                                 if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                                                    [self loadImagePickerWithSource:UIImagePickerControllerSourceTypeCamera];
+                                                 } else {
+                                                     UIAlertController *alert = [UIAlertController alertControllerWithTitle:[MCLocalization stringForKey:@"warning_title"] message:[MCLocalization stringForKey:@"no_camera_available"] preferredStyle:UIAlertControllerStyleAlert];
+                                                     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:[MCLocalization stringForKey:@"cancel_button_title"] style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
+                                                         [self dismissViewControllerAnimated:YES completion:nil];
+                                                     }];
+                                                     [alert addAction:cancelAction];
+                                                     [self presentViewController:alert animated:YES completion:nil];
+                                                 }
+                                             }];
+    
+    UIAlertAction *cancelButton = [UIAlertAction
+                                   actionWithTitle:[MCLocalization stringForKey:@"cancel_button_title"]
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction * action) {
+                                       // Handle cancelButton button
+                                   }];
+    
+    [alert addAction:cancelButton];
+    [alert addAction:takeProfilePhotoButton];
+    [alert addAction:chooseFromLibraryButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)loadImagePickerWithSource:(UIImagePickerControllerSourceType)type {
+    UIImagePickerController *pickerView = [[UIImagePickerController alloc] init];
+    pickerView.allowsEditing = YES;
+    pickerView.delegate = self;
+    pickerView.sourceType = type;
+    [self presentViewController:pickerView animated:YES completion:nil];
+}
+
 #pragma mark SVProgressHUD
 
 - (void)handleNotification:(NSNotification *)notification {
@@ -230,8 +362,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil)
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-
-     cell.textLabel.text =  [_listItemsArray objectAtIndex:indexPath.section];
+    
+    cell.textLabel.text =  [_listItemsArray objectAtIndex:indexPath.section];
     
     return cell;
 }
@@ -255,6 +387,23 @@
         vc = [[ChangeLanguageViewController alloc] initWithNibName:@"ChangeLanguageViewController" bundle:[NSBundle mainBundle]];
     
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - PickerDelegates
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    // You may change scaled width and height from the macros which is defined in Constants.h
+    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    image = [Helper scaleImage:image toSize:CGSizeMake(SCALED_WIDTH_SIZE, SCALED_HEIGHT_SIZE)];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        // Call update profile API
+        [self updateProfile:image];
+    }];
+    
 }
 
 @end

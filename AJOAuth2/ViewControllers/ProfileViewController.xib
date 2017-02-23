@@ -11,11 +11,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileViewController">
             <connections>
+                <outlet property="avatarImageView" destination="Duq-kO-cCj" id="oTg-YH-V5t"/>
                 <outlet property="basicInfoView" destination="VRi-PU-bfo" id="wl1-AY-8ap"/>
                 <outlet property="dobLabel" destination="ZxD-y5-VOC" id="zHi-h8-uNd"/>
                 <outlet property="emailAddressLabel" destination="ThD-9Q-W4X" id="IgS-PY-MtV"/>
                 <outlet property="fullNameLabel" destination="5vf-fs-R1o" id="hE2-O4-Aqr"/>
-                <outlet property="imageView" destination="Duq-kO-cCj" id="bVo-jR-hqF"/>
                 <outlet property="tableView" destination="6d0-Ru-P8f" id="kzM-hx-0Dw"/>
                 <outlet property="userNameLabel" destination="g0Z-3N-Dxu" id="n2r-Te-d51"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -35,6 +35,9 @@
                                 <constraint firstAttribute="height" constant="50" id="DaL-ER-bw4"/>
                                 <constraint firstAttribute="width" constant="50" id="QmR-8Y-CCk"/>
                             </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="edit-image-icon" translatesAutoresizingMaskIntoConstraints="NO" id="qiC-Xb-sFK">
+                            <rect key="frame" x="25" y="45" width="20" height="20"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5vf-fs-R1o">
                             <rect key="frame" x="66" y="8" width="234" height="0.0"/>
@@ -73,9 +76,12 @@
                         <constraint firstItem="ZxD-y5-VOC" firstAttribute="leading" secondItem="g0Z-3N-Dxu" secondAttribute="trailing" constant="85" id="VL6-fe-Syq"/>
                         <constraint firstItem="Duq-kO-cCj" firstAttribute="top" secondItem="VRi-PU-bfo" secondAttribute="top" constant="5" id="YB0-Yc-Eta"/>
                         <constraint firstItem="ZxD-y5-VOC" firstAttribute="top" secondItem="ThD-9Q-W4X" secondAttribute="bottom" constant="7" id="f3b-SL-Qm9"/>
+                        <constraint firstItem="g0Z-3N-Dxu" firstAttribute="top" secondItem="qiC-Xb-sFK" secondAttribute="bottom" constant="-5" id="h7X-Tn-uty"/>
                         <constraint firstItem="g0Z-3N-Dxu" firstAttribute="top" secondItem="Duq-kO-cCj" secondAttribute="bottom" constant="5" id="j9D-4J-4CG"/>
                         <constraint firstItem="ThD-9Q-W4X" firstAttribute="leading" secondItem="VRi-PU-bfo" secondAttribute="leading" constant="66" id="mdT-BN-NSy"/>
                         <constraint firstItem="g0Z-3N-Dxu" firstAttribute="leading" secondItem="VRi-PU-bfo" secondAttribute="leading" constant="5" id="nu7-x5-f6c"/>
+                        <constraint firstItem="qiC-Xb-sFK" firstAttribute="leading" secondItem="VRi-PU-bfo" secondAttribute="leading" constant="25" id="slI-eK-zRY"/>
+                        <constraint firstItem="ThD-9Q-W4X" firstAttribute="leading" secondItem="qiC-Xb-sFK" secondAttribute="trailing" constant="21" id="vaj-ks-NTf"/>
                         <constraint firstItem="5vf-fs-R1o" firstAttribute="leading" secondItem="Duq-kO-cCj" secondAttribute="trailing" constant="8" id="x8V-k0-8gk"/>
                         <constraint firstAttribute="bottom" secondItem="g0Z-3N-Dxu" secondAttribute="bottom" constant="19" id="ywa-ef-hMX"/>
                     </constraints>
@@ -104,5 +110,6 @@
     </objects>
     <resources>
         <image name="circle-user" width="50" height="50"/>
+        <image name="edit-image-icon" width="20" height="20"/>
     </resources>
 </document>

@@ -18,20 +18,14 @@ NSInteger const kErrorCannotFindHost = -1003;
 
 @implementation Helper
 
+#pragma mark Validations
+
 + (BOOL)isConnected {
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         NSLog(@"Reachability: %@", AFStringFromNetworkReachabilityStatus(status));
     }];
     
     return [AFNetworkReachabilityManager sharedManager].reachable;
-}
-
-+ (void)saveUserInfoInDefaults:(NSDictionary *)userInfo {
-    User *user = [[User alloc] initWithAttributes:[userInfo mutableCopy]];
-    NSLog(@"%@", user.description);
-    NSData *myUserEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:user];
-    [PREFS setObject:myUserEncodedObject forKey:USER_INFO];
-    [PREFS synchronize];
 }
 
 + (BOOL)checkResponseObject:(id)responseObject {
@@ -53,6 +47,17 @@ NSInteger const kErrorCannotFindHost = -1003;
     
     return YES;
 }
+
+#pragma mark User Preferences
+
++ (void)saveUserInfoInDefaults:(NSDictionary *)userInfo {
+    User *user = [[User alloc] initWithAttributes:[userInfo mutableCopy]];
+    NSLog(@"%@", user.description);
+    NSData *myUserEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:user];
+    [PREFS setObject:myUserEncodedObject forKey:USER_INFO];
+    [PREFS synchronize];
+}
+
 + (User *)getUserPrefs {
     NSData *userInfoObject = [PREFS objectForKey:USER_INFO];
     User *user = (User *)[NSKeyedUnarchiver unarchiveObjectWithData:userInfoObject];
@@ -66,6 +71,8 @@ NSInteger const kErrorCannotFindHost = -1003;
     [PREFS removeObjectForKey:USER_INFO];
     [PREFS synchronize];
 }
+
+#pragma mark Localization
 
 + (NSDictionary *)getLanguages {
     return @{
@@ -112,4 +119,23 @@ NSInteger const kErrorCannotFindHost = -1003;
     return [languageDict mutableCopy];
 }
 
+#pragma mark UIImage-Scaling
+
++ (UIImage *)scaleImage:(UIImage*)image toSize:(CGSize)newSize {
+    // UIGraphicsBeginImageContext(newSize);
+    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
+    // Pass 1.0 to force exact pixel size.
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
++ (NSData *)avatarImageUrl:(NSString *)avatarImageURLString {
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", HOST_URL, avatarImageURLString];
+    NSData *imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString: urlString]];
+    
+    return imageData;
+}
 @end

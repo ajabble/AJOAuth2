@@ -9,7 +9,7 @@
 #import "AJOauth2ApiClient.h"
 #import <MCLocalization/MCLocalization.h>
 
-NSString *const BASE_URL = @"http://YOUR_WEB_SERVER_URL/";
+NSString *const BASE_URL = @"(http|https)/YOUR_WEB_SERVER_URL/api/";
 NSString *const CLIENT_ID = @"YOUR_CLIENT_ID";
 NSString *const SECRET_KEY = @"YOUR_SECRET_KEY";
 NSString *const API_VERSION = @"YOUR_API_VERSION";
@@ -23,6 +23,8 @@ NSString *const USER_REGISTER_URI = @"user/register";
 NSString *const REQUEST_PASSWORD_URI = @"user/resetting/request";
 NSString *const CHANGE_PASSWORD_URI = @"user/profile/change-password";
 NSString *const UPDATE_PROFILE_URI = @"user/profile/edit";
+NSString *const EDIT_IMAGE_URI = @"user/profile/edit-pic";
+NSString *const AVATAR_IMAGE_URI = @"user/profile/get-pic";
 
 #define locale [MCLocalization sharedInstance].language
 
@@ -169,6 +171,47 @@ NSString *const UPDATE_PROFILE_URI = @"user/profile/edit";
            NSLog(@"Success: %@", responseObject);
            success(task, responseObject);
        }
+       failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+           NSLog(@"Failure: %@", error);
+           failure(task, error);
+       }];
+}
+
+#pragma mark AVATAR_IMAGE_URI
+- (void)getAvatarImageUrl:(AJOauth2ApiClientSuccess)success
+failure:(AJOauth2ApiClientFailure)failure {
+    NSLog(@"[%@ %@]", [self class], AVATAR_IMAGE_URI);
+    
+    [[AJOauth2ApiClient sharedClient].requestSerializer setAuthorizationHeaderFieldWithCredential:[self retrieveCredential]];
+    [self POST:AVATAR_IMAGE_URI
+    parameters:@{@"_locale": locale}
+      progress:nil
+       success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+           NSLog(@"Success: %@", responseObject);
+           success(task, responseObject);
+       }
+       failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+           failure(task, error);
+       }];
+}
+
+#pragma mark EDIT_IMAGE_URI
+- (void)updateProfileImage:(UIImage *)image success:(AJOauth2ApiClientSuccess)success
+                   failure:(AJOauth2ApiClientFailure)failure {
+    NSLog(@"[%@ %@]", [self class], EDIT_IMAGE_URI);
+    
+    [[AJOauth2ApiClient sharedClient].requestSerializer setAuthorizationHeaderFieldWithCredential:[self retrieveCredential]];
+    
+    NSData *imageData = UIImagePNGRepresentation(image);
+    [self POST:EDIT_IMAGE_URI parameters:@{@"_locale": locale} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        // fileName is hardcoded, as this doesnot effect any of the scenario
+        [formData appendPartWithFileData:imageData name:@"image" fileName:@"iOS.png" mimeType:@"image/png"];
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        NSLog(@"Progress: %@", uploadProgress);
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"Success: %@", responseObject);
+        success(task, responseObject);
+    }
        failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
            NSLog(@"Failure: %@", error);
            failure(task, error);
