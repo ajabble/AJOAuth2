@@ -24,6 +24,7 @@ NSString *const REQUEST_PASSWORD_URI = @"user/resetting/request";
 NSString *const CHANGE_PASSWORD_URI = @"user/profile/change-password";
 NSString *const UPDATE_PROFILE_URI = @"user/profile/edit";
 NSString *const EDIT_IMAGE_URI = @"user/profile/edit-pic";
+NSString *const AVATAR_IMAGE_URI = @"user/profile/get-pic";
 
 #define locale [MCLocalization sharedInstance].language
 
@@ -176,8 +177,25 @@ NSString *const EDIT_IMAGE_URI = @"user/profile/edit-pic";
        }];
 }
 
-#pragma mark EDIT_IMAGE_URI
+#pragma mark AVATAR_IMAGE_URI
+- (void)getAvatarImageUrl:(AJOauth2ApiClientSuccess)success
+failure:(AJOauth2ApiClientFailure)failure {
+    NSLog(@"[%@ %@]", [self class], AVATAR_IMAGE_URI);
+    
+    [[AJOauth2ApiClient sharedClient].requestSerializer setAuthorizationHeaderFieldWithCredential:[self retrieveCredential]];
+    [self POST:AVATAR_IMAGE_URI
+    parameters:@{@"_locale": locale}
+      progress:nil
+       success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+           NSLog(@"Success: %@", responseObject);
+           success(task, responseObject);
+       }
+       failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+           failure(task, error);
+       }];
+}
 
+#pragma mark EDIT_IMAGE_URI
 - (void)updateProfileImage:(UIImage *)image success:(AJOauth2ApiClientSuccess)success
                    failure:(AJOauth2ApiClientFailure)failure {
     NSLog(@"[%@ %@]", [self class], EDIT_IMAGE_URI);
