@@ -118,7 +118,17 @@
 #pragma mark AFOAuthCredential
 
 - (void)deleteOauthCredentialsFromKeychainItems {
-    (![PREFS objectForKey:USER_INFO]) ? [AFOAuthCredential deleteCredentialWithIdentifier:[AJOauth2ApiClient sharedClient].serviceProviderIdentifier] : NSLog(@"No action needed");
+    if(![PREFS objectForKey:USER_INFO]) {
+        NSArray *secItemClasses = @[(__bridge id)kSecClassGenericPassword,
+                                    (__bridge id)kSecClassInternetPassword,
+                                    (__bridge id)kSecClassCertificate,
+                                    (__bridge id)kSecClassKey,
+                                    (__bridge id)kSecClassIdentity];
+        for (id secItemClass in secItemClasses) {
+            NSDictionary *spec = @{(__bridge id)kSecClass: secItemClass};
+            SecItemDelete((__bridge CFDictionaryRef)spec);
+        }
+    }
 }
 
 @end
