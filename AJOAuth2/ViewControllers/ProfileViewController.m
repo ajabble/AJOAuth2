@@ -102,8 +102,8 @@
     // Avatar ImageView
     [_avatarImageView setShowActivityIndicatorView:YES];
     [_avatarImageView setIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    [_avatarImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", HOST_URL, user.avatarImageURLString]] placeholderImage:PLACEHOLDER_IMAGE options:SDWebImageRefreshCached];
-    
+    NSURL *avatarImageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", HOST_URL, user.avatarImageURLString]];
+    [_avatarImageView sd_setImageWithURL:avatarImageUrl placeholderImage:PLACEHOLDER_IMAGE options:SDWebImageRefreshCached];
     _avatarImageView.layer.cornerRadius = BTN_CORNER_RADIUS;
     _avatarImageView.layer.masksToBounds = YES;
     _avatarImageView.userInteractionEnabled = YES;
@@ -136,7 +136,8 @@
             //_avatarImageView.image = image;
             [_avatarImageView setShowActivityIndicatorView:YES];
             [_avatarImageView setIndicatorStyle:UIActivityIndicatorViewStyleGray];
-             [_avatarImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", HOST_URL, jsonDict[@"image_url"]]] placeholderImage:PLACEHOLDER_IMAGE options:SDWebImageRefreshCached];
+            NSURL *avatarImageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", HOST_URL, jsonDict[@"image_url"]]];
+            [_avatarImageView sd_setImageWithURL:avatarImageUrl placeholderImage:PLACEHOLDER_IMAGE options:SDWebImageRefreshCached];
             
             User *user = [Helper getUserPrefs];
             NSDictionary *userDict = @{@"firstname": user.firstName, @"lastname": user.lastName, @"dob": user.dob, @"username": user.userName, @"email":user.emailAddress, @"image_url":jsonDict[@"image_url"]};

@@ -67,8 +67,8 @@
         // Avatar ImageView        
         [_avatarImageView setShowActivityIndicatorView:YES];
         [_avatarImageView setIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        [_avatarImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", HOST_URL, user.avatarImageURLString]] placeholderImage:PLACEHOLDER_IMAGE options:SDWebImageRefreshCached];
-        
+        NSURL *avatarImageUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", HOST_URL, user.avatarImageURLString]];
+        [_avatarImageView sd_setImageWithURL:avatarImageUrl placeholderImage:PLACEHOLDER_IMAGE options:SDWebImageRefreshCached];
     }
     
     [self.tableView reloadData];
