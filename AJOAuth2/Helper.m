@@ -132,10 +132,4 @@ NSInteger const kErrorCannotFindHost = -1003;
     return newImage;
 }
 
-+ (NSData *)avatarImageUrl:(NSString *)avatarImageURLString {
-    NSString *urlString = [NSString stringWithFormat:@"%@%@", HOST_URL, avatarImageURLString];
-    NSData *imageData = [[NSData alloc] initWithContentsOfURL:[NSURL URLWithString: urlString]];
-    
-    return imageData;
-}
 @end

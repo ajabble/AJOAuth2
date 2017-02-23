@@ -89,6 +89,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/JJMaterialTextField/JJMaterialTextField.framework"
   install_framework "$BUILT_PRODUCTS_DIR/LGSideMenuController/LGSideMenuController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/MCLocalization/MCLocalization.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SDWebImage/SDWebImage.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SVProgressHUD/SVProgressHUD.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -97,5 +98,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/JJMaterialTextField/JJMaterialTextField.framework"
   install_framework "$BUILT_PRODUCTS_DIR/LGSideMenuController/LGSideMenuController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/MCLocalization/MCLocalization.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SDWebImage/SDWebImage.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SVProgressHUD/SVProgressHUD.framework"
 fi

@@ -12,6 +12,7 @@
 #import "User.h"
 #import <LGSideMenuController/UIViewController+LGSideMenuController.h>
 #import "ChangeLanguageViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface LeftViewController ()
 
@@ -53,7 +54,7 @@
     if (![PREFS objectForKey:USER_INFO]) {
         _usernameLabel.text = [MCLocalization stringForKey:@"personalized_title_placeholder"];
         _emailLabel.text = [MCLocalization stringForKey:@"personalized_subtitle_placeholder"];
-        _avatarImageView.image = [UIImage imageNamed:@"circle-user"];
+        _avatarImageView.image = PLACEHOLDER_IMAGE;
     } else {
         User *user = [Helper getUserPrefs];
         
@@ -63,11 +64,11 @@
         // Email Address
         _emailLabel.text = user.emailAddress;
         
-        // ImageView
-        if (user.avatarImageURLString.length > 0)
-            _avatarImageView.image = [UIImage imageWithData:[Helper avatarImageUrl:user.avatarImageURLString]];
-        else
-            _avatarImageView.image = [UIImage imageNamed:@"circle-user"];
+        // Avatar ImageView        
+        [_avatarImageView setShowActivityIndicatorView:YES];
+        [_avatarImageView setIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [_avatarImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@", HOST_URL, user.avatarImageURLString]] placeholderImage:PLACEHOLDER_IMAGE options:SDWebImageRefreshCached];
+        
     }
     
     [self.tableView reloadData];

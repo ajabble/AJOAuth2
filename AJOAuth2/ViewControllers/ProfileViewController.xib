@@ -29,7 +29,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VRi-PU-bfo">
                     <rect key="frame" x="0.0" y="64" width="320" height="100"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle-user" translatesAutoresizingMaskIntoConstraints="NO" id="Duq-kO-cCj">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="Duq-kO-cCj">
                             <rect key="frame" x="8" y="5" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="DaL-ER-bw4"/>
@@ -109,7 +109,7 @@
         </view>
     </objects>
     <resources>
-        <image name="circle-user" width="50" height="50"/>
         <image name="edit-image-icon" width="20" height="20"/>
+        <image name="placeholder" width="50" height="50"/>
     </resources>
 </document>

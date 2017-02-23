@@ -31,6 +31,7 @@
 
 #define REGEX_PASSWORD @"^[A-Za-z0-9_!@#]{8,15}$"
 #define HOST_URL @"(http|https)/YOUR_WEB_SERVER_URL"
+#define PLACEHOLDER_IMAGE [UIImage imageNamed:@"placeholder"]
 #define SCALED_WIDTH_SIZE 200
 #define SCALED_HEIGHT_SIZE 200
 

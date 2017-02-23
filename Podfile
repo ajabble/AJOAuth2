@@ -6,6 +6,7 @@ target 'AJOAuth2' do
   pod 'SVProgressHUD'
   pod 'JJMaterialTextField'
   pod 'LGSideMenuController'
+  pod 'SDWebImage', '~>3.8'
 target 'AJOAuth2Tests' do
     inherit! :search_paths
   end
