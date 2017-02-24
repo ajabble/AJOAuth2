@@ -53,11 +53,9 @@ return @{
 
 # <a name="roadmap"> Roadmap
 Here's the TODO list for the next release (**2.0**).
-
-- [ ] Refactoring the source code.
-- [ ] Correct all issues.
-- [ ] Add API and UI tests.
-- [ ] You may track issues under [Github Issues](https://github.com/ajabble/AJOAuth2/issues)
+* [ ] Refactoring of source code.
+* [ ] Add API and UI tests.
+* [ ] Correct all issues.
 
 # <a name="contribution-pr"> Contributing & Pull Requests
 Patches and pull requests are welcome! We are sorry if it takes a while to review them, but sooner or later we will get to yours.
